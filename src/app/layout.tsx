@@ -1,5 +1,6 @@
 import "../global.css"
 import { Header,Footer } from "../components"
+
 export const metadata = {
   title: 'Flip Clock',
 }

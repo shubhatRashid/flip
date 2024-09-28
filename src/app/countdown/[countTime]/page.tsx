@@ -1,16 +1,20 @@
 'use client'
 import { Digit } from "@/components";
 import { useEffect, useState } from "react";
-export default function Page() {
-    var [time,setTime] = useState(new Date())
+export default function Page(
+    {params}:{
+            params:{countTime:number}
+        }
+    ) {
+    var [time,setTime] = useState(params.countTime)
     
-    const hours = time.getHours().toString().padStart(2, '0');
-    const minutes = time.getMinutes().toString().padStart(2, '0');
-    const seconds = time.getSeconds().toString().padStart(2, '0');
+    const seconds = Math.floor(time % 60).toString().padStart(2,'0')
+    const minutes = Math.floor(time / 60).toString().padStart(2,'0')
+    const hours  = Math.floor(time/ 3600).toString().padStart(2,'0')
 
     useEffect(()=>{
         var interval = setInterval(() => {
-            setTime(() => new Date())
+            setTime((time) => time - 1)
         },1000)
 
         return () => clearInterval(interval)
