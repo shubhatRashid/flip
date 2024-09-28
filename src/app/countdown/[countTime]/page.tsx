@@ -6,19 +6,22 @@ export default function Page(
             params:{countTime:number}
         }
     ) {
-    var [time,setTime] = useState(params.countTime)
+    const [time,setTime] = useState(params.countTime)
+    let hours = Math.floor(time/3600).toString().padStart(2,'0')
+    let minutes = Math.floor((time - Number(hours)*3600 )/60).toString().padStart(2,'0')
+    let seconds = (time%60).toString().padStart(2,'0')
     
-    const seconds = Math.floor(time % 60).toString().padStart(2,'0')
-    const minutes = Math.floor(time / 60).toString().padStart(2,'0')
-    const hours  = Math.floor(time/ 3600).toString().padStart(2,'0')
-
     useEffect(()=>{
-        var interval = setInterval(() => {
-            setTime((time) => time - 1)
+        var interval = setInterval(() => { 
+            if (time > 0){
+                setTime((time) => time-1)
+            }else{
+                clearInterval(interval)
+            }
         },1000)
 
         return () => clearInterval(interval)
-    },[])
+    },[time])
     
     return (
         <div className="flex w-full h-full justify-evenly items-center px-[10%] gap-3">

@@ -2,24 +2,29 @@
 import { useState } from "react";
 import left from "../../assets/left.png"
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 export default function Header() {
     const router = useRouter()
 
     const [showNav,setShowNav] = useState(false)
     const [showCountDown,setShowCountDown] = useState(false)
-    const [hours,setHours] = useState(0)
-    const [minutes,setMinutes] = useState(0)
-    const [seconds,setSeconds] = useState(0)
+    const [hours,setHours] = useState('0')
+    const [minutes,setMinutes] = useState('0')
+    const [seconds,setSeconds] = useState('0')
+    
     const handleStart = () => {
-        const time = hours*3600+minutes*60+seconds
+        const time = (Number(hours)*3600)+(Number(minutes)*60)+Number(seconds)
         router.push(`/countdown/${time}`)
         setShowCountDown(false)
         setShowNav(false)
+        setHours('0')
+        setMinutes('0')
+        setSeconds('0')
     }
     return (
         <div className="flex w-full justify-between h-[6%] my-3 px-5">
             <div className="flex justify-center items-center bg-neutral-800 rounded-xl w-[10%]">
-                <h1>Flip Clock</h1>
+                <Link href='/'>FlipClock</Link>
             </div>
             <button 
                 className="flex justify-center items-center bg-neutral-800 rounded-xl w-[3%]"
@@ -52,36 +57,33 @@ export default function Header() {
                 >   
                 <div className="flex justify-center items-center w-full h-full gap-10">
                     <div className="flex flex-col h-full w-[30%] rounded-xl justify-center items-center">
-                        <label for='hours'> HOURS</label>
+                        <label> HOURS</label>
                         <input 
-                            name="hours"
-                            type="number" min= {0} max ={60} 
+                            type="number"  
                             className="flex w-full h-full rounded-xl justify-center items-center text-9xl
                                     bg-neutral-800"
                             value={hours}
-                            onChange={(event) => setHours(event.target.value)}
+                            onChange={(event) => setHours((event.target.value))}
                         />
                     </div>
                     <div className="flex flex-col h-full w-[30%] rounded-xl justify-center items-center">
-                        <label for='hours'> MINUTES</label>
+                        <label> MINUTES</label>
                         <input 
-                            name="minutes"
-                            type="number" min= {0} max ={60} 
+                            type="number" 
                             className="flex w-full h-full rounded-xl justify-center items-center text-9xl
                                     bg-neutral-800"
                             value={minutes}
-                            onChange={(event) => setMinutes(event.target.value)}
+                            onChange={(event) => setMinutes((event.target.value))}
                         />
                     </div>
                     <div className="flex flex-col h-full w-[30%] rounded-xl justify-center items-center">
-                        <label for='hours'> SECONDS</label>
+                        <label> SECONDS</label>
                         <input 
-                            name="seconds"
-                            type="number" min= {0} max ={60} 
+                            type="number"
                             className="flex w-full h-full rounded-xl justify-center items-center text-9xl
                                     bg-neutral-800"
                             value={seconds}
-                            onChange={(event) => setSeconds(event.target.value)}
+                            onChange={(event) => setSeconds((event.target.value))}
                         />
                     </div>
                 </div>

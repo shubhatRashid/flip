@@ -1,20 +1,28 @@
 'use client'
 import { Digit } from "@/components";
 import { useEffect, useState } from "react";
-export default function Page() {
-    var [time,setTime] = useState(new Date())
-    
-    const hours = time.getHours().toString().padStart(2, '0');
-    const minutes = time.getMinutes().toString().padStart(2, '0');
-    const seconds = time.getSeconds().toString().padStart(2, '0');
 
+export default function Page() {
+    var [time,setTime] = useState<Date | null>(null)
+    
     useEffect(()=>{
+        setTime(new Date())
         var interval = setInterval(() => {
             setTime(() => new Date())
         },1000)
 
         return () => clearInterval(interval)
     },[])
+
+    if (!time){
+        return null
+    }
+
+    const hours = time.getHours().toString().padStart(2, '0');
+    const minutes = time.getMinutes().toString().padStart(2, '0');
+    const seconds = time.getSeconds().toString().padStart(2, '0');
+
+
     
     return (
         <div className="flex w-full h-full justify-evenly items-center px-[10%] gap-3">
