@@ -27,9 +27,11 @@ export default function Header() {
                 <Link href='/'>FlipClock</Link>
             </div>
             <button 
-                className="flex justify-center items-center bg-neutral-800 rounded-xl w-[3%]"
+                className="flex flex-col gap-1 justify-center items-center bg-neutral-800 rounded-xl w-[3%]"
                 onClick={() => setShowNav(true)}>
-                <img  src={left.src} alt="Navbar" className="object-cover"/>
+                <div className="w-[20px] border"></div>
+                <div className="w-[20px] border"></div>
+                <div className="w-[20px] border"></div>
             </button>
 
             {
@@ -39,8 +41,17 @@ export default function Header() {
                                 flex-col justify-start items-start py-5 px-5 gap-5 font-serif">
                     <h1 className="font-bold text-3xl border-b-2">Navbar</h1>
                     <button 
-                        className="p-1 border rounded-xl w-full "
-                        onClick={() => setShowCountDown(!showCountDown)}>CountDown</button>
+                        className="p-1 border rounded-xl w-full"
+                        onClick={() => setShowCountDown(!showCountDown)}
+                    >
+                            CountDown
+                    </button>
+                    <button 
+                        className="p-1 border rounded-xl w-full"
+                        onClick={() => router.push('/stopwatch')}
+                    >
+                            StopWatch
+                    </button>
                     <button 
                         className="absolute bottom-0 left-0 flex justify-center items-center border rounded-xl p-1 w-full "
                         onClick={() => setShowNav(false)}
