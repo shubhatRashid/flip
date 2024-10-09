@@ -12,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col w-[100%] h-screen justify-center items-center bg-black text-white ">
+      <body className="flex flex-col w-[100%] min-h-screen justify-center items-center bg-black text-white ">
         <Header/>
           <div className="flex flex-1 w-full justify-center items-center"> {children}</div>
         <Footer/>

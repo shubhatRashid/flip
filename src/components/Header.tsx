@@ -21,8 +21,8 @@ export default function Header() {
         setSeconds('0')
     }
     return (
-        <div className="flex w-full justify-between h-[6%] my-3 px-5">
-            
+        <div className="flex w-full justify-between h-[50px] my-3 px-5">
+
             <div className="flex justify-center items-center bg-neutral-800 rounded-xl w-[10%]">
                 <Link href='/'>FlipClock</Link>
             </div>
@@ -48,10 +48,24 @@ export default function Header() {
                     </button>
                     <button 
                         className="p-1 border rounded-xl w-full"
-                        onClick={() => router.push('/stopwatch')}
+                        onClick={() => {
+                            setShowNav(false)
+                            router.push('/stopwatch')
+                        }}
                     >
                             StopWatch
                     </button>
+
+                    <button 
+                        className="p-1 border rounded-xl w-full"
+                        onClick={() => {
+                            setShowNav(false)
+                            router.push('/todolist')
+                        }}
+                    >
+                            TodoList
+                    </button>
+                    
                     <button 
                         className="absolute bottom-0 left-0 flex justify-center items-center border rounded-xl p-1 w-full "
                         onClick={() => setShowNav(false)}
@@ -83,7 +97,7 @@ export default function Header() {
                             <input 
                                 type="number"  
                                 className="flex w-full h-full rounded-xl justify-center items-center text-9xl
-                                        bg-neutral-800"
+                                        bg-neutral-800 text-center"
                                 value={hours}
                                 onChange={(event) => setHours((event.target.value))}
                             />
@@ -93,7 +107,7 @@ export default function Header() {
                             <input 
                                 type="number" 
                                 className="flex w-full h-full rounded-xl justify-center items-center text-9xl
-                                        bg-neutral-800"
+                                        bg-neutral-800 text-center"
                                 value={minutes}
                                 onChange={(event) => setMinutes((event.target.value))}
                             />
@@ -103,7 +117,7 @@ export default function Header() {
                             <input 
                                 type="number"
                                 className="flex w-full h-full rounded-xl justify-center items-center text-9xl
-                                        bg-neutral-800"
+                                        bg-neutral-800 text-center"
                                 value={seconds}
                                 onChange={(event) => setSeconds((event.target.value))}
                             />
