@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {dots,add} from "../../../assets"
 import Eachtask from "@/components/Eachtask";
 import {TaskType, TodoType} from "../../types"
+import Image from "next/image";
 
 export default function Page() {
     const [todos, setTodos] = useState<TodoType[]>([]);
@@ -99,7 +100,7 @@ export default function Page() {
                         className="absolute top-3 right-3 font-bold"
                         onClick={() => showCardOptions === "" ? setShowCardOptions(todo.category) : setShowCardOptions("")}
                     >
-                            <img className="w-[20px] object-cover" src={dots.src}/>
+                            <Image alt='image not found' width={20} height={20} src={dots.src}/>
                     </button>
 
                     {
@@ -155,7 +156,7 @@ export default function Page() {
                             className="flex justify-center items-center"
                             onClick={() => addNewTask(todo.category, todo.lastId)}
                         >
-                            <img className="w-[25px] object-cover" src={add.src}/>
+                            <Image alt='image not found' width={20} height={20} src={add.src}/>
                         </button>       
                     </div>
                 </div>
