@@ -55,7 +55,9 @@ export default function Page() {
 
     useEffect(() => {
         let data = localStorage.getItem('todolist')
-        setTodos(JSON.parse(data ? data : ''))
+        if (data){
+            setTodos(JSON.parse(data))
+        }
     },[])
 
     useEffect(() => {
