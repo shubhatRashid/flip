@@ -121,11 +121,11 @@ export default function Page() {
                     {
                     todo.tasks.map((task, i) => (
                         <Eachtask 
+                            key = {index}
                             todos={todos}
                             setTodos={setTodos}
                             todo = {todo}
                             task = {task}
-                            index = {i}
                             newTask = {newTask}
                             editingTask = {editingTask}
                             setNewTask = {setNewTask}

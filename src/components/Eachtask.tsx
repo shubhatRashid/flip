@@ -1,12 +1,12 @@
 import { deleteIcon,edit } from "../../assets";
 import {TodoType,TaskType} from "../types"
+import Image from "next/image";
 
 type EachtaskProps = {
     todos: TodoType[];
     setTodos: (todos: TodoType[]) => void;
     todo: TodoType;
     task: TaskType;
-    index: number;
     newTask: string;
     editingTask: TaskType | null;
     setNewTask: (task: string) => void;
@@ -19,7 +19,6 @@ export default function Eachtask(
     setTodos,
     todo,
     task,
-    index,
     newTask,
     editingTask,
     setNewTask,
@@ -68,11 +67,11 @@ export default function Eachtask(
         });
         setTodos(newData);
         setNewTask("")
-        setEditingTask({})
+        setEditingTask(null)
     };
 
     return (
-        <div key={index} className="flex" >
+        <div className="flex" >
             {
                 editingTask === task
                 ? 
@@ -109,7 +108,7 @@ export default function Eachtask(
                 {
                     task.completed  && 
                     <button  onClick={() => deleteTask(todo.category, task.id)}>
-                            <img className="w-[20px] object-cover" src={deleteIcon.src}/>
+                            <Image width={20} height={20} alt="no image" src={deleteIcon.src}/>
                     </button>
                 }
                 
@@ -121,7 +120,7 @@ export default function Eachtask(
                         setNewTask(task.task)
                         }}
                     >
-                            <img className="w-[20px] object-cover" src={edit.src}/>
+                            <Image width={20} height={20} alt="no image" src={edit.src}/>
                     </button>
                 }
             </div>
