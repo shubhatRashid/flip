@@ -1,16 +1,16 @@
 'use client';
 import { useEffect, useState } from "react";
-import {dots} from "../../../assets"
+import {dots,add} from "../../../assets"
 import Eachtask from "@/components/Eachtask";
+import {TaskType, TodoType} from "../../types"
 
 export default function Page() {
-    let data = localStorage.getItem('todolist')
-    const [todos, setTodos] = useState(JSON.parse(data));
-    const [editingTask, setEditingTask] = useState({});
-    const [newTask, setNewTask] = useState('');
-    const [editingCategory,setEditingCategory] = useState('')
-    const [newCategory,setNewCategory] = useState('')
-    const [showCardOptions,setShowCardOptions] = useState('')
+    const [todos, setTodos] = useState<TodoType[]>([]);
+    const [editingTask, setEditingTask] = useState<TaskType | null>(null);
+    const [newTask, setNewTask] = useState<string>('');
+    const [editingCategory,setEditingCategory] = useState<string>('')
+    const [newCategory,setNewCategory] = useState<string>('')
+    const [showCardOptions,setShowCardOptions] = useState<string>('')
 
     const addNewTask = (category: string, lastId: number) => {
         let newData = todos.map((todo) => {
@@ -53,8 +53,16 @@ export default function Page() {
     }
 
     useEffect(() => {
-        localStorage.setItem('todolist',JSON.stringify(todos))
-    },[newTask,newCategory])
+        let data = localStorage.getItem('todolist')
+        setTodos(JSON.parse(data ? data : ''))
+    },[])
+
+    useEffect(() => {
+        let data = JSON.stringify(todos)
+        if (todos.length > 0){
+            localStorage.setItem('todolist',data)
+        }
+    },[newCategory,newTask,todos])
 
     return (
         <div className="flex flex-wrap gap-5 w-full h-full justify-center items-center">
@@ -116,7 +124,7 @@ export default function Page() {
                             setTodos={setTodos}
                             todo = {todo}
                             task = {task}
-                            key = {i}
+                            index = {i}
                             newTask = {newTask}
                             editingTask = {editingTask}
                             setNewTask = {setNewTask}
@@ -127,6 +135,7 @@ export default function Page() {
 
                     <div id='taskInput' className="flex w-full border rounded-xl flex justify-between items-center gap-5 p-1 self-baseline mt-auto">
                         <form  
+                            className="w-full"
                             typeof="submit" 
                             onSubmit={
                                 (e) => {
@@ -135,7 +144,7 @@ export default function Page() {
                                     }}>
                             <input 
                                 id={todo.category}
-                                className="flex w-[90%] rounded-xl bg-black text-white p-1 outline-none" 
+                                className="flex w-full rounded-xl bg-black text-white p-1 outline-none" 
                                 placeholder="add new task..."
                                 onChange={(e) => setNewTask(e.target.value)}
                                 onFocus={(e) => e.currentTarget.value = newTask}
@@ -143,10 +152,10 @@ export default function Page() {
                             />
                         </form>
                         <button 
-                            className="border rounded-full w-6 h-6 flex justify-center items-center"
+                            className="flex justify-center items-center"
                             onClick={() => addNewTask(todo.category, todo.lastId)}
                         >
-                            +
+                            <img className="w-[25px] object-cover" src={add.src}/>
                         </button>       
                     </div>
                 </div>

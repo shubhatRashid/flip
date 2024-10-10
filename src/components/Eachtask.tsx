@@ -1,16 +1,31 @@
 import { deleteIcon,edit } from "../../assets";
-export default function Eachtask({
+import {TodoType,TaskType} from "../types"
+
+type EachtaskProps = {
+    todos: TodoType[];
+    setTodos: (todos: TodoType[]) => void;
+    todo: TodoType;
+    task: TaskType;
+    index: number;
+    newTask: string;
+    editingTask: TaskType | null;
+    setNewTask: (task: string) => void;
+    setEditingTask: (task: TaskType | null) => void;
+};
+
+export default function Eachtask(
+{
     todos,
     setTodos,
     todo,
     task,
-    key,
+    index,
     newTask,
     editingTask,
     setNewTask,
     setEditingTask,
-
-}) {
+} : EachtaskProps
+) {
 
     const deleteTask = (category: string, id: number) => {
         let newData = todos.map((todo) => {
@@ -57,7 +72,7 @@ export default function Eachtask({
     };
 
     return (
-        <div key={key} className="flex" >
+        <div key={index} className="flex" >
             {
                 editingTask === task
                 ? 
