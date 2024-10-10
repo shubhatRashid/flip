@@ -1,10 +1,11 @@
 'use client';
-import { useState } from "react";
-import data from "./-data";
-import ThreeDots from "../../../assets/dots.png"
+import { useEffect, useState } from "react";
+import {dots} from "../../../assets"
+import Eachtask from "@/components/Eachtask";
 
 export default function Page() {
-    const [todos, setTodos] = useState(data);
+    let data = localStorage.getItem('todolist')
+    const [todos, setTodos] = useState(JSON.parse(data));
     const [editingTask, setEditingTask] = useState({});
     const [newTask, setNewTask] = useState('');
     const [editingCategory,setEditingCategory] = useState('')
@@ -15,55 +16,13 @@ export default function Page() {
         let newData = todos.map((todo) => {
             if (todo.category === category) {
                 todo.tasks.push({ id: lastId + 1, task: newTask, completed: false });
+                todo.lastId += 1
             }
             return todo;
         });
         setTodos(newData);
-        setNewTask("");
-    };
-
-    const deleteTask = (category: string, id: number) => {
-        let newData = todos.map((todo) => {
-            if (todo.category === category) {
-                let newTasks = todo.tasks.filter((task) => task.id !== id);
-                todo.tasks = newTasks;
-            }
-            return todo;
-        });
-        console.log(newData);
-        setTodos(newData);
-    };
-
-    const handleCheckedChange = (category: string, id: number) => {
-        let newData = todos.map((todo) => {
-            if (todo.category === category) {
-                todo.tasks.map((task) => {
-                    if (task.id == id) {
-                        task.completed = !task.completed;
-                    }
-                    return task;
-                });
-            }
-            return todo;
-        });
-        setTodos(newData);
-    };
-
-    const handleEditTask = (category: string, id:number) => {
-        let newData = todos.map((todo) => {
-            if (todo.category === category) {
-                todo.tasks.map((task) => {
-                    if (task.id == id) {
-                        task.task = newTask
-                    }
-                    return task;
-                });
-            }
-            return todo;
-        });
-        setTodos(newData);
-        setNewTask("")
-        setEditingTask({})
+        setNewTask(() => '')
+        document.getElementById(category)?.blur()
     };
 
     const handleDeleteCategory = (category: string) => {
@@ -81,8 +40,29 @@ export default function Page() {
         setTodos(newData)
     }
 
+    const handleAddNewCategory = () => {
+        setTodos((todos) => [...todos,
+            {
+                category: "new category...",
+                tasks: [],
+                lastId: todos.length > 0 ? todos[todos.length-1].lastId + 1 : 0
+            }
+        ])
+        setEditingCategory('new category...')
+        setNewCategory('new category...')
+    }
+
+    useEffect(() => {
+        localStorage.setItem('todolist',JSON.stringify(todos))
+    },[newTask,newCategory])
+
     return (
         <div className="flex flex-wrap gap-5 w-full h-full justify-center items-center">
+
+            <div className="relative border p-3 rounded-xl min-w-[200px] min-h-[200px] flex justify-center gap-3 items-center">
+                <button onClick = {handleAddNewCategory} className="border rounded-xl p-5">Add New</button>
+            </div>
+
             {todos.map((todo, index) => (
                 <div key={index} className="relative border p-3 rounded-xl min-w-[200px] flex flex-col justify-center gap-3">
 
@@ -97,7 +77,11 @@ export default function Page() {
                                     autoFocus />
                             </form>
                             :
-                            <h1 className="text-3xl flex justify-center items-center p-1 capitalize">
+                            <h1 
+                                className="text-3xl flex justify-center items-center p-1 capitalize"
+                                style={{
+                                    opacity:todo.category === 'new category...'? '50%' : '100%',
+                                    textTransform:todo.category === 'new category...'? 'none':'capitalize'}}>
                                 {todo.category}
                             </h1>
                         }
@@ -107,7 +91,7 @@ export default function Page() {
                         className="absolute top-3 right-3 font-bold"
                         onClick={() => showCardOptions === "" ? setShowCardOptions(todo.category) : setShowCardOptions("")}
                     >
-                            <img className="w-[20px] object-cover" src={ThreeDots.src}/>
+                            <img className="w-[20px] object-cover" src={dots.src}/>
                     </button>
 
                     {
@@ -125,71 +109,39 @@ export default function Page() {
                         </div>
                     }
 
-                    {todo.tasks.map((task, i) => (
-                        <div key={i} className="flex" >
-                            {
-                                editingTask === task
-                                ? 
-                                <form 
-                                    typeof='submit' 
-                                    onSubmit={() => handleEditTask(todo.category, task.id)}
-                                    className="flex w-full">
-                                    <input 
-                                        className="flex w-full rounded-xl bg-neutral-800 text-white p-1"
-                                        value = {newTask} 
-                                        onChange={(e) => setNewTask(e.target.value)}
-                                        autoFocus
-                                    />
-                                </form> 
-                                :
-                                <div className="relative flex gap-1 px-1 text-xl"> 
-                                    <input 
-                                    type="checkbox" 
-                                    checked={task.completed} 
-                                    onChange={() => handleCheckedChange(todo.category, task.id)} 
-                                    />
-                                    <span 
-                                        className="max-w-[300px]  capitalize"
-                                        style={{
-                                            textDecoration: task.completed ? 'line-through' : 'none',
-                                            opacity: task.completed ? '50%' : '100%',
-                                        }}
-                                    >
-                                        {task.task}
-                                    </span>
-                                </div>
-                            }
-                            <div className="flex gap-1 ml-auto">
-                                {
-                                    task.completed  && 
-                                    <button  onClick={() => deleteTask(todo.category, task.id)}>
-                                        ❌
-                                    </button>
-                                }
-                                
-                                {
-                                    task.completed || editingTask !== task && 
-                                    <button 
-                                    onClick={() =>{
-                                        setEditingTask(task)
-                                        setNewTask(task.task)
-                                        }}
-                                    >
-                                        ✏️
-                                    </button>
-                                }
-                            </div>
-                        </div>
-                    ))}
+                    {
+                    todo.tasks.map((task, i) => (
+                        <Eachtask 
+                            todos={todos}
+                            setTodos={setTodos}
+                            todo = {todo}
+                            task = {task}
+                            key = {i}
+                            newTask = {newTask}
+                            editingTask = {editingTask}
+                            setNewTask = {setNewTask}
+                            setEditingTask = {setEditingTask}
+                            />
+                    ))
+                    }
 
                     <div id='taskInput' className="flex w-full border rounded-xl flex justify-between items-center gap-5 p-1 self-baseline mt-auto">
-                        <input 
-                            className="flex w-[90%] rounded-xl bg-black text-white p-1 outline-none" 
-                            placeholder="add new task..."
-                            onChange={(e) => setNewTask(e.target.value)}
-                            onFocus={(e) => e.currentTarget.value = newTask}
-                            onBlur={(e) => e.currentTarget.value = ''}
-                        />
+                        <form  
+                            typeof="submit" 
+                            onSubmit={
+                                (e) => {
+                                    e.preventDefault()
+                                    addNewTask(todo.category, todo.lastId)
+                                    }}>
+                            <input 
+                                id={todo.category}
+                                className="flex w-[90%] rounded-xl bg-black text-white p-1 outline-none" 
+                                placeholder="add new task..."
+                                onChange={(e) => setNewTask(e.target.value)}
+                                onFocus={(e) => e.currentTarget.value = newTask}
+                                onBlur={(e) => e.currentTarget.value = ''}
+                            />
+                        </form>
                         <button 
                             className="border rounded-full w-6 h-6 flex justify-center items-center"
                             onClick={() => addNewTask(todo.category, todo.lastId)}
