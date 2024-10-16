@@ -154,7 +154,7 @@ export default function Page() {
                                     }}>
                             <input 
                                 id={todo.category}
-                                className="flex w-full rounded-xl bg-black text-white p-1 outline-none" 
+                                className="flex w-full rounded-xl bg-transparent text-white p-1 outline-none" 
                                 placeholder="add new task..."
                                 onChange={(e) => setNewTask(e.target.value)}
                                 onFocus={(e) => e.currentTarget.value = newTask}

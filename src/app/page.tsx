@@ -17,7 +17,7 @@ const ProtectedPage = () => {
   }
 
   return (
-    <div className="flex gap-10">
+    <div className="flex flex-wrap justify-center items-center gap-10">
       <button 
         className="flex flex-col gap-5 justify-center items-center border p-5 rounded-xl font-bold font-serif"
         onClick={() => router.push('/clock')}>
