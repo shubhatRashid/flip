@@ -1,7 +1,11 @@
 'use client'
 import { Digit } from "@/components";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import SignInPage from "@/components/SignInPage";
+
 export default function Page() {
+    const {data:session} = useSession()
     const [start,setStart] = useState(false)
     const [time,setTime] = useState(0)
     let hours = Math.floor(time/3600).toString().padStart(2,'0')
@@ -24,6 +28,10 @@ export default function Page() {
 
         return () => clearInterval(interval)
     },[start])
+    
+    if (!session){
+        return <SignInPage />
+    }
     
     return (
         <div className="flex w-full h-full justify-evenly items-center px-[10%] gap-3">

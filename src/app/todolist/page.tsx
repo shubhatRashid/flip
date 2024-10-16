@@ -4,8 +4,11 @@ import {dots,add} from "../../../assets"
 import Eachtask from "@/components/Eachtask";
 import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import SignInPage from "@/components/SignInPage";
 
 export default function Page() {
+    const {data:session} = useSession()
     const [todos, setTodos] = useState<TodoType[]>([]);
     const [editingTask, setEditingTask] = useState<TaskType | null>(null);
     const [newTask, setNewTask] = useState<string>('');
@@ -67,6 +70,10 @@ export default function Page() {
         }
     },[newCategory,newTask,todos])
 
+    if (!session){
+        return <SignInPage />
+    }
+    
     return (
         <div className="flex flex-wrap gap-5 w-full h-full justify-center items-center">
 

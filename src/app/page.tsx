@@ -1,66 +1,61 @@
-'use client'
-import { Digit } from "@/components";
-import { useEffect, useState } from "react";
+"use client";
+import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
+import { time,todo,stopwatch,countdown } from "../../assets";
+import SignInPage from "@/components/SignInPage";
+import CountDownModel from "@/components/CountDownModel";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export default function Page() {
-    var [time,setTime] = useState<Date | null>(null)
-    
-    useEffect(()=>{
-        setTime(new Date())
-        var interval = setInterval(() => {
-            setTime(() => new Date())
-        },1000)
+const ProtectedPage = () => {
+  const { data: session } = useSession();
+  const router = useRouter()
+  const [showCountDown,setShowCountDown] = useState(false)
 
-        return () => clearInterval(interval)
-    },[])
+  if (!session) {
+    return <SignInPage/>
+  }
 
-    if (!time){
-        return null
-    }
-
-    const hours = time.getHours().toString().padStart(2, '0');
-    const minutes = time.getMinutes().toString().padStart(2, '0');
-    const seconds = time.getSeconds().toString().padStart(2, '0');
+  return (
+    <div className="flex gap-10">
+      <button 
+        className="flex flex-col gap-5 justify-center items-center border p-5 rounded-xl font-bold font-serif"
+        onClick={() => router.push('/clock')}>
+        <h2>CLOCK</h2>
+        <Image src={time.src} alt="time" width={100} height={100} />
+      </button>
 
 
-    
-    return (
-        <div className="flex w-full h-full justify-evenly items-center px-[10%] gap-3">
+      <button 
+        className="flex flex-col gap-5 justify-center items-center border p-5 rounded-xl font-bold font-serif"
+        onClick={() => router.push('/stopwatch')}>
+        <h2>STOPWATCH</h2>
+        <Image src={stopwatch.src} alt="time" width={100} height={100} />
+      </button>
 
-            <div className="flex flex-col w-full h-full justify-center items-center">
-                <div  className="flex w-full h-[90%] justify-center items-center gap-1">
-                    <Digit value = {hours[0]} width={1}/>
-                    <Digit value = {hours[1]} width={1}/>
-                </div>
-                <div className="flex w-full h-[10%] justify-center items-center">
-                    <h1 className="font-mono">HOURS</h1>
-                </div>
-            </div>
 
-            <Digit value = {':'} width={0.5}/>
+      <button 
+        className="flex flex-col gap-5 justify-center items-center border p-5 rounded-xl font-bold font-serif"
+        onClick={() => setShowCountDown(true)}>
+        <h2>COUNTDOWN</h2>
+        <Image src={countdown.src} alt="time" width={100} height={100} />
+      </button>
 
-            <div className="flex flex-col w-full h-full justify-center items-center">
-                <div  className="flex w-full h-[90%] justify-center items-center gap-1">
-                    <Digit value = {minutes[0]} width={1}/>
-                    <Digit value = {minutes[1]} width={1}/>
-                </div>
-                <div className="flex w-full h-[10%] justify-center items-center">
-                    <h1 className="font-mono">MINUTES</h1>
-                </div>
-            </div>
 
-            <Digit value = {":"} width={0.5}/>
+      <button 
+        className="flex flex-col gap-5 justify-center items-center border p-5 rounded-xl font-bold font-serif"
+        onClick={() => router.push('/todolist')}>
+        <h2>TODO</h2>
+        <Image src={todo.src} alt="time" width={100} height={100} />
+      </button>
 
-            <div className="flex flex-col w-full h-full justify-center items-center">
-                <div  className="flex w-full h-[90%] justify-center items-center gap-1">
-                    <Digit value = {seconds[0]} width={1}/>
-                    <Digit value = {seconds[1]} width={1}/>
-                </div>
-                <div className="flex w-full h-[10%] justify-center items-center">
-                    <h1 className="font-mono">SECONDS</h1>
-                </div>
-            </div>
+        {
+            showCountDown && <CountDownModel setShowCountDown={setShowCountDown}/>
+        }
+      
 
-        </div>
-    );
-}
+    </div>
+  );
+};
+
+export default ProtectedPage;

@@ -4,30 +4,32 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import SignInPage from "@/components/SignInPage";
 
-export default function Page(
-    {params}:{params:{countTime:number}}
-    ) {
+export default function Page() {
     const {data:session} = useSession()
-    const [time,setTime] = useState(params.countTime)
-    let hours = Math.floor(time/3600).toString().padStart(2,'0')
-    let minutes = Math.floor((time - Number(hours)*3600 )/60).toString().padStart(2,'0')
-    let seconds = (time%60).toString().padStart(2,'0')
-    
+
+    var [time,setTime] = useState<Date | null>(null)
     useEffect(()=>{
-        var interval = setInterval(() => { 
-            if (time > 0){
-                setTime((time) => time-1)
-            }else{
-                clearInterval(interval)
-            }
+        setTime(new Date())
+        var interval = setInterval(() => {
+            setTime(() => new Date())
         },1000)
 
         return () => clearInterval(interval)
-    },[time])
+    },[])
 
     if (!session){
         return <SignInPage />
     }
+    
+    if (!time){
+        return null
+    }
+
+    const hours = time.getHours().toString().padStart(2, '0');
+    const minutes = time.getMinutes().toString().padStart(2, '0');
+    const seconds = time.getSeconds().toString().padStart(2, '0');
+
+
     
     return (
         <div className="flex w-full h-full justify-evenly items-center px-[10%] gap-3">

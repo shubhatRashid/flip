@@ -1,9 +1,7 @@
+'use client'
 import "../global.css"
 import { Header,Footer } from "../components"
-
-export const metadata = {
-  title: 'Flip Clock',
-}
+import { SessionProvider } from "next-auth/react"
 
 export default function RootLayout({
   children,
@@ -12,10 +10,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col w-[100%] min-h-screen justify-center items-center bg-black text-white ">
-        <Header/>
-          <div className="flex flex-1 w-full justify-center items-center"> {children}</div>
-        <Footer/>
+      <body className=" relative flex flex-col w-[100%] min-h-screen justify-center items-center bg-black text-white">
+        <SessionProvider>
+          <Header/>
+            <div className="flex flex-1 w-full justify-center items-center p-10"> {children}</div>
+          <Footer/>
+        </SessionProvider>
       </body>
     </html>
   )
