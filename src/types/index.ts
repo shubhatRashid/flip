@@ -10,4 +10,8 @@ type TodoType = {
     lastId : number
 }
 
-export type {TaskType,TodoType}
+interface CountDownModelProps {
+    setShowCountDown: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+
+export type {TaskType,TodoType,CountDownModelProps}

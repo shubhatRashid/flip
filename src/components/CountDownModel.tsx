@@ -1,7 +1,8 @@
 'use client'
-import { SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
-export default function CountDownModel({setShowCountDown}) {
+
+export default function CountDownModel({setShowCountDown}:{setShowCountDown:Dispatch<SetStateAction<boolean>>}) {
     const router = useRouter()
     const [hours,setHours] = useState('0')
     const [minutes,setMinutes] = useState('0')
