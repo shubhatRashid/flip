@@ -1,6 +1,7 @@
 import { deleteIcon,edit } from "../../assets";
 import {TodoType,TaskType} from "../types"
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 type EachtaskProps = {
     todos: TodoType[];
@@ -25,24 +26,34 @@ export default function Eachtask(
     setEditingTask,
 } : EachtaskProps
 ) {
+    const router = useRouter()
 
-    const deleteTask = (category: string, id: number) => {
+    const deleteTask = async (category: string, id: string) => {
         let newData = todos.map((todo) => {
             if (todo.category === category) {
-                let newTasks = todo.tasks.filter((task) => task.id !== id);
+                let newTasks = todo.tasks.filter((task) => task._id !== id);
                 todo.tasks = newTasks;
             }
             return todo;
         });
-        console.log(newData);
         setTodos(newData);
+        try {
+            const response = await fetch('/api/deleteTas',{
+                method:'DELETE',
+                body : JSON.stringify({categoryName:category,id:id})
+            })
+            
+        } catch (error) {
+            router.refresh()
+            console.log(error)
+        }
     };
 
-    const handleCheckedChange = (category: string, id: number) => {
+    const handleCheckedChange = async (category: string, id: string,bool:boolean) => {
         let newData = todos.map((todo) => {
             if (todo.category === category) {
                 todo.tasks.map((task) => {
-                    if (task.id == id) {
+                    if (task._id == id) {
                         task.completed = !task.completed;
                     }
                     return task;
@@ -51,13 +62,22 @@ export default function Eachtask(
             return todo;
         });
         setTodos(newData);
+        try {
+            const response = await fetch('/api/completeTask',{
+                method:'POST',
+                body : JSON.stringify({categoryName:category,id:id,bool:!bool})
+            })
+        } catch (error) {
+            router.refresh()
+            console.log(error)
+        }
     };
 
-    const handleEditTask = (category: string, id:number) => {
+    const handleEditTask = async (category: string, id:string) => {
         let newData = todos.map((todo) => {
             if (todo.category === category) {
                 todo.tasks.map((task) => {
-                    if (task.id == id) {
+                    if (task._id == id) {
                         task.task = newTask
                     }
                     return task;
@@ -68,6 +88,15 @@ export default function Eachtask(
         setTodos(newData);
         setNewTask("")
         setEditingTask(null)
+        try {
+            const response = await fetch('/api/updateTask',{
+                method:'PUT',
+                body : JSON.stringify({categoryName:category,id:id,newTask:newTask})
+            })
+        } catch (error) {
+            router.refresh()
+            console.log(error)
+        }
     };
 
     return (
@@ -77,7 +106,7 @@ export default function Eachtask(
                 ? 
                 <form 
                     typeof='submit' 
-                    onSubmit={() => handleEditTask(todo.category, task.id)}
+                    onSubmit={() => handleEditTask(todo.category, task._id)}
                     className="flex w-full">
                     <input 
                         className="flex w-full rounded-xl bg-neutral-800 text-white p-1"
@@ -91,7 +120,7 @@ export default function Eachtask(
                     <input 
                     type="checkbox" 
                     checked={task.completed} 
-                    onChange={() => handleCheckedChange(todo.category, task.id)} 
+                    onChange={() => handleCheckedChange(todo.category, task._id,task.completed)} 
                     />
                     <span 
                         className="max-w-[300px]  capitalize"
@@ -107,7 +136,7 @@ export default function Eachtask(
             <div className="flex gap-1 ml-auto">
                 {
                     task.completed  && 
-                    <button  onClick={() => deleteTask(todo.category, task.id)}>
+                    <button  onClick={() => deleteTask(todo.category, task._id)}>
                             <Image width={20} height={20} alt="no image" src={deleteIcon.src}/>
                     </button>
                 }

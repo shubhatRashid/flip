@@ -6,8 +6,10 @@ import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import SignInPage from "@/components/SignInPage";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+    const router = useRouter()
     const {data:session} = useSession()
     const [todos, setTodos] = useState<TodoType[]>([]);
     const [editingTask, setEditingTask] = useState<TaskType | null>(null);
@@ -16,17 +18,32 @@ export default function Page() {
     const [newCategory,setNewCategory] = useState<string>('')
     const [showCardOptions,setShowCardOptions] = useState<string>('')
 
-    const addNewTask = (category: string, lastId: number) => {
+    const addNewTask = async (category: string) => {
         let newData = todos.map((todo) => {
             if (todo.category === category) {
-                todo.tasks.push({ id: lastId + 1, task: newTask, completed: false });
-                todo.lastId += 1
+                todo.tasks.push({task: newTask, completed: false });
             }
             return todo;
         });
         setTodos(newData);
         setNewTask(() => '')
         document.getElementById(category)?.blur()
+        
+        try {
+            const body = {
+                categoryName : category,
+                newTask : newTask
+            }
+
+            const response = await fetch('/api/addNewTask',{
+                method : 'POST',
+                body : JSON.stringify(body)
+            })
+
+        } catch (error) {
+            router.refresh()
+            console.log(error)
+        }
     };
 
     const handleDeleteCategory = async (category: string) => {
@@ -41,6 +58,7 @@ export default function Page() {
                 body : JSON.stringify(body)
             })
         } catch (error) {
+            router.refresh()
             console.log(error)
         }
 
@@ -64,6 +82,7 @@ export default function Page() {
                 body : JSON.stringify(body)
             })
         } catch (error) {
+            router.refresh()
             console.log(error)
         }
     }
@@ -73,7 +92,6 @@ export default function Page() {
             {
                 category: "new category...",
                 tasks: [],
-                lastId: todos.length > 0 ? todos[todos.length-1].lastId + 1 : 0
             }
         ])
         setEditingCategory('new category...')
@@ -83,6 +101,7 @@ export default function Page() {
                 method:'POST'
             })
         } catch (error) {
+            router.refresh()
             console.log(error)
         }
     }
@@ -99,6 +118,7 @@ export default function Page() {
                 console.error("Failed to fetch data:", response.status);
             }
         } catch (error) {
+            
             console.error("Error fetching data:", error);
         }
     };
@@ -195,7 +215,7 @@ export default function Page() {
                             onSubmit={
                                 (e) => {
                                     e.preventDefault()
-                                    addNewTask(todo.category, todo.lastId)
+                                    addNewTask(todo.category)
                                     }}>
                             <input 
                                 id={todo.category}
@@ -208,7 +228,7 @@ export default function Page() {
                         </form>
                         <button 
                             className="flex justify-center items-center"
-                            onClick={() => addNewTask(todo.category, todo.lastId)}
+                            onClick={() => addNewTask(todo.category)}
                         >
                             <Image alt='image not found' width={20} height={20} src={add.src}/>
                         </button>       

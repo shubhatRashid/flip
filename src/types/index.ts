@@ -1,13 +1,13 @@
 type TaskType = {
-    id : number,
     task : string,
-    completed : boolean
+    completed : boolean,
+    _id : string
 }
 
 type TodoType = {
     category:string,
-    tasks : TaskType[]
-    lastId : number
+    tasks : TaskType[],
+    _id : string
 }
 
 interface CountDownModelProps {
