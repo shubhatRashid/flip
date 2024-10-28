@@ -18,7 +18,7 @@ export default function CountDownModel({setShowCountDown}:{setShowCountDown:Disp
     return (
          
         <div 
-            className=" absolute top-[15%] w-[50%] h-[70%] 
+            className=" absolute top-[15%] w-[90%] sm:w-[70%] md:[60%] lg:w-[50%]
                         bg-neutral-700 flex flex-col justify-around items-center gap-10 
                         p-10 rounded-xl"
         >   

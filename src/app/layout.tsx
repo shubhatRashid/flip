@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className=" relative flex flex-col w-[100%] h-screen min-h-screen justify-between items-center bg-black text-white">
+      <body className=" relative flex flex-col w-[100vw] h-screen justify-between items-center bg-black text-white">
         <SessionProvider>
           <Header/>
             <div className="flex w-full h-full justify-center items-center p-10"> {children}</div>

@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 
 const SignInPage = () => {
   return (
-    <div id = 'signin' className="flex flex-1 gap-10 w-full h-full items-end pb-2 justify-center rounded-xl">
+    <div id = 'signin' className="flex gap-10 w-full min-h-[500px] items-end pb-2 justify-center rounded-xl">
         
       <button
         onClick={() => signIn("google")}

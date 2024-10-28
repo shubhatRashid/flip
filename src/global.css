@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    background: rgb(2,0,36);
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(172,171,171,1) 86%);
-}
 #signin {
     background-image: url('../assets/flip.jpg');
     background-position: center;
