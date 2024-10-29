@@ -21,7 +21,7 @@ export default function Page() {
     const addNewTask = async (category: string) => {
         let newData = todos.map((todo) => {
             if (todo.category === category) {
-                todo.tasks.push({task: newTask, completed: false });
+                todo.tasks.push({task: newTask, completed: false,_id:'auniqueid'+`${Math.random()*20}` });
             }
             return todo;
         });
@@ -92,6 +92,7 @@ export default function Page() {
             {
                 category: "new category...",
                 tasks: [],
+                _id:'auniqueid'+`${Math.random()*20}`
             }
         ])
         setEditingCategory('new category...')

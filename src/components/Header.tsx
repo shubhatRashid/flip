@@ -38,7 +38,7 @@ export default function Footer() {
                         <div className="flex gap-2 p-2">
                             <div className="flex flex-col gap-1">
                                 <Image
-                                    src={session.user?.image}
+                                    src={session.user?.image || ""}
                                     alt="profile"
                                     width={25}
                                     height={25}
