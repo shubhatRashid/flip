@@ -17,7 +17,7 @@ const ProtectedPage = () => {
   }
 
   return (
-    <div className="flex flex-wrap justify-center items-center w-full h-full gap-5 text-teal-500">
+    <div className="flex flex-wrap justify-evenly items-center  w-full  gap-5 text-teal-500">
       <HomeCard  currImage={time} name='CLOCK'   property="/clock" /> 
       <HomeCard currImage={stopwatch} name='STOP WATCH' property = '/stopwatch' />
       <HomeCard currImage={countdown} name = 'COUNT DOWN' property={setShowCountDown}/>
