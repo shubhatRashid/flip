@@ -1,14 +1,12 @@
 "use client";
-import { useSession, signOut } from "next-auth/react";
+import { useSession} from "next-auth/react";
 import { time,todo,stopwatch,countdown } from "../../assets";
 import SignInPage from "@/components/SignInPage";
 import CountDownModel from "@/components/CountDownModel";
 import { useState } from "react";
 import HomeCard from "@/components/HomeCard";
-import { useRouter } from "next/navigation";
 
 const ProtectedPage = () => {
-  const router = useRouter()
   const { data: session } = useSession();
   const [showCountDown,setShowCountDown] = useState(false)
 

@@ -11,8 +11,8 @@ export default function Footer() {
     const { data: session } = useSession();
 
     return (
-        <div className="relative flex w-full justify-between px-[2%] py-[1%] sm:h-[10%] bg-neutral-800  ">
-            <div className=" rounded-lg px-[2%] py-[1%] font-serif h-[]">
+        <div className="relative flex w-full justify-between px-10">
+            <div className=" rounded-lg px-[2%] py-[1%] font-serif">
                 <h1>FLIP</h1>
             </div>
 
