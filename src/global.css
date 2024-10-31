@@ -28,5 +28,11 @@ animation:
     blink 500ms steps(30) 1s 1 forwards;
 }
 
+@layer base {
+  :root {
+        --radius: 0.5rem;
+    }
+}
+
 
 

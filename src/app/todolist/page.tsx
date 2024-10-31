@@ -1,15 +1,16 @@
 'use client';
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {dots,add} from "../../../assets"
 import Eachtask from "@/components/Eachtask";
 import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import SignInPage from "@/components/SignInPage";
-import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Page() {
-    const router = useRouter()
+    const {toast} = useToast()
+
     const {data:session} = useSession()
     const [todos, setTodos] = useState<TodoType[]>([]);
     const [editingTask, setEditingTask] = useState<TaskType | null>(null);
@@ -19,16 +20,7 @@ export default function Page() {
     const [showCardOptions,setShowCardOptions] = useState<string>('')
 
     const addNewTask = async (category: string) => {
-        let newData = todos.map((todo) => {
-            if (todo.category === category) {
-                todo.tasks.push({task: newTask, completed: false,_id:'auniqueid'+`${Math.random()*20}` });
-            }
-            return todo;
-        });
-        setTodos(newData);
-        setNewTask(() => '')
-        document.getElementById(category)?.blur()
-        
+    
         try {
             const body = {
                 categoryName : category,
@@ -40,15 +32,35 @@ export default function Page() {
                 body : JSON.stringify(body)
             })
 
-        } catch (error) {
-            router.refresh()
-            console.log(error)
+            if (!response.ok){
+                const error = new Error()
+                error.name = 'Error'
+                error.cause = response.status
+                error.message = response.statusText
+                throw error
+            }
+
+            let newData = todos.map((todo) => {
+                if (todo.category === category) {
+                    todo.tasks.push({task: newTask, completed: false,_id:'auniqueid'+`${Math.random()*20}` });
+                }
+                return todo;
+            });
+
+            setTodos(newData);
+            setNewTask(() => '')
+            document.getElementById(category)?.blur()
+
+        } catch (error:any) {
+            const errorBody = {
+                title : `${error.name} : ${error.cause}`,
+                description : error.message
+            }
+            toast(errorBody)
         }
     };
 
     const handleDeleteCategory = async (category: string) => {
-        let newData = todos.filter((todo) => todo.category !== category);
-        setTodos(newData);
         try {
             const body = {
                 categoryName : category,
@@ -57,21 +69,30 @@ export default function Page() {
                 method:'DELETE',
                 body : JSON.stringify(body)
             })
-        } catch (error) {
-            router.refresh()
-            console.log(error)
+
+            if (!response.ok){
+                const error = new Error()
+                error.name = 'Error'
+                error.cause = response.status
+                error.message = response.statusText
+                throw error
+            }
+
+            let newData = todos.filter((todo) => todo.category !== category);
+            setTodos(newData);
+    
+        } catch (error:any) {
+            const errorBody = {
+                title : `${error.name} : ${error.cause}`,
+                description : error.message
+            }
+            toast(errorBody)
         }
 
     };
 
-    const handleRenameCategory = async (category:string) => {
-        let newData = todos.map(todo => {
-            if (todo.category === category){
-                todo.category = newCategory
-            }
-            return todo 
-        })
-        setTodos(newData)
+    const handleRenameCategory = async (e:FormEvent,category:string) => {
+        e.preventDefault()
         try {
             const body = {
                 categoryName : category,
@@ -81,29 +102,59 @@ export default function Page() {
                 method:'PUT',
                 body : JSON.stringify(body)
             })
-        } catch (error) {
-            router.refresh()
-            console.log(error)
+
+            if (!response.ok){
+                const error = new Error()
+                error.name = 'Error'
+                error.cause = response.status
+                error.message = response.statusText
+                throw error
+            }
+
+            let newData = todos.map(todo => {
+                if (todo.category === category){
+                    todo.category = newCategory
+                }
+                return todo 
+            })
+            setTodos(newData)
+
+        } catch (error:any) {
+            const errorBody = {
+                title : `${error.name} : ${error.cause}`,
+                description : error.message
+            }
+            toast(errorBody)
         }
     }
 
     const handleAddNewCategory = async () => {
-        setTodos((todos) => [...todos,
-            {
-                category: "new category...",
-                tasks: [],
-                _id:'auniqueid'+`${Math.random()*20}`
-            }
-        ])
-        setEditingCategory('new category...')
-        setNewCategory('new category...')
         try {
             const response = await fetch('/api/addNewCategory',{
                 method:'POST'
             })
-        } catch (error) {
-            router.refresh()
-            console.log(error)
+            if (!response.ok){
+                const error = new Error()
+                error.name = 'Error'
+                error.cause = response.status
+                error.message = response.statusText
+                throw error
+            }
+            setTodos((todos) => [...todos,
+                {
+                    category: "new category...",
+                    tasks: [],
+                    _id:'auniqueid'+`${Math.random()*20}`
+                }
+            ])
+            setEditingCategory('new category...')
+            setNewCategory('new category...')
+        } catch (error:any) {
+            const errorBody = {
+                title : `${error.name} : ${error.cause}`,
+                description : error.message
+            }
+            toast(errorBody)
         }
     }
 
@@ -153,7 +204,7 @@ export default function Page() {
                     <div className='flex justify-between items-center'>
                         {
                             editingCategory === todo.category ?
-                            <form typeof="submit" onSubmit={() => handleRenameCategory(todo.category)}>
+                            <form typeof="submit" onSubmit={(e) => handleRenameCategory(e,todo.category)}>
                                 <input 
                                     value={newCategory} 
                                     className="flex w-[90%] rounded-xl bg-black text-white p-1 outline-none"
@@ -196,7 +247,7 @@ export default function Page() {
                     {
                     todo.tasks.map((task, i) => (
                         <Eachtask 
-                            key = {index}
+                            key = {i}
                             todos={todos}
                             setTodos={setTodos}
                             todo = {todo}
