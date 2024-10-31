@@ -180,13 +180,6 @@ export default function Page() {
         getAllData()
     },[])
 
-    useEffect(() => {
-        let data = JSON.stringify(todos)
-        if (todos.length > 0){
-            localStorage.setItem('todolist',data)
-        }
-    },[newCategory,newTask,todos])
-
     if (!session){
         return <SignInPage />
     }
