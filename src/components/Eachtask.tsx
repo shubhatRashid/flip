@@ -55,7 +55,7 @@ export default function Eachtask(
             });
             setTodos(newData);
             
-        } catch (error) {
+        } catch (error:any) {
             const errorBody = {
                 title : `${error.name} : ${error.cause}`,
                 description : error.message
