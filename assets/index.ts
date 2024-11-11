@@ -8,4 +8,5 @@ import countdown from "./countdown.png"
 import stopwatch from "./stopwatch.png"
 import todo from "./todo.png"
 import setting from "./setting.png"
-export {dots,deleteIcon,edit,add,logout,time,countdown,stopwatch,todo,setting}
+import notes from "./notes.png"
+export {dots,deleteIcon,edit,add,logout,time,countdown,stopwatch,todo,setting,notes}

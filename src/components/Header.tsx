@@ -5,65 +5,27 @@ import { logout } from "../../assets";
 import Image from "next/image";
 import { useState } from "react";
 import { setting } from "../../assets";
+import { SidebarTrigger,SidebarProvider,SidebarFooter,SidebarMenu,SidebarMenuItem} from "./ui/sidebar";
+import {AppSidebar} from "../components"
 
 export default function Footer() {
-    const [showProfile, setShowProfile] = useState(false);
     const { data: session } = useSession();
 
     return (
-        <div className="relative flex w-full justify-between px-10">
-            <div className=" rounded-lg px-[2%] py-[1%] font-serif">
-                <h1>FLIP</h1>
-            </div>
-
-            {
-                !showProfile && session && 
-                <button onClick={() => setShowProfile(!showProfile)}>
-                    <Image
-                        src={setting.src}
-                        alt="profile"
-                        width={25}
-                        height={25}
-                        style={{ borderRadius: '100%' }}
-                    />
-                </button>
-            }
-
-            {
-                showProfile && session && 
-                <div
-                    className="absolute z-10 right-5 top-5 flex p-2 rounded-xl gap-5 border bg-black"
-                >
-                    <div className={`${showProfile ? 'flex' : 'hidden'} flex-col items-start font-serif capitalize`}>
-                        <div className="flex gap-2 p-2">
-                            <div className="flex flex-col gap-1">
-                                <Image
-                                    src={session.user?.image || ""}
-                                    alt="profile"
-                                    width={25}
-                                    height={25}
-                                    style={{ borderRadius: '50%' }}
-                                />
-                                <p>{session.user?.name}</p>
-                            </div>
-                            <div className="flex justify-center items-start">
-                                <button className=" border rounded-xl p-1 px-2" onClick={() => setShowProfile(!showProfile)}>{">"}</button>
-                            </div>
-                            
-                        </div>
-                       
-                        <button 
-                            className="flex gap-5 border rounded-xl p-2 w-full"
-                            onClick={() => signOut()}
-                        >
-                            <p>logout</p>
-                            {logout?.src && (
-                                <Image src={logout.src} alt="logout" width={25} height={25} />
-                            )}
-                        </button>
-                    </div>
+        <div className="relative flex w-full justify-between">
+                <div className="absolute flex justify-center items-center">
+                    {
+                        session ?
+                        <SidebarProvider >
+                            <AppSidebar/>
+                            <SidebarTrigger/>
+                            <h1 className="pt-0.5 ml-2 text-xl font-bold font-serif">FLIP</h1>
+                        </SidebarProvider>
+                        :
+                        <h1 className="pt-0.5 ml-2 text-xl font-bold font-serif">FLIP</h1>
+                    }
+                   
                 </div>
-            }
         </div>
     );
 }

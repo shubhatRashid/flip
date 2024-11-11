@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 
 const SignInPage = () => {
   return (
-    <div id="signin" className="flex gap-10 w-full h-full items-center justify-center rounded-xl border">
+    <div id="signin" className="flex gap-10 w-full h-full items-center justify-center border">
 
       <div  className="hidden md:flex flex-col h-full w-full">
       </div>
