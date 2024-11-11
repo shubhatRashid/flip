@@ -4,11 +4,11 @@ export default function HomeCard({currImage,name,property}:{currImage:{src:strin
     const router = useRouter()
     return (
         <button 
-            className="flex flex-col gap-3 min-w-[120px] justify-center items-center border p-2 rounded-xl 
-                        font-bold font-serif capitalise bg-black"
+            className="flex flex-col gap-3 min-w-[120px] min-h-[150px] justify-center items-center border p-2 rounded-xl 
+                        font-bold font-serif capitalise"
             onClick={typeof property === 'string' ?() => router.push(property): () => property(true)}>
             <h2>{name}</h2>
-            <Image src={currImage.src} alt="time" width={100} height={100} />
+            <Image src={currImage.src} alt="time" width={60} height={60} />
         </button>
     );
 }

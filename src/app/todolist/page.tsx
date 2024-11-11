@@ -1,6 +1,6 @@
 'use client';
 import { FormEvent, useEffect, useState } from "react";
-import {dots,add} from "../../../assets"
+import {edit,add} from "../../../assets"
 import Eachtask from "@/components/Eachtask";
 import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
@@ -219,7 +219,7 @@ export default function Page() {
                         className="absolute top-3 right-3 font-bold"
                         onClick={() => showCardOptions === "" ? setShowCardOptions(todo.category) : setShowCardOptions("")}
                     >
-                            <Image alt='image not found' width={20} height={20} src={dots.src}/>
+                            <Image alt='image not found' width={20} height={20} src={edit.src}/>
                     </button>
 
                     {

@@ -1,4 +1,4 @@
-import { Clock, Home,Timer,ListTodo,Settings,ChevronUp,User2} from "lucide-react"
+import { Clock, Home,Timer,ListTodo,Settings,ChevronUp,User2,Laptop} from "lucide-react"
 import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from "@radix-ui/react-dropdown-menu"
 import { useSession,signOut } from "next-auth/react"
 import {
@@ -32,8 +32,8 @@ const items = [
     icon: Timer,
   },
   {
-    title: "Tasks",
-    url: "tasks",
+    title: "Todo list",
+    url: "todolist",
     icon: ListTodo,
   },
   {
@@ -65,6 +65,22 @@ export default function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Developer</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <a href={process.env.NEXT_PUBLIC_DEVELOPER_PORTFOLIO}>
+                      <Laptop/>
+                      <span>Shubhat Rashid</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
 
 
@@ -80,7 +96,7 @@ export default function AppSidebar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 side="top"
-                className="w-[--radix-popper-anchor-width] flex flex-col bg-white shadow-md rounded text-black gap-3 p-2"
+                className=" w-[--radix-popper-anchor-width] flex flex-col bg-white shadow-md rounded text-black gap-3 p-2"
               >
                 <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1">
                   <span>Account</span>

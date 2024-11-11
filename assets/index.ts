@@ -9,4 +9,6 @@ import stopwatch from "./stopwatch.png"
 import todo from "./todo.png"
 import setting from "./setting.png"
 import notes from "./notes.png"
-export {dots,deleteIcon,edit,add,logout,time,countdown,stopwatch,todo,setting,notes}
+import flip from "./flip.png"
+import developer from "./developer.png"
+export {dots,deleteIcon,edit,add,logout,time,countdown,stopwatch,todo,setting,notes,flip,developer}
