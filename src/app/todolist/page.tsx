@@ -1,26 +1,16 @@
 'use client';
-<<<<<<< HEAD
 import { FormEvent, useEffect, useState } from "react";
 import {edit,add} from "../../../assets"
-=======
-import { useEffect, useState } from "react";
-import {dots,add} from "../../../assets"
->>>>>>> main
 import Eachtask from "@/components/Eachtask";
 import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import SignInPage from "@/components/SignInPage";
-<<<<<<< HEAD
 import { useToast } from "@/hooks/use-toast";
 
 export default function Page() {
     const {toast} = useToast()
 
-=======
-
-export default function Page() {
->>>>>>> main
     const {data:session} = useSession()
     const [todos, setTodos] = useState<TodoType[]>([]);
     const [editingTask, setEditingTask] = useState<TaskType | null>(null);
@@ -29,7 +19,6 @@ export default function Page() {
     const [newCategory,setNewCategory] = useState<string>('')
     const [showCardOptions,setShowCardOptions] = useState<string>('')
 
-<<<<<<< HEAD
     const addNewTask = async (category: string) => {
     
         try {
@@ -191,62 +180,6 @@ export default function Page() {
         getAllData()
     },[])
 
-=======
-    const addNewTask = (category: string, lastId: number) => {
-        let newData = todos.map((todo) => {
-            if (todo.category === category) {
-                todo.tasks.push({ id: lastId + 1, task: newTask, completed: false });
-                todo.lastId += 1
-            }
-            return todo;
-        });
-        setTodos(newData);
-        setNewTask(() => '')
-        document.getElementById(category)?.blur()
-    };
-
-    const handleDeleteCategory = (category: string) => {
-        let newData = todos.filter((todo) => todo.category !== category);
-        setTodos(newData);
-    };
-
-    const handleRenameCategory = (category:string) => {
-        let newData = todos.map(todo => {
-            if (todo.category === category){
-                todo.category = newCategory
-            }
-            return todo 
-        })
-        setTodos(newData)
-    }
-
-    const handleAddNewCategory = () => {
-        setTodos((todos) => [...todos,
-            {
-                category: "new category...",
-                tasks: [],
-                lastId: todos.length > 0 ? todos[todos.length-1].lastId + 1 : 0
-            }
-        ])
-        setEditingCategory('new category...')
-        setNewCategory('new category...')
-    }
-
-    useEffect(() => {
-        let data = localStorage.getItem('todolist')
-        if (data){
-            setTodos(JSON.parse(data))
-        }
-    },[])
-
-    useEffect(() => {
-        let data = JSON.stringify(todos)
-        if (todos.length > 0){
-            localStorage.setItem('todolist',data)
-        }
-    },[newCategory,newTask,todos])
-
->>>>>>> main
     if (!session){
         return <SignInPage />
     }
@@ -264,11 +197,7 @@ export default function Page() {
                     <div className='flex justify-between items-center'>
                         {
                             editingCategory === todo.category ?
-<<<<<<< HEAD
                             <form typeof="submit" onSubmit={(e) => handleRenameCategory(e,todo.category)}>
-=======
-                            <form typeof="submit" onSubmit={() => handleRenameCategory(todo.category)}>
->>>>>>> main
                                 <input 
                                     value={newCategory} 
                                     className="flex w-[90%] rounded-xl bg-black text-white p-1 outline-none"
@@ -290,11 +219,7 @@ export default function Page() {
                         className="absolute top-3 right-3 font-bold"
                         onClick={() => showCardOptions === "" ? setShowCardOptions(todo.category) : setShowCardOptions("")}
                     >
-<<<<<<< HEAD
                             <Image alt='image not found' width={20} height={20} src={edit.src}/>
-=======
-                            <Image alt='image not found' width={20} height={20} src={dots.src}/>
->>>>>>> main
                     </button>
 
                     {
@@ -315,11 +240,7 @@ export default function Page() {
                     {
                     todo.tasks.map((task, i) => (
                         <Eachtask 
-<<<<<<< HEAD
                             key = {i}
-=======
-                            key = {index}
->>>>>>> main
                             todos={todos}
                             setTodos={setTodos}
                             todo = {todo}
@@ -339,11 +260,7 @@ export default function Page() {
                             onSubmit={
                                 (e) => {
                                     e.preventDefault()
-<<<<<<< HEAD
                                     addNewTask(todo.category)
-=======
-                                    addNewTask(todo.category, todo.lastId)
->>>>>>> main
                                     }}>
                             <input 
                                 id={todo.category}
@@ -356,11 +273,7 @@ export default function Page() {
                         </form>
                         <button 
                             className="flex justify-center items-center"
-<<<<<<< HEAD
                             onClick={() => addNewTask(todo.category)}
-=======
-                            onClick={() => addNewTask(todo.category, todo.lastId)}
->>>>>>> main
                         >
                             <Image alt='image not found' width={20} height={20} src={add.src}/>
                         </button>       

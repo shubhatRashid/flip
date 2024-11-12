@@ -32,15 +32,9 @@ export default function Page() {
 
     
     return (
-<<<<<<< HEAD
         <div className="flex  w-full h-[20%] sm:h-[30%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center gap-3">
 
             <div className="flex flex-col  w-full h-full justify-center items-center gap-2">
-=======
-        <div className="flex w-full h-full justify-evenly items-center px-[10%] gap-3">
-
-            <div className="flex flex-col w-full h-full justify-center items-center">
->>>>>>> main
                 <div  className="flex w-full h-[90%] justify-center items-center gap-1">
                     <Digit value = {hours[0]} width={1}/>
                     <Digit value = {hours[1]} width={1}/>
@@ -52,27 +46,15 @@ export default function Page() {
 
             <Digit value = {':'} width={0.5}/>
 
-<<<<<<< HEAD
             <div className="flex flex-col  w-full h-full justify-center items-center gap-2">
-=======
-            <div className="flex flex-col w-full h-full justify-center items-center">
->>>>>>> main
                 <div  className="flex w-full h-[90%] justify-center items-center gap-1">
-                    <Digit value = {minutes[0]} width={1}/>
                     <Digit value = {minutes[1]} width={1}/>
-                </div>
-                <div className="flex w-full h-[10%] justify-center items-center">
-                    <h1 className="font-mono">MINUTES</h1>
                 </div>
             </div>
 
             <Digit value = {":"} width={0.5}/>
 
-<<<<<<< HEAD
             <div className="flex flex-col  w-full h-full justify-center items-center gap-2">
-=======
-            <div className="flex flex-col w-full h-full justify-center items-center">
->>>>>>> main
                 <div  className="flex w-full h-[90%] justify-center items-center gap-1">
                     <Digit value = {seconds[0]} width={1}/>
                     <Digit value = {seconds[1]} width={1}/>
