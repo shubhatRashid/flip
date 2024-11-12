@@ -1,6 +1,12 @@
 import { deleteIcon,edit } from "../../assets";
 import {TodoType,TaskType} from "../types"
 import Image from "next/image";
+<<<<<<< HEAD
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+import { FormEvent } from "react";
+=======
+>>>>>>> main
 
 type EachtaskProps = {
     todos: TodoType[];
@@ -25,6 +31,117 @@ export default function Eachtask(
     setEditingTask,
 } : EachtaskProps
 ) {
+<<<<<<< HEAD
+    const router = useRouter()
+    const {toast} = useToast()
+
+    const deleteTask = async (category: string, id: string) => {
+        try {
+            const response = await fetch('/api/deleteTask',{
+                method:'DELETE',
+                body : JSON.stringify({categoryName:category,id:id})
+            })
+
+            if (!response.ok){
+                const error = new Error()
+                error.name = 'Error'
+                error.cause = response.status
+                error.message = response.statusText
+                throw error
+            }
+
+            let newData = todos.map((todo) => {
+                if (todo.category === category) {
+                    let newTasks = todo.tasks.filter((task) => task._id !== id);
+                    todo.tasks = newTasks;
+                }
+                return todo;
+            });
+            setTodos(newData);
+            
+        } catch (error:any) {
+            const errorBody = {
+                title : `${error.name} : ${error.cause}`,
+                description : error.message
+            }
+            toast(errorBody)
+        }
+    };
+
+    const handleCheckedChange = async (category: string, id: string,bool:boolean) => {
+        try {
+            const response = await fetch('/api/completeTask',{
+                method:'POST',
+                body : JSON.stringify({categoryName:category,id:id,bool:!bool})
+            })
+
+            if (!response.ok){
+                const error = new Error()
+                error.name = 'Error'
+                error.cause = response.status
+                error.message = response.statusText
+                throw error
+            }
+
+            let newData = todos.map((todo) => {
+                if (todo.category === category) {
+                    todo.tasks.map((task) => {
+                        if (task._id == id) {
+                            task.completed = !task.completed;
+                        }
+                        return task;
+                    });
+                }
+                return todo;
+            });
+            setTodos(newData);
+        } catch (error:any) {
+            const errorBody = {
+                title : `${error.name} : ${error.cause}`,
+                description : error.message
+            }
+            toast(errorBody)
+        }
+    };
+
+    const handleEditTask = async (e:FormEvent,category: string, id:string) => {
+        e.preventDefault()
+        try {
+            const response = await fetch('/api/updateTask',{
+                method:'PUT',
+                body : JSON.stringify({categoryName:category,id:id,newTask:newTask})
+            })
+
+            if (!response.ok){
+                const error = new Error()
+                error.name = 'Error'
+                error.cause = response.status
+                error.message = response.statusText
+                throw error
+            }
+            
+            let newData = todos.map((todo) => {
+                if (todo.category === category) {
+                    todo.tasks.map((task) => {
+                        if (task._id == id) {
+                            task.task = newTask
+                        }
+                        return task;
+                    });
+                }
+                return todo;
+            });
+            setTodos(newData);
+            setNewTask("")
+            setEditingTask(null)
+        } catch (error:any) {
+            const errorBody = {
+                title : `${error.name} : ${error.cause}`,
+                description : error.message
+            }
+            toast(errorBody)
+        }
+=======
 
     const deleteTask = (category: string, id: number) => {
         let newData = todos.map((todo) => {
@@ -68,6 +185,7 @@ export default function Eachtask(
         setTodos(newData);
         setNewTask("")
         setEditingTask(null)
+>>>>>>> main
     };
 
     return (
@@ -77,7 +195,11 @@ export default function Eachtask(
                 ? 
                 <form 
                     typeof='submit' 
+<<<<<<< HEAD
+                    onSubmit={(e) => handleEditTask(e,todo.category, task._id)}
+=======
                     onSubmit={() => handleEditTask(todo.category, task.id)}
+>>>>>>> main
                     className="flex w-full">
                     <input 
                         className="flex w-full rounded-xl bg-neutral-800 text-white p-1"
@@ -91,7 +213,11 @@ export default function Eachtask(
                     <input 
                     type="checkbox" 
                     checked={task.completed} 
+<<<<<<< HEAD
+                    onChange={() => handleCheckedChange(todo.category, task._id,task.completed)} 
+=======
                     onChange={() => handleCheckedChange(todo.category, task.id)} 
+>>>>>>> main
                     />
                     <span 
                         className="max-w-[300px]  capitalize"
@@ -107,7 +233,11 @@ export default function Eachtask(
             <div className="flex gap-1 ml-auto">
                 {
                     task.completed  && 
+<<<<<<< HEAD
+                    <button  onClick={() => deleteTask(todo.category, task._id)}>
+=======
                     <button  onClick={() => deleteTask(todo.category, task.id)}>
+>>>>>>> main
                             <Image width={20} height={20} alt="no image" src={deleteIcon.src}/>
                     </button>
                 }
