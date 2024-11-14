@@ -71,13 +71,13 @@ export default function Page() {
             </div>
 
              <div className=" absolute bottom-[5%] flex justify-center items-center">
-                <div  className="flex p-2 w-full h-full justify-evenly items-center gap-5 bg-neutral-800 rounded-xl">
+                <div  className="flex p-2 w-full h-full justify-evenly items-center gap-5 bg-gray-100 rounded-xl">
                     <button 
-                        className="border rounded-full p-2 font-bold font-serif" 
+                        className="border rounded-xl p-2 font-bold font-serif" 
                         onClick={() => !start? setStart(true):setStart(false)}
                     >   {start? 'STOP' : 'START'}</button>
                     <button 
-                        className="border rounded-full p-2 font-bold font-serif" 
+                        className="border rounded-xl p-2 font-bold font-serif" 
                         onClick={reset}>Reset</button>
                 </div>
             </div>

@@ -167,11 +167,14 @@ export default function Page() {
     
                 setTodos(() =>JSON.parse(data)); // Assuming data is an array/object of todos
             } else {
-                console.error("Failed to fetch data:", response.status);
+                toast({title:`${response.status}`,description:response.statusText})
             }
-        } catch (error) {
-            
-            console.error("Error fetching data:", error);
+        } catch (error:any) {
+            const errorBody = {
+                title : `${error.name} : ${error.cause}`,
+                description : error.message
+            }
+            toast(errorBody)
         }
     };
     
