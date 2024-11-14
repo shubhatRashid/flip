@@ -1,6 +1,7 @@
 import { Clock, Home,Timer,ListTodo,Settings,ChevronUp,User2,Laptop} from "lucide-react"
 import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from "@radix-ui/react-dropdown-menu"
 import { useSession,signOut } from "next-auth/react"
+import { useSidebar } from "@/components/ui/sidebar"
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useEffect } from "react"
 
 // Menu items.
 const items = [
@@ -45,8 +47,21 @@ const items = [
 
 export default function AppSidebar() {
   const {data:session} = useSession()
+  const {setOpen} = useSidebar()
+
+  useEffect(() => {
+    setOpen(false)
+  },[])
+
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" title="flip">
+      <SidebarHeader>
+        <SidebarGroup>
+         <SidebarGroupLabel className="flex font-bold font-serif text-xl mt-[50px] text-black">Flip</SidebarGroupLabel>
+         <SidebarGroupLabel className="flex text-xs">An All In One Productivity App...</SidebarGroupLabel>
+        </SidebarGroup>
+      </SidebarHeader>
+
       <SidebarContent className="flex justify-center items-center">
         <SidebarGroup>
           <SidebarGroupLabel>Productivety Tools</SidebarGroupLabel>
@@ -96,7 +111,7 @@ export default function AppSidebar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 side="top"
-                className=" w-[--radix-popper-anchor-width] flex flex-col bg-white shadow-md rounded text-black gap-3 p-2"
+                className="flex flex-col bg-white shadow-md rounded text-black gap-3 p-2"
               >
                 <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1">
                   <span>Account</span>
@@ -104,7 +119,7 @@ export default function AppSidebar() {
                 <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1">
                   <span>Billing</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1" onClick={() => signOut()}>
+                <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1" onClick={() =>{ signOut()}}>
                   <span>Sign out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
