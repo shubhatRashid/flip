@@ -2,4 +2,5 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Digit from "./Digit";
 import AppSidebar from "./Sidebar"
-export {Header,Footer,Digit,AppSidebar}
+import SignInPage from "./SignInPage";
+export {Header,Footer,Digit,AppSidebar,SignInPage}

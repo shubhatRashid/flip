@@ -9,6 +9,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  
   return (
     <html lang="en">
       <body className="relative flex flex-col w-[100dvw] h-[100dvh] justify-between items-center">

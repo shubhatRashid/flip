@@ -105,7 +105,8 @@ export default function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2/> <p className="capitalize">{session?.user?.name}</p>
+                  <img src={session?.user?.image} className="flex rounded-xl w-[px]"/>
+                  <p className="capitalize">{session?.user?.name}</p>
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

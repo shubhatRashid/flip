@@ -1,13 +1,11 @@
 'use client'
 import { Digit } from "@/components";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import SignInPage from "@/components/SignInPage";
 
 export default function Page(
     {params}:{params:{countTime:number}}
     ) {
-    const {data:session} = useSession()
+   
     const [time,setTime] = useState(params.countTime)
     let hours = Math.floor(time/3600).toString().padStart(2,'0')
     let minutes = Math.floor((time - Number(hours)*3600 )/60).toString().padStart(2,'0')
@@ -24,10 +22,6 @@ export default function Page(
 
         return () => clearInterval(interval)
     },[time])
-
-    if (!session){
-        return <SignInPage />
-    }
     
     return (
         <div className="flex w-full h-[20%] sm:h-[30%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center px-[10%] gap-3">

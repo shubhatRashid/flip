@@ -27,7 +27,6 @@ export async function connectDB(): Promise<mongoose.Mongoose> {
   if (!cached.promise) {
     const options = {
       bufferCommands: false,
-      useNewUrlParser:true,
       useUnifiedTopology:true,
     };
 
