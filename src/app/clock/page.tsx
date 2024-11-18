@@ -1,12 +1,11 @@
 'use client'
-import { Digit } from "@/components";
+import { Digit,Loader,SignInPage } from "@/components";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import SignInPage from "@/components/SignInPage";
 
 export default function Page() {
-    const {data:session} = useSession()
-
+    const { data: session,status } = useSession();
+    
     var [time,setTime] = useState<Date | null>(null)
     useEffect(()=>{
         setTime(new Date())
@@ -17,14 +16,17 @@ export default function Page() {
         return () => clearInterval(interval)
     },[])
 
-    if (!session){
-        return <SignInPage />
-    }
-    
     if (!time){
         return null
     }
+    if (status === 'loading'){
+    return <Loader/>
+  }
 
+  if (status === 'unauthenticated') {
+    return <SignInPage/>
+  }
+  
     const hours = time.getHours().toString().padStart(2, '0');
     const minutes = time.getMinutes().toString().padStart(2, '0');
     const seconds = time.getSeconds().toString().padStart(2, '0');

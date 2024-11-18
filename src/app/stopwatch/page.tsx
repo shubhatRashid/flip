@@ -1,11 +1,11 @@
 'use client'
-import { Digit } from "@/components";
+import { Digit,SignInPage,Loader} from "@/components";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import SignInPage from "@/components/SignInPage";
+import { Sign } from "crypto";
 
 export default function Page() {
-    const {data:session} = useSession()
+    const {data:session,status} = useSession()
     const [start,setStart] = useState(false)
     const [time,setTime] = useState(0)
     let hours = Math.floor(time/3600).toString().padStart(2,'0')
@@ -29,12 +29,11 @@ export default function Page() {
         return () => clearInterval(interval)
     },[start])
     
-    if (!session){
-        return <SignInPage />
-    }
-    
+    if (status === 'loading') return <Loader/>
+    if (status === 'unauthenticated') return <SignInPage/>
+
     return (
-        <div className="flex  w-full h-[20%] sm:h-[30%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center px-[10%] gap-3">
+        <div className="flex  w-full h-[20%] sm:h-[30%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center px-[10%] gap-7">
 
             <div className="flex flex-col w-full h-full justify-center items-center gap-3">
                 <div  className="flex w-full h-[90%] justify-center items-center gap-1">
@@ -46,8 +45,6 @@ export default function Page() {
                 </div>
             </div>
 
-            <Digit value = {':'} width={0.5}/>
-
             <div className="flex flex-col w-full h-full justify-center items-center gap-3">
                 <div  className="flex w-full h-[90%] justify-center items-center gap-1">
                     <Digit value = {minutes[0]} width={1}/>
@@ -57,8 +54,6 @@ export default function Page() {
                     <h1 className="font-mono">MINUTES</h1>
                 </div>
             </div>
-
-            <Digit value = {":"} width={0.5}/>
 
             <div className="flex flex-col w-full h-full justify-center items-center gap-3">
                 <div  className="flex w-full h-[90%] justify-center items-center gap-1">

@@ -11,8 +11,8 @@ const SignInPage = () => {
 
       <div className="relative flex flex-col w-full h-full font-serif justify-center items-center gap-10">
         <div className="flex flex-col gap-3 border rounded-xl p-3">
-          <p className="flex text-9xl typewriter">Flip</p>
-          <p className="text-sm typewriter font-italic pl-2 capitalize">An all in one productivity app ... </p>
+          <p className="flex text-9xl">Flip</p>
+          <p className="text-sm font-italic pl-2 capitalize">An all in one productivity app ... </p>
         </div>
 
         <div className="border border-4 animate-bounce hover:animate-none rounded-full">

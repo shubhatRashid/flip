@@ -1,17 +1,15 @@
 'use client';
 import { FormEvent, useEffect, useState } from "react";
 import {edit,add} from "../../../assets"
-import Eachtask from "@/components/Eachtask";
 import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-import SignInPage from "@/components/SignInPage";
 import { useToast } from "@/hooks/use-toast";
+import { SignInPage,Loader,Eachtask } from "@/components";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
+    const {data:session,status} = useSession()
     const {toast} = useToast()
-
-    const {data:session} = useSession()
     const [todos, setTodos] = useState<TodoType[]>([]);
     const [editingTask, setEditingTask] = useState<TaskType | null>(null);
     const [newTask, setNewTask] = useState<string>('');
@@ -42,7 +40,7 @@ export default function Page() {
 
             let newData = todos.map((todo) => {
                 if (todo.category === category) {
-                    todo.tasks.push({task: newTask, completed: false,_id:'auniqueid'+`${Math.random()*20}` });
+                    todo.tasks.push({task: newTask, completed: false,_id:'A3F5C98B72E14D56FA9C23'+`${Math.round(Math.random()*20)}` });
                 }
                 return todo;
             });
@@ -183,10 +181,9 @@ export default function Page() {
         getAllData()
     },[])
 
-    if (!session){
-        return <SignInPage />
-    }
-    
+    if (status === 'loading' || !todos) return <Loader/>
+    if (status === 'unauthenticated') return <SignInPage/> 
+
     return (
         <div className="flex flex-wrap gap-5 w-full h-full justify-center items-center">
 
@@ -203,7 +200,7 @@ export default function Page() {
                             <form typeof="submit" onSubmit={(e) => handleRenameCategory(e,todo.category)}>
                                 <input 
                                     value={newCategory} 
-                                    className="flex w-[90%] rounded-xl bg-black text-white p-1 outline-none"
+                                    className="flex w-[90%] rounded-xl text-black p-1 outline-none"
                                     onChange={(e) => setNewCategory(e.target.value)}
                                     autoFocus />
                             </form>
@@ -229,7 +226,7 @@ export default function Page() {
                         showCardOptions === todo.category &&
                         <div 
                             className="absolute right-[10%] top-[10%] flex flex-col text-sm
-                            justify-start items-start gap-1 p-3 rounded-xl bg-neutral-800 z-10"> 
+                            justify-start items-start gap-1 p-3 rounded-xl bg-gray-100 z-10"> 
                             <button  className="border p-1 rounded-xl w-full" onClick={() => handleDeleteCategory(todo.category)}>🗑️ delete</button>
                             <button className="border p-1 rounded-xl" 
                                     onClick={() => {
@@ -267,7 +264,7 @@ export default function Page() {
                                     }}>
                             <input 
                                 id={todo.category}
-                                className="flex w-full rounded-xl bg-transparent text-white p-1 outline-none" 
+                                className="flex w-full rounded-xl p-1 outline-none" 
                                 placeholder="add new task..."
                                 onChange={(e) => setNewTask(e.target.value)}
                                 onFocus={(e) => e.currentTarget.value = newTask}

@@ -1,6 +1,6 @@
 'use client'
 import "../global.css"
-import { Header,Footer } from "../components"
+import { Header} from "../components"
 import { SessionProvider } from "next-auth/react"
 import { Toaster } from "@/components/ui/toaster"
 
@@ -9,7 +9,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  
+
   return (
     <html lang="en">
       <body className="relative flex flex-col w-[100dvw] h-[100dvh] justify-between items-center">

@@ -5,12 +5,17 @@ import SignInPage from "@/components/SignInPage";
 import CountDownModel from "@/components/CountDownModel";
 import { useState } from "react";
 import HomeCard from "@/components/HomeCard";
+import { Loader } from "@/components";
 
 const ProtectedPage = () => {
-  const { data: session } = useSession();
+  const { data: session,status } = useSession();
   const [showCountDown,setShowCountDown] = useState(false)
+  
+  if (status === 'loading'){
+    return <Loader/>
+  }
 
-  if (!session) {
+  if (status === 'unauthenticated') {
     return <SignInPage/>
   }
 

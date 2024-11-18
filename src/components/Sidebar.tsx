@@ -1,7 +1,10 @@
-import { Clock, Home,Timer,ListTodo,ChevronUp,User2,Laptop} from "lucide-react"
+import { Clock, Home,Timer,ListTodo,ChevronUp,Laptop,NotebookPen} from "lucide-react"
+import { useEffect, useState } from "react"
 import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from "@radix-ui/react-dropdown-menu"
 import { useSession,signOut } from "next-auth/react"
 import { useSidebar } from "@/components/ui/sidebar"
+import CountDownModel from "./CountDownModel"
+
 import {
   Sidebar,
   SidebarContent,
@@ -14,8 +17,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useEffect } from "react"
 
+var count;
 // Menu items.
 const items = [
   {
@@ -40,14 +43,20 @@ const items = [
   },
   {
     title: "CountDown",
-    url: "countdown",
+    url: '#',
     icon: Timer,
+  },
+  {
+    title: "Notes",
+    url: '/notes',
+    icon: NotebookPen,
   },
 ]
 
 export default function AppSidebar() {
   const {data:session} = useSession()
   const {setOpen} = useSidebar()
+  const [showCountDown,setShowCountDown] = useState(false)
 
   useEffect(() => {
     setOpen(false)
@@ -55,6 +64,7 @@ export default function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" title="flip">
+      {showCountDown && <CountDownModel setShowCountDown={setShowCountDown}/>}
       <SidebarHeader>
         <SidebarGroup>
          <SidebarGroupLabel className="flex font-bold font-serif text-xl mt-[50px] text-black">Flip</SidebarGroupLabel>
@@ -70,10 +80,18 @@ export default function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
+                    {
+                      item.title != 'CountDown' ? 
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
                     </a>
+                    :
+                    <button onClick={() => setShowCountDown(!showCountDown)}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </button>
+                    }
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -120,7 +138,8 @@ export default function AppSidebar() {
                 <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1">
                   <span>Billing</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1" onClick={() =>{ signOut()}}>
+                <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1" 
+                  onClick={() =>{signOut()}}>
                   <span>Sign out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
