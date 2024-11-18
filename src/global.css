@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #signin {
-    background-image: url('../assets/signinbg.jpg');
+    background-image: url('../assets/productivity.png');
     background-position:bottom;
     background-size:cover;
 }
