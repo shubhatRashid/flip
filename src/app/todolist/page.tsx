@@ -203,7 +203,7 @@ export default function Page() {
                             </form>
                             :
                             <h1 
-                                className="text-3xl flex justify-center items-center p-1 capitalize"
+                                className="text-2xl flex justify-center items-center p-1 capitalize font-mono"
                                 style={{
                                     opacity:todo.category === 'new category...'? '50%' : '100%',
                                     textTransform:todo.category === 'new category...'? 'none':'capitalize'}}>

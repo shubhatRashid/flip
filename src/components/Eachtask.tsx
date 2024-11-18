@@ -156,14 +156,14 @@ export default function Eachtask(
                     />
                 </form> 
                 :
-                <div className="relative flex gap-1 px-1 text-xl"> 
+                <div className="relative flex gap-1 px-1 text-lg"> 
                     <input 
                     type="checkbox" 
                     checked={task.completed} 
                     onChange={() => handleCheckedChange(todo.category, task._id,task.completed)} 
                     />
                     <span 
-                        className="max-w-[300px]  capitalize"
+                        className="max-w-[300px] text-gray-500 capitalize"
                         style={{
                             textDecoration: task.completed ? 'line-through' : 'none',
                             opacity: task.completed ? '50%' : '100%',
