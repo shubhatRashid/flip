@@ -4,7 +4,8 @@ import {edit,add} from "../../../assets"
 import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
-import { SignInPage,Loader,Eachtask } from "@/components";
+import { SignInPage,Loader,Eachtask,Dialog,handleDialog} from "@/components";
+
 import { useSession } from "next-auth/react";
 
 export default function Page() {
@@ -37,15 +38,9 @@ export default function Page() {
                 error.message = response.statusText
                 throw error
             }
-
-            let newData = todos.map((todo) => {
-                if (todo.category === category) {
-                    todo.tasks.push({task: newTask, completed: false,_id:'A3F5C98B72E14D56FA9C23'+`${Math.round(Math.random()*20)}` });
-                }
-                return todo;
-            });
-
-            setTodos(newData);
+            
+            let incommingData = await response.json()
+            setTodos(() => JSON.parse(incommingData))
             setNewTask(() => '')
             document.getElementById(category)?.blur()
 
@@ -59,6 +54,7 @@ export default function Page() {
     };
 
     const handleDeleteCategory = async (category: string) => {
+        setShowCardOptions('')
         try {
             const body = {
                 categoryName : category,
@@ -78,6 +74,10 @@ export default function Page() {
 
             let newData = todos.filter((todo) => todo.category !== category);
             setTodos(newData);
+            toast({
+                title : 'Sucess',
+                description : 'category deleted sucessfully'
+            })
     
         } catch (error:any) {
             const errorBody = {
@@ -138,13 +138,10 @@ export default function Page() {
                 error.message = response.statusText
                 throw error
             }
-            setTodos((todos) => [...todos,
-                {
-                    category: "new category...",
-                    tasks: [],
-                    _id:'auniqueid'+`${Math.random()*20}`
-                }
-            ])
+
+            const incommingData = await response.json()
+            setTodos(() => incommingData)
+            console.log(todos)
             setEditingCategory('new category...')
             setNewCategory('new category...')
         } catch (error:any) {
@@ -185,8 +182,8 @@ export default function Page() {
     if (status === 'unauthenticated') return <SignInPage/> 
 
     return (
-        <div className="flex flex-wrap gap-5 w-full h-full justify-center items-center">
-
+        <div className="relative z-0 flex flex-wrap gap-5 w-full h-full justify-center items-center">
+        
             <div className="relative border p-3 rounded-xl min-w-[200px] min-h-[200px] flex justify-center gap-3 items-center">
                 <button onClick = {handleAddNewCategory} className="border rounded-xl p-5">Add New</button>
             </div>
@@ -225,18 +222,27 @@ export default function Page() {
                     {
                         showCardOptions === todo.category &&
                         <div 
-                            className="absolute right-[10%] top-[10%] flex flex-col text-sm
+                            className="absolute right-[10%] top-[10%] flex flex-col text-sm border
                             justify-start items-start gap-1 p-3 rounded-xl bg-gray-100 z-10"> 
-                            <button  className="border p-1 rounded-xl w-full" onClick={() => handleDeleteCategory(todo.category)}>🗑️ delete</button>
-                            <button className="border p-1 rounded-xl" 
+
+                            <button  className="border p-2 rounded w-full bg-gray-200" 
+                                    onClick={() => handleDialog() }>🗑️ delete</button>
+                            <Dialog 
+                                title="Delete this Category"  
+                                description="This action cannot be undone. 
+                                            This will permanently delete the category from our servers"
+                                proceedFunc = {() => handleDeleteCategory(todo.category)}
+                            />
+                            <button className="border p-2 rounded bg-gray-200" 
                                     onClick={() => {
                                         setEditingCategory(todo.category)
                                         setNewCategory(todo.category)
                                         setShowCardOptions('')}}
                             >✒️ rename</button>
+
                         </div>
                     }
-
+                    
                     {
                     todo.tasks.map((task, i) => (
                         <Eachtask 

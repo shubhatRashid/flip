@@ -5,4 +5,5 @@ import AppSidebar from "./Sidebar"
 import SignInPage from "./SignInPage";
 import Loader from "./Loader/Loader"
 import Eachtask from "./Eachtask";
-export {Header,Footer,Digit,AppSidebar,SignInPage,Loader,Eachtask}
+import {Dialog,handleDialog} from "./Dialog";
+export {Header,Footer,Digit,AppSidebar,SignInPage,Loader,Eachtask,Dialog,handleDialog}
