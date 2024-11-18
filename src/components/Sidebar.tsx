@@ -1,4 +1,4 @@
-import { Clock, Home,Timer,ListTodo,Settings,ChevronUp,User2,Laptop} from "lucide-react"
+import { Clock, Home,Timer,ListTodo,ChevronUp,User2,Laptop} from "lucide-react"
 import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from "@radix-ui/react-dropdown-menu"
 import { useSession,signOut } from "next-auth/react"
 import { useSidebar } from "@/components/ui/sidebar"
@@ -105,7 +105,7 @@ export default function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <img src={session?.user?.image} className="flex rounded-xl w-[px]"/>
+                  <img src={`${session?.user?.image}`} className="flex rounded-full w-[20px] h-[20px]"/>
                   <p className="capitalize">{session?.user?.name}</p>
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
