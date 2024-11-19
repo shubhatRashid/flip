@@ -22,7 +22,7 @@ function Dialog(
          openDialog && 
         <div 
             className="fixed top-[30%] bottom-[30%] 
-                        left-[15%]  right-[15%] sm: left-[20%]  right-[20%] md: left-[25%]  right-[25%]  lg : left-[30%]  right-[30%]
+                        left-[15%]  right-[15%]
                         font-mono p-5 z-10 bg-gray-100  
                         flex flex-col justify-between  max-w-[75%] items-start gap-5 rounded-lg ">
             <h2 className="font-bold text-xl capitalize">{title}</h2>
