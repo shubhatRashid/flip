@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { SignInPage,Loader,Eachtask,Dialog,handleDialog} from "@/components";
 
 import { useSession } from "next-auth/react";
+import { FolderPen } from "lucide-react";
 
 export default function Page() {
     const {data:session,status} = useSession()
@@ -189,7 +190,12 @@ export default function Page() {
             </div>
 
             {todos.map((todo, index) => (
-                <div key={index} className="relative border p-3 rounded-xl min-w-[200px] flex flex-col justify-center gap-3">
+                <div key={index} 
+                    className="relative border p-3 rounded-xl min-w-[200px] 
+                                flex flex-col justify-center gap-3
+                                shadow-md bg-gray-50 hover:shadow-xl hover:bg-gray-100
+                                "
+                >
 
                     <div className='flex justify-between items-center'>
                         {
@@ -216,14 +222,14 @@ export default function Page() {
                         className="absolute top-3 right-3 font-bold"
                         onClick={() => showCardOptions === "" ? setShowCardOptions(todo.category) : setShowCardOptions("")}
                     >
-                            <Image alt='image not found' width={20} height={20} src={edit.src}/>
+                            <FolderPen/>
                     </button>
 
                     {
                         showCardOptions === todo.category &&
                         <div 
                             className="absolute right-[10%] top-[10%] flex flex-col text-sm border
-                            justify-start items-start gap-1 p-3 rounded-xl bg-gray-100 z-10"> 
+                            justify-start items-start gap-1 p-3 rounded-xl bg-white z-10"> 
 
                             <button  className="border p-2 rounded w-full bg-gray-200" 
                                     onClick={() => handleDialog() }>🗑️ delete</button>
@@ -270,7 +276,7 @@ export default function Page() {
                                     }}>
                             <input 
                                 id={todo.category}
-                                className="flex w-full rounded-xl p-1 outline-none" 
+                                className="flex w-full rounded p-1 outline-none" 
                                 placeholder="add new task..."
                                 onChange={(e) => setNewTask(e.target.value)}
                                 onFocus={(e) => e.currentTarget.value = newTask}

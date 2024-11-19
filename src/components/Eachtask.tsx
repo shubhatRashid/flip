@@ -140,7 +140,7 @@ export default function Eachtask(
     };
 
     return (
-        <div className="flex" >
+        <div className="flex p-1 rounded-lg hover:border hover:bg-white" >
             {
                 editingTask === task
                 ? 
@@ -149,7 +149,7 @@ export default function Eachtask(
                     onSubmit={(e) => handleEditTask(e,todo.category, task._id)}
                     className="flex w-full">
                     <input 
-                        className="flex w-full rounded-xl bg-neutral-800 text-white p-1"
+                        className="flex w-full rounded-xl outline-none p-1"
                         value = {newTask} 
                         onChange={(e) => setNewTask(e.target.value)}
                         autoFocus
@@ -189,7 +189,7 @@ export default function Eachtask(
                         setNewTask(task.task)
                         }}
                     >
-                            <Image width={20} height={20} alt="no image" src={edit.src}/>
+                            <Image width={15} height={15} alt="no image" src={edit.src}/>
                     </button>
                 }
             </div>
