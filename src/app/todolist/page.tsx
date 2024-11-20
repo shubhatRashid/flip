@@ -5,9 +5,10 @@ import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import { SignInPage,Loader,Eachtask,Dialog,handleDialog} from "@/components";
-
 import { useSession } from "next-auth/react";
 import { FolderPen } from "lucide-react";
+import { Permanent_Marker} from 'next/font/google'; 
+const permanent_Marker = Permanent_Marker({weight:'400', subsets: ['latin'] })
 
 export default function Page() {
     const {data:session,status} = useSession()
@@ -209,7 +210,7 @@ export default function Page() {
                             </form>
                             :
                             <h1 
-                                className="text-2xl flex justify-center items-center p-1 capitalize font-mono"
+                                className={`text-2xl flex justify-center items-center p-1 capitalize ${permanent_Marker.className}`}
                                 style={{
                                     opacity:todo.category === 'new category...'? '50%' : '100%',
                                     textTransform:todo.category === 'new category...'? 'none':'capitalize'}}>

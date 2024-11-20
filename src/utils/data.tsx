@@ -44,6 +44,13 @@ const data:NoteCategory[]= [
             notedescription: "Daily team sync-up meeting",
             noteDate: "2024-11-19",
             noteTime: "9:30 AM"
+          },
+          {
+            _id: "i9j0k1l2",
+            notetitle: "Team Standup",
+            notedescription: "Daily team sync-up meeting",
+            noteDate: "2024-11-19",
+            noteTime: "9:30 AM"
           }
         ]
       },

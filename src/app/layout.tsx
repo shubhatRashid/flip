@@ -16,7 +16,7 @@ export default function RootLayout({
         <SessionProvider>
           <Toaster/>
           <Header/>
-            <div className="flex w-full h-full justify-center items-center p-10"> {children}</div>
+            <div className="flex w-full h-full justify-center items-center px-5 py-7 overflow-scroll"> {children}</div>
         </SessionProvider>
       </body>
     </html>

@@ -25,7 +25,7 @@ const ProtectedPage = () => {
       <HomeCard currImage={stopwatch} name='STOP WATCH' property = '/stopwatch' />
       <HomeCard currImage={countdown} name = 'COUNT DOWN' property={setShowCountDown}/>
       <HomeCard currImage={todo} name='TODO LIST' property = '/todolist'/>
-      <HomeCard currImage={notes} name='NOTES' property = '/notes'/>
+      <HomeCard currImage={notes} name='STICKY NOTES' property = '/stickynotes'/>
 
         {
           showCountDown && <CountDownModel setShowCountDown={setShowCountDown}/>

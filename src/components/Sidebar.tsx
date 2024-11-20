@@ -1,4 +1,4 @@
-import { Clock, Home,Timer,ListTodo,ChevronUp,Laptop,NotebookPen} from "lucide-react"
+import { Clock, Home,Timer,ListTodo,ChevronUp,Laptop,StickyNote} from "lucide-react"
 import { useEffect, useState } from "react"
 import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from "@radix-ui/react-dropdown-menu"
 import { useSession,signOut } from "next-auth/react"
@@ -48,9 +48,9 @@ const items = [
     icon: Timer,
   },
   {
-    title: "Notes",
-    url: '/notes',
-    icon: NotebookPen,
+    title: "Sticky Notes",
+    url: '/stickynotes',
+    icon: StickyNote,
   },
 ]
 
@@ -64,7 +64,7 @@ export default function AppSidebar() {
   },[])
 
   return (
-    <Sidebar collapsible="icon" title="flip">
+    <Sidebar collapsible="icon">
       {showCountDown && <CountDownModel setShowCountDown={setShowCountDown}/>}
       <Dialog 
         title={`SignOut ${session?.user?.name} ?`}
@@ -84,7 +84,7 @@ export default function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.title} title={item.title}>
                   <SidebarMenuButton asChild>
                     {
                       item.title != 'CountDown' ? 
