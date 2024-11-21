@@ -80,6 +80,7 @@ export default function Page() {
                 title : 'Sucess',
                 description : 'category deleted sucessfully'
             })
+            handleDialog()
     
         } catch (error:any) {
             const errorBody = {
@@ -185,7 +186,12 @@ export default function Page() {
 
     return (
         <div className="relative z-0 flex flex-wrap gap-5 w-full h-full justify-center items-center">
-        
+            <Dialog 
+                title="Delete this Category"  
+                description="This action cannot be undone. 
+                            This will permanently delete the category from our servers"
+                proceedFunc = {() => handleDeleteCategory(editingCategory)}
+            />
             <div className="relative border p-3 rounded-xl min-w-[200px] min-h-[200px] flex justify-center gap-3 items-center">
                 <button onClick = {handleAddNewCategory} className="border rounded-xl p-5">Add New</button>
             </div>
@@ -233,13 +239,13 @@ export default function Page() {
                             justify-start items-start gap-1 p-3 rounded-xl bg-white z-10"> 
 
                             <button  className="border p-2 rounded w-full bg-gray-200" 
-                                    onClick={() => handleDialog() }>🗑️ delete</button>
-                            <Dialog 
-                                title="Delete this Category"  
-                                description="This action cannot be undone. 
-                                            This will permanently delete the category from our servers"
-                                proceedFunc = {() => handleDeleteCategory(todo.category)}
-                            />
+                                    onClick={() => {
+                                        handleDialog()
+                                        setEditingCategory(todo.category)
+                                        setNewCategory(todo.category)
+                                        setShowCardOptions('')
+                                    } }
+                            >🗑️ delete</button>
                             <button className="border p-2 rounded bg-gray-200" 
                                     onClick={() => {
                                         setEditingCategory(todo.category)

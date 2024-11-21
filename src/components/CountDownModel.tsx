@@ -19,8 +19,8 @@ export default function CountDownModel({setShowCountDown}:{setShowCountDown:Disp
     return (
          
         <div 
-            className=" fixed top-[20%] left-[25%] w-[90%] sm:w-[70%] md:[60%] lg:w-[50%]
-                        bg-gray-200 flex flex-col justify-around items-center gap-10 
+            className=" fixed z-10 top-[25%] w-[90%] h-[50%] left-[5%]
+                        bg-gray-200 flex flex-col justify-evenly items-center gap-10
                         p-10 rounded-xl"
         >   
             <div 
@@ -34,12 +34,12 @@ export default function CountDownModel({setShowCountDown}:{setShowCountDown:Disp
                         x
                 </button>
             </div>
-            <div className="flex justify-center items-center w-full h-full gap-10 bg-white p-3 rounded-lg">
+            <div className="flex justify-center items-center w-full h-full gap-10  p-3 rounded-lg font-sarif">
                 <div className="flex flex-col h-full w-[30%] rounded-xl justify-center items-center">
                     <label> HOURS</label>
                     <input 
                         type="number"  
-                        className="flex w-full h-full rounded-xl justify-center items-center text-9xl
+                        className="flex w-full h-full rounded-xl justify-center items-center text-4xl sm:text:9xl
                                 bg-gray-100 text-center"
                         value={hours}
                         onChange={(event) => setHours((event.target.value))}
@@ -49,7 +49,7 @@ export default function CountDownModel({setShowCountDown}:{setShowCountDown:Disp
                     <label> MINUTES</label>
                     <input 
                         type="number" 
-                        className="flex w-full h-full rounded-xl justify-center items-center text-9xl
+                        className="flex w-full h-full rounded-xl justify-center items-center text-4xl sm:text:9xl
                                 bg-gray-100 text-center"
                         value={minutes}
                         onChange={(event) => setMinutes((event.target.value))}
@@ -59,7 +59,7 @@ export default function CountDownModel({setShowCountDown}:{setShowCountDown:Disp
                     <label> SECONDS</label>
                     <input 
                         type="number"
-                        className="flex w-full h-full rounded-xl justify-center items-center text-9xl
+                        className="flex w-full h-full rounded-xl justify-center items-center text-4xl sm:text:9xl
                                 bg-gray-100 text-center"
                         value={seconds}
                         onChange={(event) => setSeconds((event.target.value))}

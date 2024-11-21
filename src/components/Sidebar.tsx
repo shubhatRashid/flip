@@ -4,7 +4,6 @@ import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} 
 import { useSession,signOut } from "next-auth/react"
 import { useSidebar } from "@/components/ui/sidebar"
 import CountDownModel from "./CountDownModel"
-import { Dialog,handleDialog } from "./Dialog"
 
 import {
   Sidebar,
@@ -66,11 +65,7 @@ export default function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       {showCountDown && <CountDownModel setShowCountDown={setShowCountDown}/>}
-      <Dialog 
-        title={`SignOut ${session?.user?.name} ?`}
-        description="This action will sign out your account and end your session. Your data will be saved in the database . You can sigin
-                      anytime and excess your data. "
-        proceedFunc={() => signOut()}/>
+      
       <SidebarHeader>
         <SidebarGroup>
          <SidebarGroupLabel className="flex font-bold font-serif text-xl mt-[50px] text-black">Flip</SidebarGroupLabel>
@@ -145,7 +140,7 @@ export default function AppSidebar() {
                   <span>Billing</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1" 
-                  onClick={() =>{handleDialog()}}>
+                  onClick={() =>signOut()}>
                   <span>Sign out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
