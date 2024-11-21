@@ -3,7 +3,7 @@ import {TodoType,TaskType} from "../types"
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import {Caveat } from 'next/font/google'; 
 const caveat = Caveat({weight:'700', subsets: ['latin'] })
 
@@ -147,6 +147,7 @@ export default function Eachtask(
                 editingTask === task
                 ? 
                 <form 
+                    id="taskInput"
                     typeof='submit' 
                     onSubmit={(e) => handleEditTask(e,todo.category, task._id)}
                     className="flex w-full">
@@ -155,10 +156,11 @@ export default function Eachtask(
                         value = {newTask} 
                         onChange={(e) => setNewTask(e.target.value)}
                         autoFocus
+                        onBlur={() => setEditingTask(null)} 
                     />
                 </form> 
                 :
-                <div className="relative flex w-full gap-1 px-1 text-xl"> 
+                <div className="relative flex w-[90%] gap-1 px-1 text-xl"> 
                     <input 
                     type="checkbox" 
                     checked={task.completed} 
@@ -169,6 +171,10 @@ export default function Eachtask(
                         style={{
                             textDecoration: task.completed ? 'line-through' : 'none',
                             opacity: task.completed ? '50%' : '100%',
+                        }}
+                        onDoubleClick={() =>{
+                            setEditingTask(task)
+                            setNewTask(task.task)
                         }}
                     >
                         {task.task}
@@ -191,7 +197,7 @@ export default function Eachtask(
                         setNewTask(task.task)
                         }}
                     >
-                            <Image width={15} height={15} alt="no image" src={edit.src}/>
+                            <Image width={20} height={20} alt="no image" src={edit.src}/>
                     </button>
                 }
             </div>
