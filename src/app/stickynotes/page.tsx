@@ -14,15 +14,15 @@ export default function Page() {
     if (status === 'unauthenticated') return <SignInPage/>
     
     return (
-        <div className='flex flex-wrap justify-evenly items-center gap-4 w-full h-full '>
+        <div className='flex flex-wrap justify-evenly items-center gap-10 w-full h-full pt-5 '>
 
             {notes.map((eachCategory,index) => (
                 <EachNoteCategory key={index} eachCategory={eachCategory}/>
             ))}
 
-            <div className="flex border rounded-lg min-w-[200px] min-h-[200px] 
-                            justify-center items-center mb-10">
-                <button className='flex flex-col justify-center items-center border rounded min-w-[50px] min-h-[100px]'>
+            <div className="flex  min-w-[200px] min-h-[200px] 
+                            justify-center items-center">
+                <button className='flex flex-col justify-center items-center border rounded-lg min-w-[50px] min-h-[100px]'>
                     <CirclePlus/>
                     <p className="font-sans text-gray-400 p-2">Add New</p>
                 </button>

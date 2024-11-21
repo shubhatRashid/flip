@@ -185,16 +185,13 @@ export default function Page() {
     if (status === 'unauthenticated') return <SignInPage/> 
 
     return (
-        <div className="relative z-0 flex flex-wrap gap-5 w-full h-full justify-center items-center">
+        <div className="relative z-0 flex flex-wrap gap-5 w-full h-full justify-center items-center pt-5">
             <Dialog 
                 title="Delete this Category"  
                 description="This action cannot be undone. 
                             This will permanently delete the category from our servers"
                 proceedFunc = {() => handleDeleteCategory(editingCategory)}
             />
-            <div className="relative border p-3 rounded-xl min-w-[200px] min-h-[200px] flex justify-center gap-3 items-center">
-                <button onClick = {handleAddNewCategory} className="border rounded-xl p-5">Add New</button>
-            </div>
 
             {todos.map((todo, index) => (
                 <div key={index} 
@@ -299,6 +296,10 @@ export default function Page() {
                     </div>
                 </div>
             ))}
+
+            <div className="relative min-w-[200px] min-h-[200px] flex justify-center gap-3 items-center">
+                <button onClick = {handleAddNewCategory} className="border rounded-xl p-5">Add New</button>
+            </div>
         </div>
     );
 }
