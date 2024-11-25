@@ -9,7 +9,7 @@ export default function EachNote(
    
     return (
         <div 
-            className='relative flex flex-col border p-2 hover:scale-125 hover:cursor-pointer'
+            className='relative flex flex-col border p-2 hover:scale-125 hover:cursor-pointer transition ease-in-out delay-50'
             style={
                 {
                     backgroundColor: eachnote.color,

@@ -197,7 +197,7 @@ export default function Page() {
                 <div key={index} 
                     className="relative border p-3 rounded-xl min-w-[200px] 
                                 flex flex-col justify-center gap-3
-                                shadow-md bg-gray-50 hover:shadow-xl hover:bg-gray-100
+                                shadow-md bg-gray-50 hover:shadow-xl hover:bg-gray-100 
                                 "
                 >
 

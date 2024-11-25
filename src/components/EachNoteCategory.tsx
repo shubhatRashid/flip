@@ -36,7 +36,7 @@ export default function EachNoteCategory(
     return (
         <div className=" relative border p-1 rounded-lg flex flex-col gap-3 flex-wrap hover:scale-110
                         max-w-[300px] max-h-[500px] min-h-[200px] min-w-[200px]
-                        shadow-md bg-gray-50 hover:shadow-xl hover:bg-gray-100">
+                        shadow-md bg-gray-50 hover:shadow-xl hover:bg-gray-100 transition ease-in-out delay-50">
             
             <div className="flex justify-between border-b border-dashed">
                 {
