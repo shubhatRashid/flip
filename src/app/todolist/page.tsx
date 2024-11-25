@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import { SignInPage,Loader,Eachtask,Dialog,handleDialog} from "@/components";
 import { useSession } from "next-auth/react";
-import { FolderPen } from "lucide-react";
+import { CirclePlus, FolderPen } from "lucide-react";
 import { Permanent_Marker} from 'next/font/google'; 
 const permanent_Marker = Permanent_Marker({weight:'400', subsets: ['latin'] })
 
@@ -297,8 +297,8 @@ export default function Page() {
                 </div>
             ))}
 
-            <div className="relative min-w-[200px] min-h-[200px] flex justify-center gap-3 items-center">
-                <button onClick = {handleAddNewCategory} className="border rounded-xl p-5">Add New</button>
+            <div className="relative flex w-full justify-end items-center pr-3 mt-auto">
+                <button onClick = {handleAddNewCategory} className="border rounded-full p-5"><CirclePlus/>    </button>
             </div>
         </div>
     );

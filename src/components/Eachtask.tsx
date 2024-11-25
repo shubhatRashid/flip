@@ -142,7 +142,7 @@ export default function Eachtask(
     };
 
     return (
-        <div className="flex p-1 rounded-lg hover:border hover:bg-white" >
+        <div className="flex p-1 rounded-lg hover:border hover:bg-white gap-2" >
             {
                 editingTask === task
                 ? 

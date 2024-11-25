@@ -6,10 +6,10 @@ const caveat = Caveat({weight:'700', subsets: ['latin'] })
 export default function EachNote(
     {eachnote,index} : {eachnote:Note,index:number}
 ) {
-    const color = ['#D2FF72','#9EDF9C','#FFE31A','#7ED4AD','#A5B68D']
+   
     return (
         <div 
-            className='relative flex flex-col border p-2'
+            className='relative flex flex-col border p-2 hover:scale-125 hover:cursor-pointer'
             style={
                 {
                     backgroundColor: eachnote.color,
