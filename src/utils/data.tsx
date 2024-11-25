@@ -4,7 +4,8 @@ export type Note = {
   notedescription: string;
   noteDate: string;
   noteTime: string;
-  color: string; // Added color field
+  backgroundColor: string; // Renamed color to backgroundColor
+  textColor: string;       // Added textColor
 };
 
 export type NoteCategory = {
@@ -13,7 +14,7 @@ export type NoteCategory = {
   notes: Note[];
 };
 
-// Updated data with light monochromatic colors
+// Updated data with backgroundColor and textColor for better readability
 export const data: NoteCategory[] = [
   {
     _id: "1a2b3c4d5e6f7a8b9c0d1e2f", // 24-character hex ID
@@ -25,7 +26,8 @@ export const data: NoteCategory[] = [
         notedescription: "Discuss project milestones and timelines",
         noteDate: "2024-11-18",
         noteTime: "10:00 AM",
-        color: "#ADD8E6" // Light blue
+        backgroundColor: "#ADD8E6", // Light blue
+        textColor: "#000000"        // Black for good contrast
       },
       {
         _id: "e5f6g7h8i9j0k1l2m3n4o5p6",
@@ -33,7 +35,8 @@ export const data: NoteCategory[] = [
         notedescription: "Review PR for feature implementation",
         noteDate: "2024-11-18",
         noteTime: "2:00 PM",
-        color: "#E6E6FA" // Lavender
+        backgroundColor: "#E6E6FA", // Lavender
+        textColor: "#4B0082"        // Dark indigo for contrast
       },
       {
         _id: "i9j0k1l2m3n4o5p6q7r8s9t0",
@@ -41,7 +44,8 @@ export const data: NoteCategory[] = [
         notedescription: "Daily team sync-up meeting",
         noteDate: "2024-11-19",
         noteTime: "9:30 AM",
-        color: "#F0E68C" // Light khaki
+        backgroundColor: "#F0E68C", // Light khaki
+        textColor: "#8B4513"        // Saddle brown for contrast
       }
     ]
   },
@@ -55,7 +59,8 @@ export const data: NoteCategory[] = [
         notedescription: "Buy groceries for the week",
         noteDate: "2024-11-20",
         noteTime: "5:00 PM",
-        color: "#FFE4B5" // Moccasin
+        backgroundColor: "#FFE4B5", // Moccasin
+        textColor: "#8B4513"        // Saddle brown for contrast
       },
       {
         _id: "n7o8p9q0r1s2t3u4v5w6x7y8",
@@ -63,7 +68,8 @@ export const data: NoteCategory[] = [
         notedescription: "Complete daily workout routine",
         noteDate: "2024-11-21",
         noteTime: "7:00 AM",
-        color: "#AFEEEE" // Pale turquoise
+        backgroundColor: "#AFEEEE", // Pale turquoise
+        textColor: "#00688B"        // Dark turquoise for contrast
       },
       {
         _id: "r1s2t3u4v5w6x7y8z9a0b1c2",
@@ -71,7 +77,8 @@ export const data: NoteCategory[] = [
         notedescription: "Catch up with Mom over the phone",
         noteDate: "2024-11-21",
         noteTime: "8:00 PM",
-        color: "#D3D3D3" // Light gray
+        backgroundColor: "#D3D3D3", // Light gray
+        textColor: "#000000"        // Black for contrast
       }
     ]
   },
@@ -85,7 +92,8 @@ export const data: NoteCategory[] = [
         notedescription: "Book flights for the upcoming vacation",
         noteDate: "2024-11-22",
         noteTime: "9:00 AM",
-        color: "#F5F5DC" // Beige
+        backgroundColor: "#F5F5DC", // Beige
+        textColor: "#8B4513"        // Saddle brown for contrast
       },
       {
         _id: "z9a0b1c2d3e4f5g6h7i8j9k0",
@@ -93,7 +101,8 @@ export const data: NoteCategory[] = [
         notedescription: "Confirm hotel reservations",
         noteDate: "2024-11-22",
         noteTime: "10:30 AM",
-        color: "#F0FFF0" // Honeydew
+        backgroundColor: "#F0FFF0", // Honeydew
+        textColor: "#006400"        // Dark green for contrast
       },
       {
         _id: "d3e4f5g6h7i8j9k0l1m2n3o4",
@@ -101,7 +110,8 @@ export const data: NoteCategory[] = [
         notedescription: "Plan activities for the trip",
         noteDate: "2024-11-23",
         noteTime: "3:00 PM",
-        color: "#FFFACD" // Lemon chiffon
+        backgroundColor: "#FFFACD", // Lemon chiffon
+        textColor: "#8B0000"        // Dark red for contrast
       }
     ]
   },
@@ -115,7 +125,8 @@ export const data: NoteCategory[] = [
         notedescription: "Watch JavaScript course videos",
         noteDate: "2024-11-24",
         noteTime: "6:00 PM",
-        color: "#E0FFFF" // Light cyan
+        backgroundColor: "#E0FFFF", // Light cyan
+        textColor: "#00008B"        // Dark blue for contrast
       },
       {
         _id: "l1m2n3o4p5q6r7s8t9u0v1w2",
@@ -123,7 +134,8 @@ export const data: NoteCategory[] = [
         notedescription: "Read blog post on React hooks",
         noteDate: "2024-11-24",
         noteTime: "11:00 AM",
-        color: "#FFF8DC" // Cornsilk
+        backgroundColor: "#FFF8DC", // Cornsilk
+        textColor: "#8B4513"        // Saddle brown for contrast
       }
     ]
   }

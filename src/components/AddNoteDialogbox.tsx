@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { CirclePlus } from "lucide-react"
 import { useState } from "react"
 
-export default function DialogDemo({submitFunction}:{submitFunction:Function}) {
+export default function AddNoteDialogDemo({submitFunction}:{submitFunction:Function}) {
   const [title,setTitle] = useState('')
   const [description,setDescription] = useState('')
   const [color,setColor] = useState<string>('#ff0000')

@@ -1,15 +1,17 @@
 import { NoteCategory } from "@/utils/data";
 import EachNote from "./EachNote";
-import { CirclePlus, FolderPen } from "lucide-react";
+import { FolderPen, Maximize } from "lucide-react";
 import { FormEvent, useState,useEffect } from "react";
-import Dialogbox from "./Dialogbox"
+import AddNoteDialogbox from "./AddNoteDialogbox"
 import { generateHex24 } from "@/utils/functions";
+import { useRouter } from "next/navigation";
 
 export default function EachNoteCategory(
     {eachCategory,notes,setNotes}:{eachCategory:NoteCategory,notes:NoteCategory[],setNotes:React.Dispatch<React.SetStateAction<NoteCategory[]>>}) {
     const [selectedCategory,setSelectedCategory] = useState('')
     const [renameCategory,setRenameCategory] = useState('')
     const [newCategoryName,setNewCategoryName] = useState('')
+    const router = useRouter()
 
     const handleRenameCategory = (e:FormEvent) => {
         e.preventDefault()
@@ -54,9 +56,11 @@ export default function EachNoteCategory(
     return (
         <div 
             id={`${eachCategory.category}`}
-            className=" relative border p-1 rounded-lg flex flex-col gap-3 flex-wrap hover:scale-110
+            className=" relative border p-1 rounded-lg flex flex-col gap-3 flex-wrap 
                         max-w-[300px] max-h-[500px] min-h-[200px] min-w-[200px]
-                        shadow-md bg-gray-50 hover:shadow-xl hover:bg-gray-100 transition ease-in-out delay-50"
+                        shadow-md bg-gray-50 
+                        hover:scale-110 hover:shadow-xl hover:bg-gray-100 transition ease-in-out delay-50
+                    "
         >
             
             <div className="flex justify-between border-b border-dashed">
@@ -81,7 +85,7 @@ export default function EachNoteCategory(
                     </h1>
                 }
 
-                <button className="" 
+                <button className="" title="options"
                         onClick={() => 
                             selectedCategory != eachCategory.category
                             ? 
@@ -98,10 +102,10 @@ export default function EachNoteCategory(
                         className="absolute right-[10%] top-[10%] flex flex-col text-sm border
                         justify-start items-start gap-1 p-3 rounded-xl bg-white z-10"> 
 
-                        <button  className="border p-2 rounded w-full bg-gray-200" 
+                        <button  className="border p-2 rounded w-full bg-gray-200" title="delete"
                                 onClick={() => handleDeleteCategory(eachCategory._id) }
                         >🗑️ delete</button>
-                        <button className="border p-2 rounded bg-gray-200" 
+                        <button className="border p-2 rounded bg-gray-200" title="rename"
                                 onClick={() => 
                                             {
                                                 setRenameCategory(eachCategory.category) 
@@ -116,19 +120,25 @@ export default function EachNoteCategory(
 
             </div>
 
-            <div className="flex flex-wrap justify-evenly items-center gap-5">
+            <div 
+                className={`flex flex-wrap justify-evenly items-center gap-5`}
+            >
                 {
                     eachCategory.notes.map((eachnote,index) => (
-                        <EachNote key={index} eachnote={eachnote} index={index}/>
+                        <EachNote key={index} eachnote={eachnote} index={index} minHeight="150px" minWidth="100px" textSize={1}/>
                     ))
                 }
             </div>
                 
-            <div 
-                className='flex justify-end items-center'
-            >       
-                <Dialogbox submitFunction={handleAddNewNote}/>
+            <div className='flex justify-between items-center mt-auto'>  
+                <button onClick={() => router.push(`stickynotes/${eachCategory._id}`)} title="maximise" >
+                    <Maximize className="scale-75"/>  
+                </button>   
+                <div title="add new note">
+                    <AddNoteDialogbox submitFunction={handleAddNewNote}/>
+                </div>
             </div>
+            
         </div>
     );
 }
