@@ -4,7 +4,7 @@ import {edit,add} from "../../../assets"
 import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
-import { SignInPage,Loader,Eachtask,Dialog,handleDialog} from "@/components";
+import { SignInPage,Loader,Eachtask} from "@/components";
 import { useSession } from "next-auth/react";
 import { CirclePlus, FolderPen } from "lucide-react";
 import { Permanent_Marker} from 'next/font/google'; 
@@ -19,6 +19,7 @@ export default function Page() {
     const [editingCategory,setEditingCategory] = useState<string>('')
     const [newCategory,setNewCategory] = useState<string>('')
     const [showCardOptions,setShowCardOptions] = useState<string>('')
+    const [deleteCategory,setDeleteCategory] = useState('')
 
     const addNewTask = async (category: string) => {
     
@@ -80,7 +81,6 @@ export default function Page() {
                 title : 'Sucess',
                 description : 'category deleted sucessfully'
             })
-            handleDialog()
     
         } catch (error:any) {
             const errorBody = {
@@ -186,13 +186,7 @@ export default function Page() {
 
     return (
         <div className="relative z-0 flex flex-wrap gap-5 w-full h-full justify-center items-center pt-5">
-            <Dialog 
-                title="Delete this Category"  
-                description="This action cannot be undone. 
-                            This will permanently delete the category from our servers"
-                proceedFunc = {() => handleDeleteCategory(editingCategory)}
-            />
-
+            {todos.length == 0 && <div className="text-gray-300">Please Add your first Category and todos ...</div>}
             {todos.map((todo, index) => (
                 <div key={index} 
                     className="relative border p-3 rounded-xl min-w-[200px] 
@@ -206,6 +200,7 @@ export default function Page() {
                             editingCategory === todo.category ?
                             <form typeof="submit" onSubmit={(e) => handleRenameCategory(e,todo.category)}>
                                 <input 
+                                    id="todocategoryinput"
                                     value={newCategory} 
                                     className="flex w-[90%] rounded-xl text-black p-1 outline-none"
                                     onChange={(e) => setNewCategory(e.target.value)}
@@ -236,12 +231,7 @@ export default function Page() {
                             justify-start items-start gap-1 p-3 rounded-xl bg-white z-10"> 
 
                             <button  className="border p-2 rounded w-full bg-gray-200" 
-                                    onClick={() => {
-                                        handleDialog()
-                                        setEditingCategory(todo.category)
-                                        setNewCategory(todo.category)
-                                        setShowCardOptions('')
-                                    } }
+                                    onClick={() =>handleDeleteCategory(todo.category)}
                             >🗑️ delete</button>
                             <button className="border p-2 rounded bg-gray-200" 
                                     onClick={() => {

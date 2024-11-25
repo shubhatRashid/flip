@@ -1,7 +1,7 @@
 'use client'
 import { useSession } from "next-auth/react";
 import { SignInPage,Loader } from "@/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {EachNoteCategory} from "@/components";
 import {data} from "@/utils/data";
 import { generateHex24 } from "@/utils/functions";
@@ -20,6 +20,7 @@ export default function Page() {
         }
 
         setNotes((prevNotes) => [...prevNotes,newCategory])
+        document.getElementById('new category...')?.focus()
 
     }
 

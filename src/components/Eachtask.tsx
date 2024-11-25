@@ -1,4 +1,4 @@
-import { deleteIcon,edit } from "../../assets";
+import { deleteIcon} from "../../assets";
 import {TodoType,TaskType} from "../types"
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -189,17 +189,6 @@ export default function Eachtask(
                     </button>
                 }
                 
-                {
-                    task.completed || editingTask !== task && 
-                    <button 
-                    onClick={() =>{
-                        setEditingTask(task)
-                        setNewTask(task.task)
-                        }}
-                    >
-                            <Image width={20} height={20} alt="no image" src={edit.src}/>
-                    </button>
-                }
             </div>
         </div>
     );

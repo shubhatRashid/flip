@@ -1,7 +1,9 @@
 import { NoteCategory } from "@/utils/data";
 import EachNote from "./EachNote";
 import { CirclePlus, FolderPen } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState,useEffect } from "react";
+import Dialogbox from "./Dialogbox"
+import { generateHex24 } from "@/utils/functions";
 
 export default function EachNoteCategory(
     {eachCategory,notes,setNotes}:{eachCategory:NoteCategory,notes:NoteCategory[],setNotes:React.Dispatch<React.SetStateAction<NoteCategory[]>>}) {
@@ -29,14 +31,33 @@ export default function EachNoteCategory(
         setNotes(() => newNotesCategories)
     }
 
-    const handleAddNewNote = () => {
-        
+    const handleAddNewNote = (title:string,description:string,color:string) => {
+        let newNotesCategories = notes.map((noteCategory) => {
+            if (noteCategory._id === eachCategory._id){
+                noteCategory.notes.push({
+                    _id: generateHex24(),
+                    notetitle: title,
+                    notedescription: description,
+                    noteDate: "2024-11-24",
+                    noteTime: "11:00 AM",
+                    color:  color
+                })
+
+                return noteCategory
+            }
+            return noteCategory
+        })
+
+        setNotes(newNotesCategories)
     }
 
     return (
-        <div className=" relative border p-1 rounded-lg flex flex-col gap-3 flex-wrap hover:scale-110
+        <div 
+            id={`${eachCategory.category}`}
+            className=" relative border p-1 rounded-lg flex flex-col gap-3 flex-wrap hover:scale-110
                         max-w-[300px] max-h-[500px] min-h-[200px] min-w-[200px]
-                        shadow-md bg-gray-50 hover:shadow-xl hover:bg-gray-100 transition ease-in-out delay-50">
+                        shadow-md bg-gray-50 hover:shadow-xl hover:bg-gray-100 transition ease-in-out delay-50"
+        >
             
             <div className="flex justify-between border-b border-dashed">
                 {
@@ -103,14 +124,11 @@ export default function EachNoteCategory(
                 }
             </div>
                 
-            <button 
-                className='flex justify-end items-center '
-                onClick={() => {handleAddNewNote()}}
+            <div 
+                className='flex justify-end items-center'
             >       
-                <div className="rounded-full border p-2">
-                <CirclePlus/>
-                </div>
-            </button>
+                <Dialogbox submitFunction={handleAddNewNote}/>
+            </div>
         </div>
     );
 }
