@@ -1,6 +1,6 @@
 import { NoteCategory } from "@/utils/data";
 import EachNote from "./EachNote";
-import { FolderPen, Maximize } from "lucide-react";
+import { CirclePlus, FolderPen, Maximize } from "lucide-react";
 import { FormEvent, useState,useEffect } from "react";
 import AddNoteDialogbox from "./AddNoteDialogbox"
 import { generateHex24 } from "@/utils/functions";
@@ -33,7 +33,7 @@ export default function EachNoteCategory(
         setNotes(() => newNotesCategories)
     }
 
-    const handleAddNewNote = (title:string,description:string,color:string) => {
+    const handleAddNewNote = (title:string,description:string,color:string,textColor:string) => {
         let newNotesCategories = notes.map((noteCategory) => {
             if (noteCategory._id === eachCategory._id){
                 noteCategory.notes.push({
@@ -42,7 +42,8 @@ export default function EachNoteCategory(
                     notedescription: description,
                     noteDate: "2024-11-24",
                     noteTime: "11:00 AM",
-                    color:  color
+                    backgroundColor:  color,
+                    textColor:textColor
                 })
 
                 return noteCategory
@@ -85,7 +86,7 @@ export default function EachNoteCategory(
                     </h1>
                 }
 
-                <button className="" title="options"
+                <button className=" scale-75 hover:scale-100" title="options"
                         onClick={() => 
                             selectedCategory != eachCategory.category
                             ? 
@@ -125,17 +126,36 @@ export default function EachNoteCategory(
             >
                 {
                     eachCategory.notes.map((eachnote,index) => (
-                        <EachNote key={index} eachnote={eachnote} index={index} minHeight="150px" minWidth="100px" textSize={1}/>
+                        <EachNote 
+                        key={index} 
+                        eachnote={eachnote} 
+                        index={index} 
+                        minHeight="150px" 
+                        minWidth="100px" 
+                        textSize={1}
+                        maximise={false}/>
                     ))
                 }
             </div>
                 
-            <div className='flex justify-between items-center mt-auto'>  
-                <button onClick={() => router.push(`stickynotes/${eachCategory._id}`)} title="maximise" >
+            <div className='flex justify-between items-center mt-auto '>  
+                <button className="hover:scale-125"
+                     onClick =  {() => {
+                                        router.push(`stickynotes/${eachCategory._id}`)
+                                    } 
+                                }
+                    title="maximise" 
+                >
                     <Maximize className="scale-75"/>  
                 </button>   
-                <div title="add new note">
-                    <AddNoteDialogbox submitFunction={handleAddNewNote}/>
+                <div title="add new note" className="hover:scale-110 rounded-full">
+                    <AddNoteDialogbox 
+                        dialogTitle="Add New Note"
+                        dialogDescription="Enter the contents for a new note"
+                        submitFunction={handleAddNewNote} 
+                        defaultTitle="" defaultDescription="" defaultBgColor="#ff0000" defaultTextColor="#ff0000"
+                        icon = {<div><CirclePlus/></div>}
+                    />
                 </div>
             </div>
             

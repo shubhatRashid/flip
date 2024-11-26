@@ -10,32 +10,37 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { CirclePlus } from "lucide-react"
 import { useState } from "react"
 
-export default function AddNoteDialogDemo({submitFunction}:{submitFunction:Function}) {
-  const [title,setTitle] = useState('')
-  const [description,setDescription] = useState('')
-  const [color,setColor] = useState<string>('#ff0000')
+export default function AddNoteDialogBox(
+  {submitFunction,defaultTitle,defaultDescription,defaultTextColor,defaultBgColor,icon,dialogTitle,dialogDescription}
+  :
+  {submitFunction:Function,defaultTitle:string,defaultDescription:string,defaultTextColor:string,defaultBgColor:string,icon:React.ReactElement,dialogTitle:string,dialogDescription:string}) 
+  
+  {
+  const [title,setTitle] = useState(defaultTitle)
+  const [description,setDescription] = useState(defaultDescription)
+  const [color,setColor] = useState<string>(defaultBgColor)
+  const [textColor,setTextColor] = useState(defaultTextColor)
   const [open,setOpen] = useState(false)
 
   const handleSubmit = () => {
-    submitFunction(title,description,color)
+    submitFunction(title,description,color,textColor)
     setOpen(false)
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => setOpen(true)} className="rounded-full p-2">
-            <CirclePlus/>
-        </Button>
+        <div onClick={() => setOpen(true)} className="rounded-full p-2 border scale-75 border-gray-400">
+            {icon}
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add Note</DialogTitle>
+          <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>
-            Add a new note to this category.
+            {dialogDescription}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -53,9 +58,15 @@ export default function AddNoteDialogDemo({submitFunction}:{submitFunction:Funct
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="color" className="text-right">
-              Note Color
+              Background Color
             </Label>
             <Input id="color" type="color" value={color} onChange={(e) => setColor(e.target.value)} className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="textcolor" className="text-right">
+              Text Color
+            </Label>
+            <Input id="textcolor" type="color" value={textColor} onChange={(e) => setTextColor(e.target.value)} className="col-span-3" />
           </div>
         </div>
         <DialogFooter>

@@ -1,6 +1,6 @@
 'use client'
 import data from "@/utils/data";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { EachNote } from "@/components";
 
 export default function Page({params}:{params:Promise<{categoryid:string}>}) {
@@ -19,11 +19,20 @@ export default function Page({params}:{params:Promise<{categoryid:string}>}) {
 
     return (
         <div className={`flex w-full h-full flex-wrap justify-evenly items-center gap-5`}>
-                { 
-                    currCategory?.notes.map((eachnote,index) => (
-                        <EachNote key={index} eachnote={eachnote} index={index} minHeight="300px" minWidth="200px" textSize={2}/>
-                    ))
-                }
-            </div>
+            { 
+                currCategory?.notes.map((eachnote,index) => (
+                    <EachNote 
+                    key={index} 
+                    eachnote={eachnote} 
+                    index={index} 
+                    minHeight="300px" 
+                    minWidth="200px" 
+                    textSize={2}
+                    maximise={true}/>
+                ))
+            }
+
+
+         </div>
     );
 }

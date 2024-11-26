@@ -7,4 +7,5 @@ import Loader from "./Loader/Loader"
 import Eachtask from "./Eachtask";
 import EachNoteCategory from "./EachNoteCategory";
 import EachNote from "./EachNote";
-export {Header,Footer,Digit,AppSidebar,SignInPage,Loader,Eachtask,EachNoteCategory,EachNote}
+import AddNoteDialogBox from "./AddNoteDialogbox";
+export {Header,Footer,Digit,AppSidebar,SignInPage,Loader,Eachtask,EachNoteCategory,EachNote,AddNoteDialogBox}
