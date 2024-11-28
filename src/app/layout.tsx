@@ -3,6 +3,7 @@ import "../global.css"
 import { Header} from "../components"
 import { SessionProvider } from "next-auth/react"
 import { Toaster } from "@/components/ui/toaster"
+import { AppProvider } from "@/utils/context/AppContext"
 
 export default function RootLayout({
   children,
@@ -16,7 +17,9 @@ export default function RootLayout({
         <SessionProvider>
           <Toaster/>
           <Header/>
+          <AppProvider>
             <div className="flex w-full h-full justify-center items-center px-5 py-7 overflow-scroll"> {children}</div>
+          </AppProvider>
         </SessionProvider>
       </body>
     </html>

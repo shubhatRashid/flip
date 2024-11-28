@@ -32,7 +32,7 @@ export default function AddNoteDialogBox(
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div onClick={() => setOpen(true)} className="rounded-full p-2 border scale-75 border-gray-400">
+        <div onClick={() => setOpen(true)} className="rounded-full p-2 border scale-75 border-gray-400 hover:scale-100">
             {icon}
         </div>
       </DialogTrigger>

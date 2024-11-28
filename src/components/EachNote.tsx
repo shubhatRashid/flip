@@ -1,21 +1,73 @@
-import { Note } from "@/utils/data";
+import { Note,NoteCategory } from "@/utils/data";
 import { SquarePen } from "lucide-react";
 import { Permanent_Marker,Caveat } from 'next/font/google'; 
 import AddNoteDialogBox from "./AddNoteDialogbox";
+import {useEffect } from "react";
+import { useAppContext } from "@/utils/context/AppContext";
+import { json } from "stream/consumers";
 const EditNoteDialogBox = AddNoteDialogBox
 const permanent_Marker = Permanent_Marker({weight:'400', subsets: ['latin'] })
 const caveat = Caveat({weight:'700', subsets: ['latin'] })
 
 export default function EachNote(
-    {eachnote,index,minHeight,minWidth,textSize,maximise} : {eachnote:Note,index:number,minHeight:string,minWidth:string,textSize:number,maximise:boolean}
+    {eachnote,noteCategory,index,minHeight,minWidth,textSize,maximise} 
+    : 
+    {
+        eachnote:Note,
+        noteCategory:NoteCategory,
+        index:number,
+        minHeight:string,
+        minWidth:string,
+        textSize:number,
+        maximise:boolean
+    }
 ) {
-   const handleEditNote = (title:string,description:string,color:string,textColor:string) => {
-    console.log(title,description,color,textColor)
-   }
-   
+    const {notes,setNotes} = useAppContext()
+
+    const handleEditNote = (
+        title: string,
+        description: string,
+        color: string,
+        textColor: string
+      ) => {
+        
+        // Ensure a new array and objects are returned to trigger a rerender
+        const newNotes = notes.map((category) => {
+          if (category._id === noteCategory._id) {
+            // Map over the notes array and update the specific note
+            const updatedNotes = category.notes.map((note) => {
+              if (note._id === eachnote._id) {
+                return {
+                  ...note, // Create a new object for the note
+                  notetitle: title,
+                  notedescription: description,
+                  backgroundColor: color,
+                  textColor: textColor,
+                };
+              }
+              return note; // Return the original note if it doesn't match
+            });
+      
+            // Return a new category object with updated notes
+            return {
+              ...category, // Spread the category to ensure we don't mutate it
+              notes: updatedNotes, // Replace the notes array with the updated one
+            };
+          }
+          return category; // Return the original category if it doesn't match
+        });
+      
+        // Update the state with a completely new reference
+        setNotes(JSON.parse(JSON.stringify(newNotes)))
+      };
+      
+      useEffect(()=> {
+        console.log(notes)
+      },[notes])
+
     return (
         <div
-            className="relative flex flex-col border p-2
+            className="relative flex flex-col border p-2 shadow-md hover:shadow-lg
                         hover:scale-110 hover:cursor-pointer transition ease-in-out delay-50"
             style={
                 {

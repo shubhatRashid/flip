@@ -5,9 +5,11 @@ import { FormEvent, useState,useEffect } from "react";
 import AddNoteDialogbox from "./AddNoteDialogbox"
 import { generateHex24 } from "@/utils/functions";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/utils/context/AppContext";
 
 export default function EachNoteCategory(
-    {eachCategory,notes,setNotes}:{eachCategory:NoteCategory,notes:NoteCategory[],setNotes:React.Dispatch<React.SetStateAction<NoteCategory[]>>}) {
+    {eachCategory}:{eachCategory:NoteCategory}) {
+    const {notes,setNotes} = useAppContext()
     const [selectedCategory,setSelectedCategory] = useState('')
     const [renameCategory,setRenameCategory] = useState('')
     const [newCategoryName,setNewCategoryName] = useState('')
@@ -129,6 +131,7 @@ export default function EachNoteCategory(
                         <EachNote 
                         key={index} 
                         eachnote={eachnote} 
+                        noteCategory = {eachCategory}
                         index={index} 
                         minHeight="150px" 
                         minWidth="100px" 

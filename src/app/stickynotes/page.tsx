@@ -1,16 +1,14 @@
 'use client'
 import { useSession } from "next-auth/react";
 import { SignInPage,Loader } from "@/components";
-import { useEffect, useState } from "react";
 import {EachNoteCategory} from "@/components";
-import {data} from "@/utils/data";
 import { generateHex24 } from "@/utils/functions";
 import { CirclePlus } from "lucide-react";
-import { todo } from "node:test";
+import { useAppContext } from "@/utils/context/AppContext";
 
 export default function Page() {
     const {data:session,status} = useSession()
-    const [notes,setNotes] = useState(data)
+    const {notes,setNotes} = useAppContext()
 
     const handleAddNewCategory = () => {
         const newCategory = {
@@ -24,6 +22,7 @@ export default function Page() {
 
     }
 
+
     if (status === 'loading') return <Loader/>
     if (status === 'unauthenticated') return <SignInPage/>
     
@@ -31,7 +30,7 @@ export default function Page() {
         <div className='flex flex-wrap justify-evenly items-center gap-10 w-full h-full pt-5 '>
 
             {notes.map((eachCategory,index) => (
-                <EachNoteCategory key={index} eachCategory={eachCategory} notes={notes} setNotes={setNotes}/>
+                <EachNoteCategory key={index} eachCategory={eachCategory}/>
             ))}
 
             <div className="flex  w-full justify-end items-center mt-auto py-2">

@@ -1,11 +1,11 @@
 'use client'
-import data from "@/utils/data";
 import { useEffect, useState } from "react";
 import { EachNote } from "@/components";
+import { useAppContext } from "@/utils/context/AppContext";
 
 export default function Page({params}:{params:Promise<{categoryid:string}>}) {
     const [categoryid,setCategoryid] = useState('')
-    const [allnotes,setAllNotes] = useState(data)
+    const {notes} = useAppContext()
 
     useEffect(() => {
         const resolveParams = async () => {
@@ -15,7 +15,7 @@ export default function Page({params}:{params:Promise<{categoryid:string}>}) {
         resolveParams()
     },[params])
 
-    const currCategory = allnotes.filter((note) => note._id === categoryid)[0]
+    const currCategory = notes.filter((noteCategory) => noteCategory._id === categoryid)[0]
 
     return (
         <div className={`flex w-full h-full flex-wrap justify-evenly items-center gap-5`}>
@@ -24,6 +24,7 @@ export default function Page({params}:{params:Promise<{categoryid:string}>}) {
                     <EachNote 
                     key={index} 
                     eachnote={eachnote} 
+                    noteCategory={currCategory}
                     index={index} 
                     minHeight="300px" 
                     minWidth="200px" 
