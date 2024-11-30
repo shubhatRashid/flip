@@ -34,7 +34,7 @@ export default function Page() {
 
     
     return (
-        <div className="flex  w-full h-[20%] sm:h-[30%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center gap-3">
+        <div className="flex flex-col sm:flex-row  w-full h-full sm:max-h-[50%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center gap-3 pt-5">
 
             <div className="flex flex-col  w-full h-full justify-center items-center gap-2">
                 <div  className="flex w-full h-[90%] justify-center items-center gap-1">
@@ -55,7 +55,7 @@ export default function Page() {
                 </div>
 
                 <div className="flex w-full h-[10%] justify-center items-center">
-                    <h1 className="font-mono">HOURS</h1>
+                    <h1 className="font-mono">MINUTES</h1>
                 </div>
             </div>
 

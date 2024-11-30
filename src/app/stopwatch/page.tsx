@@ -3,6 +3,8 @@ import { Digit,SignInPage,Loader} from "@/components";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Sign } from "crypto";
+import { Pause, Play, TimerReset } from "lucide-react";
+import { ResetIcon } from "@radix-ui/react-icons";
 
 export default function Page() {
     const {data:session,status} = useSession()
@@ -33,7 +35,7 @@ export default function Page() {
     if (status === 'unauthenticated') return <SignInPage/>
 
     return (
-        <div className="flex  w-full h-[20%] sm:h-[30%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center px-[10%] gap-7">
+        <div className="flex flex-col sm:flex-row  w-full h-full sm:h-[30%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center px-[10%] gap-5 pt-5">
 
             <div className="flex flex-col w-full h-full justify-center items-center gap-3">
                 <div  className="flex w-full h-[90%] justify-center items-center gap-1">
@@ -65,16 +67,23 @@ export default function Page() {
                 </div>
             </div>
 
-             <div className=" absolute bottom-[5%] flex justify-center items-center">
-                <div  className="flex p-2 w-full h-full justify-evenly items-center gap-5 bg-gray-100 rounded-xl">
+             <div className=" absolute bottom-5 flex justify-between items-center w-full p-10 sm:p-20">
                     <button 
-                        className="border rounded-xl p-2 font-bold font-serif" 
+                        className="border rounded-xl p-2 font-bold font-serif hover:bg-gray-100 hover:scale-110" 
+                        title="reset"
+                        onClick={reset}
+                    >
+                        <TimerReset />
+                    </button>
+
+                    <button 
+                        className="border rounded-xl p-2 font-bold font-serif hover:bg-gray-100 hover:scale-110" 
                         onClick={() => !start? setStart(true):setStart(false)}
-                    >   {start? 'STOP' : 'START'}</button>
-                    <button 
-                        className="border rounded-xl p-2 font-bold font-serif" 
-                        onClick={reset}>Reset</button>
-                </div>
+                        title= {start? 'pause' : 'play' }
+                    >   
+                        {start? <Pause/> : <Play/> }
+                    </button>
+                    
             </div>
 
         </div>

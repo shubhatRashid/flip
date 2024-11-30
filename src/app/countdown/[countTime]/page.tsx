@@ -56,8 +56,6 @@ export default function Page(
         </div>
       </div>
 
-      <Digit value={":"} width={0.5} />
-
       <div className="flex flex-col w-full h-full justify-center items-center gap-3">
         <div className="flex w-full h-[90%] justify-center items-center gap-1">
           <Digit value={minutes[0]} width={1} />
@@ -67,8 +65,6 @@ export default function Page(
           <h1 className="font-mono">MINUTES</h1>
         </div>
       </div>
-
-      <Digit value={":"} width={0.5} />
 
       <div className="flex flex-col w-full h-full justify-center items-center gap-3">
         <div className="flex w-full h-[90%] justify-center items-center gap-1">
