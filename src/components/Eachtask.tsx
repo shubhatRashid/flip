@@ -35,7 +35,7 @@ export default function Eachtask(
 
     const deleteTask = async (category: string, id: string) => {
         try {
-            const response = await fetch('/api/deleteTask',{
+            const response = await fetch('/api/todolist/deleteTask',{
                 method:'DELETE',
                 body : JSON.stringify({categoryName:category,id:id})
             })
@@ -68,7 +68,7 @@ export default function Eachtask(
 
     const handleCheckedChange = async (category: string, id: string,bool:boolean) => {
         try {
-            const response = await fetch('/api/completeTask',{
+            const response = await fetch('/api/todolist/completeTask',{
                 method:'POST',
                 body : JSON.stringify({categoryName:category,id:id,bool:!bool})
             })
@@ -105,7 +105,7 @@ export default function Eachtask(
     const handleEditTask = async (e:FormEvent,category: string, id:string) => {
         e.preventDefault()
         try {
-            const response = await fetch('/api/updateTask',{
+            const response = await fetch('/api/todolist/updateTask',{
                 method:'PUT',
                 body : JSON.stringify({categoryName:category,id:id,newTask:newTask})
             })

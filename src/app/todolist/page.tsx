@@ -29,7 +29,7 @@ export default function Page() {
                 newTask : newTask
             }
 
-            const response = await fetch('/api/addNewTask',{
+            const response = await fetch('/api/todolist/addNewTask',{
                 method : 'POST',
                 body : JSON.stringify(body)
             })
@@ -62,7 +62,7 @@ export default function Page() {
             const body = {
                 categoryName : category,
             }
-            const response = await fetch('/api/deleteCategory',{
+            const response = await fetch('/api/todolist/deleteCategory',{
                 method:'DELETE',
                 body : JSON.stringify(body)
             })
@@ -99,7 +99,7 @@ export default function Page() {
                 categoryName : category,
                 newCategoryName : newCategory
             }
-            const response = await fetch('/api/renameCategory',{
+            const response = await fetch('/api/todolist/renameCategory',{
                 method:'PUT',
                 body : JSON.stringify(body)
             })
@@ -131,7 +131,7 @@ export default function Page() {
 
     const handleAddNewCategory = async () => {
         try {
-            const response = await fetch('/api/addNewCategory',{
+            const response = await fetch('/api/todolist/addNewCategory',{
                 method:'POST'
             })
             if (!response.ok){
@@ -158,7 +158,7 @@ export default function Page() {
 
     const getAllData = async () => {
         try {
-            let response = await fetch('/api/data');
+            let response = await fetch('/api/todolist/data');
             
             if (response.ok) {
                 let data = await response.json(); // Parse the response body as JSON
