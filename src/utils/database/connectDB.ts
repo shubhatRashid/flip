@@ -27,7 +27,6 @@ export async function connectDB(): Promise<mongoose.Mongoose> {
   if (!cached.promise) {
     const options = {
       bufferCommands: false,
-      useUnifiedTopology:true,
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, options).then((mongoose) => mongoose);

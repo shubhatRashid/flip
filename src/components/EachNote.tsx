@@ -4,7 +4,6 @@ import { Permanent_Marker,Caveat } from 'next/font/google';
 import AddNoteDialogBox from "./AddNoteDialogbox";
 import {useEffect } from "react";
 import { useAppContext } from "@/utils/context/AppContext";
-import { json } from "stream/consumers";
 const EditNoteDialogBox = AddNoteDialogBox
 const permanent_Marker = Permanent_Marker({weight:'400', subsets: ['latin'] })
 const caveat = Caveat({weight:'700', subsets: ['latin'] })

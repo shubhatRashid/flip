@@ -208,7 +208,7 @@ export default function Page() {
                             </form>
                             :
                             <h1 
-                                className={`text-2xl flex justify-center items-center p-1 capitalize ${permanent_Marker.className}`}
+                                className={`text-2xl flex justify-center items-center p-1 pr-10 capitalize ${permanent_Marker.className}`}
                                 style={{
                                     opacity:todo.category === 'new category...'? '50%' : '100%',
                                     textTransform:todo.category === 'new category...'? 'none':'capitalize'}}>

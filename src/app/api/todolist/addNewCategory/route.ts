@@ -30,8 +30,7 @@ export const POST = async (request: Request) => {
     });
 
   } catch (error) {
-    console.error('Database update error:', error);
-    return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+    return new Response(JSON.stringify({ error: 'Internal Server Error : Count not add a new category in todos' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
