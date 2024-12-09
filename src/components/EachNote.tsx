@@ -1,9 +1,10 @@
-import { Note,NoteCategory } from "@/utils/data";
 import { SquarePen } from "lucide-react";
 import { Permanent_Marker,Caveat } from 'next/font/google'; 
 import AddNoteDialogBox from "./AddNoteDialogbox";
 import {useEffect } from "react";
 import { useAppContext } from "@/utils/context/AppContext";
+import { useToast } from "@/hooks/use-toast";
+import { NoteCategoryType, NoteType } from "@/types";
 const EditNoteDialogBox = AddNoteDialogBox
 const permanent_Marker = Permanent_Marker({weight:'400', subsets: ['latin'] })
 const caveat = Caveat({weight:'700', subsets: ['latin'] })
@@ -12,8 +13,8 @@ export default function EachNote(
     {eachnote,noteCategory,index,minHeight,minWidth,textSize,maximise} 
     : 
     {
-        eachnote:Note,
-        noteCategory:NoteCategory,
+        eachnote:NoteType,
+        noteCategory:NoteCategoryType,
         index:number,
         minHeight:string,
         minWidth:string,
@@ -22,6 +23,7 @@ export default function EachNote(
     }
 ) {
     const {notes,setNotes} = useAppContext()
+    const {toast} = useToast()
 
     const handleEditNote = async (
         title: string,
@@ -67,10 +69,18 @@ export default function EachNote(
         
         try {
           const response = await fetch('/api/stickynotes/editnote',{method:'PUT',body:body})
+          if (!response.ok){
+            throw new Error(`${response.status}`,{cause:response.statusText})
+        }
           const data = await response.json()
           setNotes(data)
-        } catch (error) {
-          console.log(error)
+        } catch (error:any) {
+          const errorBody = {
+            title : error.message ,
+            description : `${error.name} : ${error.cause}`
+        }
+        toast(errorBody)
+        setTimeout(() => window.location.reload(),3000)
         }
       };
       

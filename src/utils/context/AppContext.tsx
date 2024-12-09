@@ -28,14 +28,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
             setTodos(parsedData.todos);
             setNotes(parsedData.stickynotes)
         } else {
-            toast({title:`${response.status}`,description:response.statusText})
+            throw new Error(`${response.status}`,{cause:response.statusText})
         }
     } catch (error:any) {
         const errorBody = {
-            title : `${error.name} : ${error.cause}`,
-            description : error.message
+            title : error.message,
+            description : `${error.name} : ${error.cause}`
         }
         toast(errorBody)
+        setTimeout(() => window.location.reload(),3000)
     }
 };
 

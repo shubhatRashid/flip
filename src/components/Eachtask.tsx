@@ -63,6 +63,7 @@ export default function Eachtask(
                 description : error.message
             }
             toast(errorBody)
+            setTimeout(() => window.location.reload(),3000)
         }
     };
 
@@ -99,6 +100,7 @@ export default function Eachtask(
                 description : error.message
             }
             toast(errorBody)
+            setTimeout(() => window.location.reload(),3000)
         }
     };
 
@@ -138,6 +140,7 @@ export default function Eachtask(
                 description : error.message
             }
             toast(errorBody)
+            setTimeout(() => window.location.reload(),3000)
         }
     };
 

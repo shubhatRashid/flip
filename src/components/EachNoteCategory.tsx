@@ -1,4 +1,3 @@
-import { NoteCategory } from "@/utils/data";
 import EachNote from "./EachNote";
 import { CirclePlus, FolderPen, Maximize } from "lucide-react";
 import { FormEvent, useState,useEffect } from "react";
@@ -6,14 +5,18 @@ import AddNoteDialogbox from "./AddNoteDialogbox"
 import { generateHex24 } from "@/utils/functions";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/utils/context/AppContext";
+import { useToast } from "@/hooks/use-toast";
+import { error } from "console";
+import { NoteCategoryType } from "@/types";
 
 export default function EachNoteCategory(
-    {eachCategory}:{eachCategory:NoteCategory}) {
+    {eachCategory}:{eachCategory:NoteCategoryType}) {
     const {notes,setNotes} = useAppContext()
     const [selectedCategory,setSelectedCategory] = useState('')
     const [renameCategory,setRenameCategory] = useState('')
     const [newCategoryName,setNewCategoryName] = useState('')
     const router = useRouter()
+    const {toast} = useToast()
 
     const handleRenameCategory = async (e:FormEvent) => {
         e.preventDefault()
@@ -35,10 +38,20 @@ export default function EachNoteCategory(
 
         try {
             const response = await fetch('/api/stickynotes/renamecategory',{method:'PUT',body:body})
+            console.log(response)
+            if (!response.ok){
+                throw new Error(`${response.status}`,{cause:response.statusText})
+                
+            }
             const data = await response.json()
             setNotes(data)
-        } catch (error) {
-            console.log(error)
+        } catch (error:any) {
+            const errorBody = {
+                title : error.message,
+                description : `${error.name} : ${error.cause}`
+            }
+            toast(errorBody)
+            setTimeout(() => window.location.reload(),2000)
         }
     }
 
@@ -54,10 +67,18 @@ export default function EachNoteCategory(
         })
         try {
             const response = await fetch('/api/stickynotes/deletecategory',{method:'POST',body:body})
+            if (!response.ok){
+                throw new Error(`${response.status}`,{cause:response.statusText})
+            }
             const data = await response.json()
             setNotes(data)
-        } catch (error) {
-            console.log(error)
+        } catch (error:any) {
+            const errorBody = {
+                title : error.message ,
+                description : `${error.name} : ${error.cause}`
+            }
+            toast(errorBody)
+            setTimeout(() => window.location.reload(),2000)
         }
     }
 
@@ -88,10 +109,18 @@ export default function EachNoteCategory(
         })
         try {
             const response = await fetch('/api/stickynotes/addnewnote',{method:'POST',body:body})
+            if (!response.ok){
+                throw new Error(`${response.status}`,{cause:response.statusText})
+            }
             const data = await response.json()
             setNotes(data)
-        } catch (error) {
-            console.log(error)
+        } catch (error:any) {
+            const errorBody = {
+                title : error.message ,
+                description : `${error.name} : ${error.cause}`
+            }
+            toast(errorBody)
+            setTimeout(() => window.location.reload(),3000)
         }
     }
 

@@ -54,6 +54,7 @@ export default function Page() {
                 description : error.message
             }
             toast(errorBody)
+            setTimeout(() => window.location.reload(),3000)
         }
     };
 
@@ -82,6 +83,7 @@ export default function Page() {
                 title : 'Sucess',
                 description : 'category deleted sucessfully'
             })
+            
     
         } catch (error:any) {
             const errorBody = {
@@ -89,6 +91,7 @@ export default function Page() {
                 description : error.message
             }
             toast(errorBody)
+            setTimeout(() => window.location.reload(),3000)
         }
 
     };
@@ -127,6 +130,7 @@ export default function Page() {
                 description : error.message
             }
             toast(errorBody)
+            setTimeout(() => window.location.reload(),3000)
         }
     }
 
@@ -154,6 +158,7 @@ export default function Page() {
                 description : error.message
             }
             toast(errorBody)
+            setTimeout(() => window.location.reload(),3000)
         }
     }
 
