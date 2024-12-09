@@ -8,12 +8,13 @@ import { SignInPage,Loader,Eachtask} from "@/components";
 import { useSession } from "next-auth/react";
 import { CirclePlus, FolderPen } from "lucide-react";
 import { Permanent_Marker} from 'next/font/google'; 
+import { useAppContext } from "@/utils/context/AppContext";
 const permanent_Marker = Permanent_Marker({weight:'400', subsets: ['latin'] })
 
 export default function Page() {
     const {data:session,status} = useSession()
     const {toast} = useToast()
-    const [todos, setTodos] = useState<TodoType[]>([]);
+    const {todos,setTodos} = useAppContext()
     const [editingTask, setEditingTask] = useState<TaskType | null>(null);
     const [newTask, setNewTask] = useState<string>('');
     const [editingCategory,setEditingCategory] = useState<string>('')
@@ -156,32 +157,7 @@ export default function Page() {
         }
     }
 
-    const getAllData = async () => {
-        try {
-            let response = await fetch('/api/data');
-            
-            if (response.ok) {
-                let data = await response.json(); // Parse the response body as JSON
-    
-                setTodos(() =>JSON.parse(data).todos); // Assuming data is an array/object of todos
-            } else {
-                toast({title:`${response.status}`,description:response.statusText})
-            }
-        } catch (error:any) {
-            const errorBody = {
-                title : `${error.name} : ${error.cause}`,
-                description : error.message
-            }
-            toast(errorBody)
-        }
-    };
-    
-
-    useEffect(() => {
-        getAllData()
-    },[])
-
-    if (status === 'loading' || !todos) return <Loader/>
+    if (status === 'loading') return <Loader/>
     if (status === 'unauthenticated') return <SignInPage/> 
 
     return (
