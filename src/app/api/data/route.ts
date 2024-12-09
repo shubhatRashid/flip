@@ -19,13 +19,8 @@ export const GET = async (request: Request) => {
         const newUser = new User({
             name : session.user?.name,
             email : session.user?.email,
-            todos : {
-                category : 'new category...',
-                tasks: [{
-                    task : 'new task',
-                    completed : false
-                }]
-            }
+            todos : [],
+            stickynotes : []
         })
     
         await newUser.save()
@@ -33,7 +28,7 @@ export const GET = async (request: Request) => {
 
     let data = await User.findOne({name:session.user?.name})
      
-    return new Response(JSON.stringify(JSON.stringify(data?.todos)), {
+    return new Response(JSON.stringify(JSON.stringify(data)), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
       });

@@ -23,41 +23,55 @@ export default function EachNote(
 ) {
     const {notes,setNotes} = useAppContext()
 
-    const handleEditNote = (
+    const handleEditNote = async (
         title: string,
         description: string,
         color: string,
         textColor: string
       ) => {
-        
-        // Ensure a new array and objects are returned to trigger a rerender
+      
         const newNotes = notes.map((category) => {
           if (category._id === noteCategory._id) {
-            // Map over the notes array and update the specific note
             const updatedNotes = category.notes.map((note) => {
               if (note._id === eachnote._id) {
                 return {
-                  ...note, // Create a new object for the note
+                  ...note,
                   notetitle: title,
                   notedescription: description,
                   backgroundColor: color,
                   textColor: textColor,
                 };
               }
-              return note; // Return the original note if it doesn't match
+              return note; 
             });
-      
-            // Return a new category object with updated notes
             return {
-              ...category, // Spread the category to ensure we don't mutate it
-              notes: updatedNotes, // Replace the notes array with the updated one
+              ...category, 
+              notes: updatedNotes,
             };
           }
-          return category; // Return the original category if it doesn't match
+          return category; 
         });
-      
-        // Update the state with a completely new reference
         setNotes(JSON.parse(JSON.stringify(newNotes)))
+
+        const body = JSON.stringify({
+          category_id : noteCategory._id,
+          note_id : eachnote._id,
+          updatedNote : {
+            ...eachnote,
+            notetitle: title,
+            notedescription: description,
+            backgroundColor: color,
+            textColor: textColor,
+          }
+        })
+        
+        try {
+          const response = await fetch('/api/stickynotes/editnote',{method:'PUT',body:body})
+          const data = await response.json()
+          setNotes(data)
+        } catch (error) {
+          console.log(error)
+        }
       };
       
       useEffect(()=> {

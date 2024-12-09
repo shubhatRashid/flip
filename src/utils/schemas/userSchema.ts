@@ -6,5 +6,5 @@ export const userSchema = new  mongoose.Schema({
     name:String,
     email:String,
     todos : [todoSchema],
-    notes : [notesSchema]
+    stickynotes : [notesSchema]
 })

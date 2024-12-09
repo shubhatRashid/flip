@@ -15,7 +15,7 @@ export default function EachNoteCategory(
     const [newCategoryName,setNewCategoryName] = useState('')
     const router = useRouter()
 
-    const handleRenameCategory = (e:FormEvent) => {
+    const handleRenameCategory = async (e:FormEvent) => {
         e.preventDefault()
         let newNotesCategories = notes.map((noteCategory) => {
             if (noteCategory._id === eachCategory._id){
@@ -25,28 +25,56 @@ export default function EachNoteCategory(
         })
 
         setNotes(newNotesCategories)
+
+        const body = JSON.stringify(
+            {
+                categoryId : eachCategory._id,
+                newCategoryName:newCategoryName
+            }
+        )
+
+        try {
+            const response = await fetch('/api/stickynotes/renamecategory',{method:'PUT',body:body})
+            const data = await response.json()
+            setNotes(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    const handleDeleteCategory = (id:string) => {
+    const handleDeleteCategory = async (id:string) => {
         let newNotesCategories = notes.filter((noteCategory) => {
             return noteCategory._id != id
         })
 
         setNotes(() => newNotesCategories)
+
+        const body = JSON.stringify({
+            categoryId : id
+        })
+        try {
+            const response = await fetch('/api/stickynotes/deletecategory',{method:'POST',body:body})
+            const data = await response.json()
+            setNotes(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    const handleAddNewNote = (title:string,description:string,color:string,textColor:string) => {
+    const handleAddNewNote = async (title:string,description:string,color:string,textColor:string) => {
+        const newNote = {
+            _id: generateHex24(),
+            notetitle: title,
+            notedescription: description,
+            noteDate: "2024-11-24",
+            noteTime: "11:00 AM",
+            backgroundColor:  color,
+            textColor:textColor
+        }
+
         let newNotesCategories = notes.map((noteCategory) => {
             if (noteCategory._id === eachCategory._id){
-                noteCategory.notes.push({
-                    _id: generateHex24(),
-                    notetitle: title,
-                    notedescription: description,
-                    noteDate: "2024-11-24",
-                    noteTime: "11:00 AM",
-                    backgroundColor:  color,
-                    textColor:textColor
-                })
+                noteCategory.notes.push(newNote)
 
                 return noteCategory
             }
@@ -54,6 +82,17 @@ export default function EachNoteCategory(
         })
 
         setNotes(newNotesCategories)
+        const body = JSON.stringify({
+            category_id : eachCategory._id,
+            newNote : newNote,
+        })
+        try {
+            const response = await fetch('/api/stickynotes/addnewnote',{method:'POST',body:body})
+            const data = await response.json()
+            setNotes(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (

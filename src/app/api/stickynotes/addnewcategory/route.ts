@@ -12,16 +12,16 @@ export const GET = async (request:Request) => {
           headers: { 'Content-Type': 'application/json' }
         });
       }
-    await connectDB()
 
     try {
+        await connectDB()
         const updatedUser = await User.findOneAndUpdate(
             {name:session.user?.name},
-            {$push:{'notes':{category:'new category...',notes:[]}}},
+            {$push:{'stickynotes':{category:'new category...',notes:[]}}},
             {new:true}
         )
 
-        return new Response(JSON.stringify(updatedUser.notes),{
+        return new Response(JSON.stringify(updatedUser.stickynotes),{
             status:200,
             headers:{'Content-Type':'application/json'}
         })

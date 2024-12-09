@@ -10,15 +10,22 @@ export default function Page() {
     const {data:session,status} = useSession()
     const {notes,setNotes} = useAppContext()
 
-    const handleAddNewCategory = () => {
+    const handleAddNewCategory = async() => {
         const newCategory = {
             _id : generateHex24(),
             category : 'new category...',
             notes : []
         }
-
         setNotes((prevNotes) => [...prevNotes,newCategory])
         document.getElementById('new category...')?.focus()
+        
+        try {
+            const response = await fetch('/api/stickynotes/addnewcategory')
+            const data = await response.json()
+            setNotes(data)
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 

@@ -158,12 +158,12 @@ export default function Page() {
 
     const getAllData = async () => {
         try {
-            let response = await fetch('/api/todolist/data');
+            let response = await fetch('/api/data');
             
             if (response.ok) {
                 let data = await response.json(); // Parse the response body as JSON
     
-                setTodos(() =>JSON.parse(data)); // Assuming data is an array/object of todos
+                setTodos(() =>JSON.parse(data).todos); // Assuming data is an array/object of todos
             } else {
                 toast({title:`${response.status}`,description:response.statusText})
             }
