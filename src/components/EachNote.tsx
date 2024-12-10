@@ -103,7 +103,7 @@ export default function EachNote(
         >   
             <h1 className={` ${permanent_Marker.className} ${textSize===1?'text-sm':'text-xl'} font-serif font-bold border-b`}>{eachnote.notetitle}</h1>
             <span 
-                className={` ${caveat.className} flex flex-wrap max-w-[100px] 
+                className={` ${caveat.className} flex flex-wrap ${!maximise ? 'max-w-[100px]' : 'max-w-[200px]'} 
                              ${textSize===1?'text-sm':'text-xl'} capitalize my-auto mx-auto`}
                 style={{color:eachnote.textColor}}
             >

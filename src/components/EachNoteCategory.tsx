@@ -82,52 +82,10 @@ export default function EachNoteCategory(
         }
     }
 
-    const handleAddNewNote = async (title:string,description:string,color:string,textColor:string) => {
-        const newNote = {
-            _id: generateHex24(),
-            notetitle: title,
-            notedescription: description,
-            noteDate: "2024-11-24",
-            noteTime: "11:00 AM",
-            backgroundColor:  color,
-            textColor:textColor
-        }
-
-        let newNotesCategories = notes.map((noteCategory) => {
-            if (noteCategory._id === eachCategory._id){
-                noteCategory.notes.push(newNote)
-
-                return noteCategory
-            }
-            return noteCategory
-        })
-
-        setNotes(newNotesCategories)
-        const body = JSON.stringify({
-            category_id : eachCategory._id,
-            newNote : newNote,
-        })
-        try {
-            const response = await fetch('/api/stickynotes/addnewnote',{method:'POST',body:body})
-            if (!response.ok){
-                throw new Error(`${response.status}`,{cause:response.statusText})
-            }
-            const data = await response.json()
-            setNotes(data)
-        } catch (error:any) {
-            const errorBody = {
-                title : error.message ,
-                description : `${error.name} : ${error.cause}`
-            }
-            toast(errorBody)
-            setTimeout(() => window.location.reload(),3000)
-        }
-    }
-
     return (
         <div 
             id={`${eachCategory.category}`}
-            className=" relative border p-1 rounded-lg flex flex-col gap-3 flex-wrap 
+            className=" relative z-10 border p-1 rounded-lg flex flex-col gap-3 flex-wrap 
                         max-w-[300px] max-h-[500px] min-h-[200px] min-w-[200px]
                         shadow-md bg-gray-50 
                         hover:scale-110 hover:shadow-xl hover:bg-gray-100 transition ease-in-out delay-50
@@ -195,22 +153,28 @@ export default function EachNoteCategory(
                 className={`flex flex-wrap justify-evenly items-center gap-5`}
             >
                 {
-                    eachCategory.notes.map((eachnote,index) => (
-                        <EachNote 
-                        key={index} 
-                        eachnote={eachnote} 
-                        noteCategory = {eachCategory}
-                        index={index} 
-                        minHeight="150px" 
-                        minWidth="100px" 
-                        textSize={1}
-                        maximise={false}/>
-                    ))
+                    eachCategory.notes.map((eachnote,index) => {
+                        if (index < 3){
+                            return (
+                            <EachNote 
+                                key={index} 
+                                eachnote={eachnote} 
+                                noteCategory = {eachCategory}
+                                index={index} 
+                                minHeight="150px" 
+                                minWidth="100px" 
+                                textSize={1}
+                                maximise={false}
+                            />
+                        )
+                        }
+                    })
+                    
                 }
             </div>
                 
-            <div className='flex justify-between items-center mt-auto '>  
-                <button className="hover:scale-125"
+            <div className='absolute w-full bottom-2 z-100 flex justify-between items-center mt-auto '>  
+                <button className="hover:scale-125 rounded-full  border bg-gray-200 p-1 border border-gray-500"
                      onClick =  {() => {
                                         router.push(`stickynotes/${eachCategory._id}`)
                                     } 
@@ -219,15 +183,6 @@ export default function EachNoteCategory(
                 >
                     <Maximize className="scale-75"/>  
                 </button>   
-                <div title="add new note" className="hover:scale-110 rounded-full">
-                    <AddNoteDialogBox 
-                        dialogTitle="Add New Note"
-                        dialogDescription="Enter the contents for a new note"
-                        submitFunction={handleAddNewNote} 
-                        defaultTitle="" defaultDescription="" defaultBgColor="#ff0000" defaultTextColor="#ff0000"
-                        icon = {<div><CirclePlus/></div>}
-                    />
-                </div>
             </div>
             
         </div>
