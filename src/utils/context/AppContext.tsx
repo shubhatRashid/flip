@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, Dispatch,useEffect } from 'react';
 import { NoteCategoryType, TodoType } from '@/types';
 import { useToast } from "@/hooks/use-toast";
+import { useSession } from 'next-auth/react';
 // Define the shape of the context state
 interface AppContextType {
   notes: NoteCategoryType[]; 
@@ -17,6 +18,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [notes, setNotes] = useState<NoteCategoryType[]>([]);
   const [todos, setTodos] = useState<TodoType[]>([])
   const {toast} = useToast()
+  const {data:session,status} = useSession()
 
   const getAllData = async () => {
     try {
@@ -41,8 +43,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 };
 
   useEffect(() => {
-      getAllData()
-  },[])
+      if (status === 'authenticated'){
+        getAllData()
+      }
+  },[status])
 
   return (
     <AppContext.Provider value={{ notes, setNotes,todos,setTodos }}>
