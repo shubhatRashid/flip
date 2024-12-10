@@ -17,10 +17,13 @@ export const PUT = async (request:Request) => {
     try {
         await connectDB()
         const updatedUser = await User.findOneAndUpdate(
-            {name:session.user?.name,'stickynotes._id':category_id,'stickynotes.notes._id' : note_id},
-            { $set: { 'stickynotes.$.notes': updatedNote }},
-            {new:true}
-        )
+            { name: session.user?.name, 'stickynotes._id': category_id, 'stickynotes.notes._id': note_id },
+            { $set: { 'stickynotes.$[].notes.$[note]': updatedNote }}, 
+            {
+              new: true,
+              arrayFilters: [{ 'note._id': note_id }] 
+            }
+          );
 
         return new Response(JSON.stringify(updatedUser.stickynotes),{
             status:200,

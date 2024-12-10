@@ -1,7 +1,7 @@
 import EachNote from "./EachNote";
 import { CirclePlus, FolderPen, Maximize } from "lucide-react";
 import { FormEvent, useState,useEffect } from "react";
-import AddNoteDialogbox from "./AddNoteDialogbox"
+import AddNoteDialogBox from "./AddNoteDialogbox"
 import { generateHex24 } from "@/utils/functions";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/utils/context/AppContext";
@@ -220,7 +220,7 @@ export default function EachNoteCategory(
                     <Maximize className="scale-75"/>  
                 </button>   
                 <div title="add new note" className="hover:scale-110 rounded-full">
-                    <AddNoteDialogbox 
+                    <AddNoteDialogBox 
                         dialogTitle="Add New Note"
                         dialogDescription="Enter the contents for a new note"
                         submitFunction={handleAddNewNote} 
