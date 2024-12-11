@@ -1,7 +1,7 @@
-import { SquarePen, Trash, } from "lucide-react";
+import { EllipsisVertical, GripHorizontal, GripVertical, SquarePen, Trash, } from "lucide-react";
 import { Permanent_Marker,Caveat } from 'next/font/google'; 
 import AddNoteDialogBox from "./AddNoteDialogbox";
-import {useEffect } from "react";
+import {useEffect, useState } from "react";
 import { useAppContext } from "@/utils/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { NoteCategoryType, NoteType } from "@/types";
@@ -24,6 +24,7 @@ export default function EachNote(
 ) {
     const {notes,setNotes} = useAppContext()
     const {toast} = useToast()
+    const [options,setOptions] = useState(false)
 
     const handleEditNote = async (
         title: string,
@@ -84,9 +85,41 @@ export default function EachNote(
         }
       };
 
-    const handleDeleteNote = async() => {
+    const handleDeleteNote = async () => {
+      
+        const newNotes = notes.map((category) => {
+          if (category._id === noteCategory._id) {
+            const updatedNotes = category.notes.filter((note) => note._id !== eachnote._id);
+            return {
+              ...category, 
+              notes: updatedNotes,
+            };
+          }
+          return category; 
+        });
+        setNotes(JSON.parse(JSON.stringify(newNotes)))
 
-    }
+        const body = JSON.stringify({
+          category_id : noteCategory._id,
+          note_id : eachnote._id,
+        })
+        
+        try {
+          const response = await fetch('/api/stickynotes/deletenote',{method:'POST',body:body})
+          if (!response.ok){
+            throw new Error(`${response.status}`,{cause:response.statusText})
+        }
+          const data = await response.json()
+          setNotes(data)
+        } catch (error:any) {
+          const errorBody = {
+            title : error.message ,
+            description : `${error.name} : ${error.cause}`
+        }
+        toast(errorBody)
+        setTimeout(() => window.location.reload(),3000)
+        }
+      };
       
       useEffect(()=> {
         console.log(notes)
@@ -104,8 +137,12 @@ export default function EachNote(
                     minWidth:minWidth
                 }
             }
-        >   
-            <h1 className={` ${permanent_Marker.className} ${textSize===1?'text-sm':'text-xl'} font-serif font-bold border-b`}>{eachnote.notetitle}</h1>
+        >
+            <div className="flex justify-between items-center">
+              <h1 className={` ${permanent_Marker.className} ${textSize===1?'text-sm':'text-xl'} font-serif font-bold border-b`}>{eachnote.notetitle}</h1>
+               {maximise && <button title='options'><EllipsisVertical className="scale-75" onClick={() => setOptions(!options)} /></button> }
+            </div>
+            
             <span 
                 className={` ${caveat.className} flex flex-wrap ${!maximise ? 'max-w-[100px]' : 'max-w-[200px]'} 
                              ${textSize===1?'text-sm':'text-xl'} capitalize my-auto mx-auto`}
@@ -114,24 +151,27 @@ export default function EachNote(
                 {eachnote.notedescription}
             </span>
 
-            <div className="flex w-full gap-5">
-                {
-                    maximise && 
-                    <div className="absolute bottom-2 left-0  px-2 flex w-full justify-between items-center ml-auto">
-                        <EditNoteDialogBox 
-                            dialogTitle="Edit Note"
-                            dialogDescription="Edit the contents to update the note"
-                            submitFunction={handleEditNote}
-                            defaultTitle={eachnote.notetitle}
-                            defaultDescription={eachnote.notedescription}
-                            defaultBgColor={eachnote.backgroundColor}
-                            defaultTextColor={eachnote.textColor}
-                            icon = {<div><SquarePen/></div>}
-                        />
-                        <Trash onClick={handleDeleteNote}/>
-                    </div>
-                }
-            </div>
+          
+            {
+                options && 
+                <div className="absolute bottom-2  px-2 flex w-[50%] justify-evenly items-center ml-auto border border-black rounded-lg">
+                    <button title="edit note">
+                      <EditNoteDialogBox 
+                          dialogTitle="Edit Note"
+                          dialogDescription="Edit the contents to update the note"
+                          submitFunction={handleEditNote}
+                          defaultTitle={eachnote.notetitle}
+                          defaultDescription={eachnote.notedescription}
+                          defaultBgColor={eachnote.backgroundColor}
+                          defaultTextColor={eachnote.textColor}
+                          icon = {<div className="scale-75"><SquarePen/></div>}
+                      />
+                    </button>
+                    <button title="delete" onClick={handleDeleteNote}>
+                      <Trash className="scale-75 hover:scale-100"/>
+                    </button>
+                </div>
+            }
 
         </div>
     );
