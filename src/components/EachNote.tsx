@@ -138,7 +138,7 @@ export default function EachNote(
                 }
             }
         >
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-5">
               <h1 className={` ${permanent_Marker.className} ${textSize===1?'text-sm':'text-xl'} font-serif font-bold border-b`}>{eachnote.notetitle}</h1>
                {maximise && <button title='options'><EllipsisVertical className="scale-75" onClick={() => setOptions(!options)} /></button> }
             </div>
