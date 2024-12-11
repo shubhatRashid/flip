@@ -148,7 +148,11 @@ export default function EachNote(
                              ${textSize===1?'text-sm':'text-xl'} capitalize my-auto mx-auto`}
                 style={{color:eachnote.textColor}}
             >
-                {eachnote.notedescription}
+                {
+                !maximise && eachnote.notedescription.length > 100 ? 
+                  eachnote.notedescription.slice(0,100) + ' ...' 
+                : 
+                  eachnote.notedescription}
             </span>
 
           
