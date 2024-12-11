@@ -1,4 +1,4 @@
-import { SquarePen } from "lucide-react";
+import { SquarePen, Trash, } from "lucide-react";
 import { Permanent_Marker,Caveat } from 'next/font/google'; 
 import AddNoteDialogBox from "./AddNoteDialogbox";
 import {useEffect } from "react";
@@ -83,6 +83,10 @@ export default function EachNote(
         setTimeout(() => window.location.reload(),3000)
         }
       };
+
+    const handleDeleteNote = async() => {
+
+    }
       
       useEffect(()=> {
         console.log(notes)
@@ -113,7 +117,7 @@ export default function EachNote(
             <div className="flex w-full gap-5">
                 {
                     maximise && 
-                    <button className=" ml-auto">
+                    <div className="absolute bottom-2 left-0  px-2 flex w-full justify-between items-center ml-auto">
                         <EditNoteDialogBox 
                             dialogTitle="Edit Note"
                             dialogDescription="Edit the contents to update the note"
@@ -123,8 +127,9 @@ export default function EachNote(
                             defaultBgColor={eachnote.backgroundColor}
                             defaultTextColor={eachnote.textColor}
                             icon = {<div><SquarePen/></div>}
-                            />
-                    </button>
+                        />
+                        <Trash onClick={handleDeleteNote}/>
+                    </div>
                 }
             </div>
 
