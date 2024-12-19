@@ -2,9 +2,7 @@
 import { Digit,SignInPage,Loader} from "@/components";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { Sign } from "crypto";
 import { Pause, Play, TimerReset } from "lucide-react";
-import { ResetIcon } from "@radix-ui/react-icons";
 
 export default function Page() {
     const {data:session,status} = useSession()

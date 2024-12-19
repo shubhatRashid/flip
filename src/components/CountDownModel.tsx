@@ -1,16 +1,19 @@
 'use client'
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSidebar } from "./ui/sidebar";
 
 export default function CountDownModel({setShowCountDown}:{setShowCountDown:Dispatch<SetStateAction<boolean>>}) {
     const router = useRouter()
     const [hours,setHours] = useState('0')
     const [minutes,setMinutes] = useState('0')
     const [seconds,setSeconds] = useState('0')
-    
+    const {setOpen} = useSidebar()
+
     const handleStart = () => {
         const time = (Number(hours)*3600)+(Number(minutes)*60)+Number(seconds)
         router.push(`/countdown/${time}`)
+        setOpen(false)
         setHours('0')
         setMinutes('0')
         setSeconds('0')
