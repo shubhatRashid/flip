@@ -54,7 +54,7 @@ export default function AddNoteDialogBox(
             <Label htmlFor="username" className="text-right">
               Description
             </Label>
-            <Input id="username" value={description} onChange={(e) => setDescription(e.target.value)} className="col-span-3" />
+            <textarea id="username" value={description} onChange={(e) => setDescription(e.target.value)} className="col-span-3 border p-3 rounded-md" />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="color" className="text-right">

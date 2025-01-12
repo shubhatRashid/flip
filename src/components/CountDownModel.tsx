@@ -1,7 +1,7 @@
 'use client'
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSidebar } from "./ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar"
 
 export default function CountDownModel({setShowCountDown}:{setShowCountDown:Dispatch<SetStateAction<boolean>>}) {
     const router = useRouter()
