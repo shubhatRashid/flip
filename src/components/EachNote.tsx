@@ -127,8 +127,9 @@ export default function EachNote(
 
     return (
         <div
-            className="relative flex flex-col border p-2 shadow-md hover:shadow-lg
-                        hover:scale-110 hover:cursor-pointer transition ease-in-out delay-50"
+            className={`relative flex flex-col border p-1 shadow-md hover:shadow-lg
+                        hover:scale-110 hover:cursor-pointer transition ease-in-out delay-50
+                        ${!maximise ? 'max-w-[100px]' : 'max-w-[300px]'} `}
             style={
                 {
                     backgroundColor: eachnote.backgroundColor,
@@ -143,17 +144,18 @@ export default function EachNote(
                {maximise && <button title='options'><EllipsisVertical className="scale-75" onClick={() => setOptions(!options)} /></button> }
             </div>
             
-            <span 
-                className={` ${caveat.className} flex flex-wrap ${!maximise ? 'max-w-[100px]' : 'max-w-[200px]'} 
-                             ${textSize===1?'text-sm':'text-xl'} capitalize my-auto mx-auto`}
+            <p 
+                className={` ${caveat.className} flex 
+                             ${textSize===1?'text-sm':'text-xl'} capitalize p-3
+                             whitespace-pre-wrap`}
                 style={{color:eachnote.textColor}}
             >
                 {
-                !maximise && eachnote.notedescription.length > 100 ? 
-                  eachnote.notedescription.slice(0,100) + ' ...' 
+                !maximise && eachnote.notedescription.length > 50 ? 
+                  eachnote.notedescription.slice(0,50) + ' ...' 
                 : 
                   eachnote.notedescription}
-            </span>
+            </p>
 
           
             {

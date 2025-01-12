@@ -150,7 +150,7 @@ export default function EachNoteCategory(
             </div>
 
             <div 
-                className={`flex flex-wrap justify-evenly items-center gap-5`}
+                className={`flex flex-wrap justify-evenly items-center gap-2`}
             >
                 {
                     eachCategory.notes.map((eachnote,index) => {
@@ -183,6 +183,7 @@ export default function EachNoteCategory(
                 >
                     <Maximize className="scale-75"/>  
                 </button>   
+                {eachCategory.notes.length - 3 > 0 && <p className="pr-3 mt-auto text-gray-400 text-xs">{eachCategory.notes.length - 3} more</p>}
             </div>
             
         </div>
