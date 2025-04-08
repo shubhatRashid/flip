@@ -45,8 +45,8 @@ export default function Page(
   let seconds = (time % 60).toString().padStart(2, '0');
 
   return (
-    <div className="flex flex-col sm:flex-row  w-full h-full sm:h-[30%] md:h-[40%] lg:h-[50%] xl:h-[60%] justify-evenly items-center px-[10%] gap-5 pt-5">
-      <div className="flex flex-col w-full h-full justify-center items-center gap-3">
+    <div className="flex flex-col sm:flex-row  w-full h-screen justify-evenly items-center px-[10%] gap-5 pt-5">
+      <div className="flex flex-col w-full h-[50%] justify-center items-center gap-3">
         <div className="flex w-full h-[90%] justify-center items-center gap-1">
           <Digit value={hours[0]} width={1} />
           <Digit value={hours[1]} width={1} />
@@ -56,7 +56,7 @@ export default function Page(
         </div>
       </div>
 
-      <div className="flex flex-col w-full h-full justify-center items-center gap-3">
+      <div className="flex flex-col w-full h-[50%] justify-center items-center gap-3">
         <div className="flex w-full h-[90%] justify-center items-center gap-1">
           <Digit value={minutes[0]} width={1} />
           <Digit value={minutes[1]} width={1} />
@@ -66,7 +66,7 @@ export default function Page(
         </div>
       </div>
 
-      <div className="flex flex-col w-full h-full justify-center items-center gap-3">
+      <div className="flex flex-col w-full h-[50%] justify-center items-center gap-3">
         <div className="flex w-full h-[90%] justify-center items-center gap-1">
           <Digit value={seconds[0]} width={1} />
           <Digit value={seconds[1]} width={1} />

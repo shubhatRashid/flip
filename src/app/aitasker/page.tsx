@@ -31,6 +31,7 @@ const aitasker = () => {
     }
     toast(toastBody)
     setResult(false)
+    setPrompt('')
   }
   const { data: session,status } = useSession();
 
