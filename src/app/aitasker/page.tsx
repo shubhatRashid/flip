@@ -1,21 +1,38 @@
 'use client'
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { Check, Clipboard, LoaderCircle } from "lucide-react"
 import { Loader, SignInPage } from "@/components"
 import { useSession } from "next-auth/react"
+import { useToast } from "@/hooks/use-toast"
+
 const aitasker = () => {
   const [prompt,setPrompt] = useState('')
-  const [result,setResult] = useState(true)
+  const [result,setResult] = useState(false)
+  const [dataLoading,setDataLoading] = useState(false)
+  const {toast} = useToast()
+
   const handleForm = (e) => {
     e.preventDefault()
-    setResult(true)
+    setDataLoading(true)
     setTimeout(() => {
-      setResult(false)
+      setDataLoading(false)
+      setResult(true)
+      const toastBody = {
+        title : 'Tasks generated' ,
+        description : "Your work has been broken down sucessfully",
+      }
+    toast(toastBody)
     },2000)
   }
-
+  const handleApprove = () => {
+    const toastBody = {
+      title : 'Tasks approved' ,
+      description : "check your tasks section for the approved tasks",
+    }
+    toast(toastBody)
+    setResult(false)
+  }
   const { data: session,status } = useSession();
-  const [showCountDown,setShowCountDown] = useState(false)
 
   if (status === 'loading'){
     return <Loader/>
@@ -25,7 +42,7 @@ const aitasker = () => {
     return <SignInPage/>
   }
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-5 overflow-y-auto  bg-gray-50">
+    <div className="w-full flex flex-col justify-center items-center gap-5 bg-gray-50 min-h-screen">
     
       <div className="w-full h-full flex flex-col justify-center items-center gap-5">
         <h1 className="text-4xl font-bold ">AI Task Breakdown</h1>
@@ -51,7 +68,7 @@ const aitasker = () => {
         </div>
       </div>
 
-      {/* <LoaderCircle className="animate-spin" size={32}/> */}
+      {dataLoading && <LoaderCircle className="animate-spin" size={32}/>}
 
       {
         result &&
@@ -82,7 +99,13 @@ const aitasker = () => {
         
             </ul>
 
-            <button className="text-white flex justify-center items-center ml-auto bg-green-500 p-2 rounded-lg"><Check className="mx-2" size={20}/>Approve</button>
+            <button 
+              className="text-white flex justify-center items-center ml-auto bg-green-500 p-2 rounded-lg"
+              onClick={handleApprove}
+            > 
+              <Check className="mx-2" size={20}/>
+              Approve
+            </button>
           </div>
         </div>
       }
