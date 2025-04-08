@@ -13,12 +13,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="relative flex flex-col w-[100dvw] h-[100dvh] justify-between items-center">
+      <body className="relative flex flex-col w-[100dvw] justify-between items-center">
         <SessionProvider>
           <Toaster/>
           <Header/>
           <AppProvider>
-            <div className="flex w-full h-full justify-center items-center px-5 py-7 overflow-scroll"> {children}</div>
+            <div className="flex w-full min-h-[100dvh] justify-center items-center px-5 py-7 overflow-scroll"> {children}</div>
           </AppProvider>
         </SessionProvider>
       </body>

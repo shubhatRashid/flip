@@ -1,4 +1,4 @@
-import { Clock, Home,Timer,ListTodo,ChevronUp,Laptop,StickyNote} from "lucide-react"
+import { Clock, Home,Timer,ListTodo,ChevronUp,Laptop,StickyNote,Bot} from "lucide-react"
 import { useEffect, useState } from "react"
 import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from "@radix-ui/react-dropdown-menu"
 import { useSession,signOut } from "next-auth/react"
@@ -50,6 +50,11 @@ const items = [
     title: "Sticky Notes",
     url: '/stickynotes',
     icon: StickyNote,
+  },
+  {
+    title: "AI TASKER",
+    url: '/aitasker',
+    icon: Bot,
   },
 ]
 

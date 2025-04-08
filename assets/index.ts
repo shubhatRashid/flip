@@ -11,4 +11,5 @@ import setting from "./setting.png"
 import notes from "./notes.png"
 import flip from "./flip.png"
 import developer from "./developer.png"
-export {dots,deleteIcon,edit,add,logout,time,countdown,stopwatch,todo,setting,notes,flip,developer}
+import aitasker from "./aitasker.png"
+export {dots,deleteIcon,edit,add,logout,time,countdown,stopwatch,todo,setting,notes,flip,developer,aitasker}

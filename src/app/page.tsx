@@ -1,6 +1,6 @@
 "use client";
 import { useSession} from "next-auth/react";
-import { time,todo,stopwatch,countdown,notes as notesImage } from "../../assets";
+import { time,todo,stopwatch,countdown,notes as notesImage ,aitasker} from "../../assets";
 import SignInPage from "@/components/SignInPage";
 import CountDownModel from "@/components/CountDownModel";
 import { useState,useEffect } from "react";
@@ -26,6 +26,7 @@ const ProtectedPage = () => {
       <HomeCard currImage={countdown} name = 'COUNT DOWN' property={setShowCountDown}/>
       <HomeCard currImage={todo} name='TODO LIST' property = '/todolist'/>
       <HomeCard currImage={notesImage} name='STICKY NOTES' property = '/stickynotes'/>
+      <HomeCard currImage={aitasker} name='AI TASKER' property = '/aitasker'/>
 
         {
           showCountDown && <CountDownModel setShowCountDown={setShowCountDown}/>
