@@ -52,7 +52,7 @@ const items = [
     icon: StickyNote,
   },
   {
-    title: "AI TASKER",
+    title: "AI Tasker",
     url: '/aitasker',
     icon: Bot,
   },

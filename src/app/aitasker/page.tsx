@@ -1,5 +1,5 @@
 'use client'
-import { FormEvent, useState } from "react"
+import { useState } from "react"
 import { Check, Clipboard, LoaderCircle } from "lucide-react"
 import { Loader, SignInPage } from "@/components"
 import { useSession } from "next-auth/react"
@@ -85,16 +85,6 @@ const aitasker = () => {
               
               <li className="bg-gray-100 rounded-lg w-full flex gap-3 justify-start items-center p-2">
                 <span className="rounded-full bg-green-200 p-1 w-[35px] flex justify-center items-center">01</span>
-                <span>Research Market Competitors</span>
-              </li>
-
-              <li className="bg-gray-100 rounded-lg w-full flex gap-3 justify-start items-center p-2">
-                <span className="rounded-full bg-green-200 p-1 w-[35px] flex justify-center items-center">02</span>
-                <span>Research Market Competitors</span>
-              </li>
-
-              <li className="bg-gray-100 rounded-lg w-full flex gap-3 justify-start items-center p-2">
-                <span className="rounded-full bg-green-200 p-1 w-[35px] flex justify-center items-center">03</span>
                 <span>Research Market Competitors</span>
               </li>
         
