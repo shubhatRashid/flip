@@ -1,18 +1,18 @@
 'use client'
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { Check, Clipboard, Cross, LoaderCircle, RotateCcw } from "lucide-react"
 import { Loader, SignInPage } from "@/components"
 import { useSession } from "next-auth/react"
 import { useToast } from "@/hooks/use-toast"
-import { TaskType } from "@/types"
+import { TaskType, TodoType } from "@/types"
 
-const aitasker = () => {
+const Aitasker = () => {
   const [prompt,setPrompt] = useState('')
-  const [result,setResult] = useState(null)
+  const [result,setResult] = useState<null|TaskType[]>(null)
   const [dataLoading,setDataLoading] = useState(false)
   const {toast} = useToast()
 
-  const handleForm = async (e) => {
+  const handleForm = async (e:FormEvent) => {
     e.preventDefault()
     setDataLoading(true)
     const response = await fetch('/api/aitasker',{
@@ -37,7 +37,6 @@ const aitasker = () => {
       description : "check your tasks section for the approved tasks",
     }
     toast(toastBody)
-    setResult(false)
     setPrompt('')
   }
   const { data: session,status } = useSession();
@@ -128,4 +127,4 @@ const aitasker = () => {
   )
 }
 
-export default aitasker
+export default Aitasker
