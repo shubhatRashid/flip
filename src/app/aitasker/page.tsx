@@ -8,7 +8,7 @@ import { TaskType, TodoType } from "@/types"
 
 const Aitasker = () => {
   const [prompt,setPrompt] = useState('')
-  const [result,setResult] = useState<null|TaskType[]>(null)
+  const [result,setResult] = useState<null|TodoType>(null)
   const [dataLoading,setDataLoading] = useState(false)
   const {toast} = useToast()
 
@@ -21,7 +21,7 @@ const Aitasker = () => {
     })
     const jsonData = await response.json()
     const parsedData = JSON.parse(jsonData.tasks.choices[0].message.content)
-    setResult(parsedData.tasks)
+    setResult(parsedData)
     setDataLoading(false)
     
     const toastBody = {
@@ -31,12 +31,28 @@ const Aitasker = () => {
     toast(toastBody)
 
   }
-  const handleApprove = () => {
-    const toastBody = {
-      title : 'Tasks approved' ,
-      description : "check your tasks section for the approved tasks",
+  const handleApprove = async () => {
+    try {
+      const response = await fetch('/api/todolist/addNewCategory',{
+        method:'POST',
+        headers : {'Content-Type': 'application/json'}, 
+        body : JSON.stringify(result)
+      })
+      const toastBody = {
+        title : 'Tasks approved' ,
+        description : "check your tasks section for the approved tasks",
+      }
+      toast(toastBody)
+      setResult(null)
+
+    } catch (error) {
+      const toastBody = {
+        title : 'Error' ,
+        description : "Error approving tasks",
+      }
+      toast(toastBody)
     }
-    toast(toastBody)
+    
     setPrompt('')
   }
   const { data: session,status } = useSession();
@@ -92,7 +108,7 @@ const Aitasker = () => {
             <ul className="p-5 w-full flex flex-col gap-2">
               
               {
-                result.map((eachTask:TaskType,index:number) => (
+                result.tasks.map((eachTask:TaskType,index:number) => (
                   <li key={index} className="bg-gray-100 rounded-lg w-full flex gap-3 justify-start items-center p-2">
                     <span className="rounded-full bg-green-200 p-1 w-[35px] flex justify-center items-center">{index+1}</span>
                     <span>{eachTask.task}</span>
