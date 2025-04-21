@@ -1,4 +1,4 @@
-import { Clock, Home,Timer,ListTodo,ChevronUp,Laptop,StickyNote,Bot} from "lucide-react"
+import { Clock, Home,Timer,ListTodo,ChevronUp,Laptop,StickyNote,Bot, LogOut} from "lucide-react"
 import { useEffect, useState } from "react"
 import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from "@radix-ui/react-dropdown-menu"
 import { useSession,signOut } from "next-auth/react"
@@ -105,21 +105,6 @@ export default function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Developer</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href={process.env.NEXT_PUBLIC_DEVELOPER_PORTFOLIO}>
-                      <Laptop/>
-                      <span>Shubhat Rashid</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
 
 
@@ -138,15 +123,13 @@ export default function AppSidebar() {
                 side="top"
                 className="flex flex-col bg-white shadow-md rounded text-black gap-3 p-2"
               >
-                <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1">
-                  <span>Account</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1">
-                  <span>Billing</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1" 
+                <DropdownMenuItem className="hover:bg-gray-200 rounded-md pl-1 p-1 border " 
                   onClick={() =>signOut()}>
-                  <span>Sign out</span>
+                  <span className="flex gap-2 justify-center items-center"
+                  >
+                    <LogOut size={20}/>
+                    Sign out
+                  </span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
