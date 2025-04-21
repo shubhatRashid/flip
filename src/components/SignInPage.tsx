@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { Clock, Timer, AlarmClock, StickyNote, ListTodo, Lightbulb } from "lucide-react";
 import Robot from "./Robot";
 import Features from "./Features";
+import Contact from "./Contact";
 
 const features = [
   {
@@ -44,7 +45,7 @@ const SignInPage = () => {
 
   return (
     
-    <div className="flex flex-col  justify-center items-center gap-10">
+    <div className="flex flex-col  justify-center items-center gap-10 w-full">
           <div className="flex justify-center items-center gap-10 h-full bg-gray-50">
             <div className="flex flex-col gap-10 w-[50%] justify-center items-center h-full">
               <div className="flex  gap-5  w-full h-[30%] justify-center items-center">
@@ -78,6 +79,7 @@ const SignInPage = () => {
             </button>
           </div>
           <Features/>
+          <Contact/>
     </div>
   );
 };
