@@ -53,7 +53,7 @@ const SignInPage = () => {
                 <p className="text-sm font-italic pl-2 capitalize mt-auto text-gray-500">An all in one productivity app ... </p>
               </div>
 
-              <div className="flex flex-wrap gap-5 justify-center items-center h-[40%] ">
+              <div className="flex flex-wrap gap-5 justify-center items-center h-[40%] w-full">
                 <div className="bg-white p-4 rounded-xl shadow-sm w-full md:w-[40%] h-[40%]">
                   <h3 className="font-bold text-purple-700">F – Focus</h3>
                   <p className="text-gray-600">Stay on track and eliminate distractions.</p>
@@ -70,7 +70,7 @@ const SignInPage = () => {
                   <h3 className="font-bold text-purple-700">P – Progress</h3>
                   <p className="text-gray-600">Track your achievements and grow consistently.</p>
                 </div>
-            </div>
+              </div>
 
             </div>
             <button className="w-full rounded-lg"
@@ -80,6 +80,15 @@ const SignInPage = () => {
           </div>
           <Features/>
           <Contact/>
+          <button 
+              className="absolute flex justify-center items-center 
+              w-[50px] md:w-[70px] h-[25px] md:h-[35px] 
+              top-2 right-2 md:right-5 
+              bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-2 py-1 
+              rounded-md text-white font-bold"
+              onClick={() => signIn('google')}>  
+              Login
+          </button>
     </div>
   );
 };

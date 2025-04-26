@@ -13,7 +13,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="relative flex flex-col w-[100dvw] justify-between items-center">
+      <body className="relative flex flex-col w-[99dvw] justify-between items-center">
         <SessionProvider>
           <Toaster/>
           <Header/>

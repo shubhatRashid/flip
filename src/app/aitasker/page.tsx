@@ -65,13 +65,13 @@ const Aitasker = () => {
     return <SignInPage/>
   }
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-5 bg-gray-50 min-h-screen">
+    <div className="w-full flex flex-col justify-center items-center gap-5 bg-gray-50  md:pl-10">
     
       {!result && 
-      <div className="w-full h-full flex flex-col justify-center items-center gap-5">
+      <div className="w-full h-full flex flex-col justify-center items-center gap-5 w-full">
         <h1 className="text-4xl font-bold ">AI Task Breakdown</h1>
-        <p className="text-gray-600">Enter your work item and let AI break it down into actionable tasks</p>
-        <div className="flex flex-col w-[80%] h-1/2 border p-10 rounded-lg bg-white gap-5 border-sky-300 shadow-md">
+        <p className="text-gray-600 text-sm md:text-md">Enter your work item and let AI break it down into actionable tasks</p>
+        <div className="flex flex-col h-1/2 border p-5 rounded-lg bg-white gap-5 border-sky-300 shadow-md w-full">
             <h2 className="font-medium">What are you working on?</h2>
             <form 
               className="w-full h-full flex flex-col justify-between items-center gap-5"
@@ -97,7 +97,7 @@ const Aitasker = () => {
 
       {
         result &&
-        <div className="flex flex-col justify-center items-start w-[80%] border rounded-lg border-sky-300 shadow-md bg-white">
+        <div className="flex flex-col justify-center items-start w-full md:w-[80%] border rounded-lg border-sky-300 shadow-md bg-white">
           <div className="flex justify-start gap-2 items-center border-b w-full bg-green-100 p-5 text-green-800">
             <Clipboard/> 
             <h1 className="text-2xl font-bold">Generated Tasks</h1>
@@ -105,7 +105,7 @@ const Aitasker = () => {
           
           <div className="flex flex-col justify-center items-start w-full p-5">
             <h1 className="text-lg font-medium">Tasks</h1>
-            <ul className="p-5 w-full flex flex-col gap-2">
+            <ul className="py-5 w-full flex flex-col gap-2">
               
               {
                 result.tasks.map((eachTask:TaskType,index:number) => (
