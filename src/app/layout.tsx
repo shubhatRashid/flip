@@ -18,7 +18,7 @@ export default function RootLayout({
           <Toaster/>
           <Header/>
           <AppProvider>
-            <div className="flex w-full min-h-[100dvh] justify-center items-center px-5 py-7 overflow-scroll"> {children}</div>
+            <div className="flex w-full min-h-[100dvh] justify-center items-center px-5 py-7"> {children}</div>
           </AppProvider>
         </SessionProvider>
       </body>

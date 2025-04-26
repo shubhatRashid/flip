@@ -45,7 +45,7 @@ export default function Page() {
     if (status === 'unauthenticated') return <SignInPage/>
     
     return (
-        <div className='flex flex-wrap justify-evenly items-center gap-10 w-full h-full pt-5 md:pl-10'>
+        <div className='relative z-0 flex flex-wrap justify-evenly items-center gap-10 w-full h-full pt-5 md:pl-10'>
 
             {notes.map((eachCategory,index) => (
                 <EachNoteCategory key={index} eachCategory={eachCategory}/>

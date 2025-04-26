@@ -8,8 +8,8 @@ export default function Footer() {
     const { data: session } = useSession();
 
     return (
-        <div className="fixed  flex w-full justify-between">
-                <div className="flex justify-center items-center">
+        <div className="relative flex w-full justify-between">
+                <div className="absolute flex justify-center items-center">
                     {
                         session ?
                         <div className='relative'>
@@ -17,7 +17,7 @@ export default function Footer() {
                                 <AppSidebar/>
                                 <SidebarTrigger className="relative md:absolute  z-10 left-2 "/>
                                 <h1 
-                                    className="pt-0.4 text-lg font-bold font-serif typewriter h-full bg-gradient-to-r 
+                                    className="pt-0.4 ml-2  text-lg font-bold font-serif typewriter h-full bg-gradient-to-r 
                                                 from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
                                 >FLIP</h1>
                             </SidebarProvider>
