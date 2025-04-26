@@ -4,6 +4,7 @@ import { Header} from "../components"
 import { SessionProvider } from "next-auth/react"
 import { Toaster } from "@/components/ui/toaster"
 import { AppProvider } from "@/utils/context/AppContext"
+import { BreadcrumbWithCustomSeparator } from "@/components/BreadCrumbWithCustomSeparator"
 
 export default function RootLayout({
   children,
@@ -17,6 +18,7 @@ export default function RootLayout({
         <SessionProvider>
           <Toaster/>
           <Header/>
+          <BreadcrumbWithCustomSeparator/>
           <AppProvider>
             <div className="flex w-full min-h-[100dvh] justify-center items-center px-5 py-7"> {children}</div>
           </AppProvider>

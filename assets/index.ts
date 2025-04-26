@@ -12,4 +12,5 @@ import notes from "./notes.png"
 import flip from "./flip.png"
 import developer from "./developer.png"
 import aitasker from "./aitasker.png"
-export {dots,deleteIcon,edit,add,logout,time,countdown,stopwatch,todo,setting,notes,flip,developer,aitasker}
+import pomodoro from "./pomodoro.png"
+export {dots,deleteIcon,edit,add,logout,time,countdown,stopwatch,todo,setting,notes,flip,developer,aitasker,pomodoro}
