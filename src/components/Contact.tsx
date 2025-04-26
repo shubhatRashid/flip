@@ -33,23 +33,23 @@ const Contact = () => {
         Developer & Contact Info
       </h3>
 
-      <div className="flex justify-around items-center gap-10 w-full">
+      <div className="flex flex-col md:flex-row justify-around items-center gap-10 w-full">
         {/* Developer Info */}
-        <div>
+        <div className="flex flex-col justify-center items-start w-full">
           <h4 className="text-xl font-bold text-purple-700 mb-4">Developer</h4>
-          <p className="text-gray-700 mb-1">{developer.name}</p>
-          <p className="text-gray-600 mb-3">{developer.role}</p>
-          <InfoRow icon={<UserSquare className="w-5 h-5 text-purple-600" />} url={developer.portfolio.url} label={developer.portfolio.label} />
-          <InfoRow icon={<Github className="w-5 h-5 text-purple-600" />} url={developer.github.url} label={developer.github.label} />
-          <InfoRow icon={<Linkedin className="w-5 h-5 text-purple-600" />} url={developer.linkedin.url} label={developer.linkedin.label} />
+          <p className="pl-2.5 text-gray-700 mb-1">{developer.name}</p>
+          <p className="pl-2.5 text-gray-600 mb-3">{developer.role}</p>
+          <InfoRow icon={<UserSquare className="pl-2.5 w-5 h-5 text-purple-600" />} url={developer.portfolio.url} label={developer.portfolio.label} />
+          <InfoRow icon={<Github className="pl-2.5 w-5 h-5 text-purple-600" />} url={developer.github.url} label={developer.github.label} />
+          <InfoRow icon={<Linkedin className="pl-2.5 w-5 h-5 text-purple-600" />} url={developer.linkedin.url} label={developer.linkedin.label} />
         </div>
 
         {/* Contact Info */}
-        <div>
-          <h4 className="text-xl font-bold text-purple-700 mb-4">Contact</h4>
-          <InfoRow icon={<Mail className="w-5 h-5 text-purple-600" />} url={`mailto:${contact.email}`} label={contact.email} />
-          <InfoRow icon={<Phone className="w-5 h-5 text-purple-600" />} label={contact.phone} />
-          <InfoRow icon={<Twitter className="w-5 h-5 text-purple-600" />} url={contact.twitter.url} label={contact.twitter.label} />
+        <div className="flex flex-col justify-center items-start w-full mb-auto">
+          <h4 className="pl-2.5 text-xl font-bold text-purple-700 mb-4">Contact</h4>
+          <InfoRow icon={<Mail className="pl-2.5 w-5 h-5 text-purple-600" />} url={`mailto:${contact.email}`} label={contact.email} />
+          <InfoRow icon={<Phone className="pl-2.5 w-5 h-5 text-purple-600" />} label={contact.phone} />
+          <InfoRow icon={<Twitter className="pl-2.5 w-5 h-5 text-purple-600" />} url={contact.twitter.url} label={contact.twitter.label} />
         </div>
       </div>
     </section>
