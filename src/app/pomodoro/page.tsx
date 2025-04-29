@@ -2,7 +2,7 @@
 import { Digit,SignInPage,Loader} from "@/components";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { BotMessageSquare, Pause, Play, TimerReset } from "lucide-react";
+import { BotMessageSquare, Circle, CircleArrowRight, Pause, Play, TimerReset } from "lucide-react";
 
 export default function Page() {
     const [currStatus,setCurrStatus] = useState('work')
@@ -79,15 +79,16 @@ export default function Page() {
             <div 
                 className="flex flex-col mr-auto justify-start items-start text-sm sm:text-md
                             border rounded-md p-2 capitalize shadow-md bg-gray-50 font-mono
-                             bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                <span className="flex">
+                             bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
+            >
+                <span className="flex justify-center items-center gap-2">
                    <p className="font-bold">Cycle</p>: 0{cycle + 1}
                 </span>
                 <span className="flex">
                    <p className="font-bold">Status</p> : {currStatus === 'work' ? 'pomodoro / work session' : cycle < 3? 'short break':'long break'}
                 </span>
-                <span className="font-bold mt-5 border-t flex">
-                    <BotMessageSquare/> {currStatus === 'work' ? workPhrases[cycle] : breakPharases[cycle]}
+                <span className="font-bold mt-5 border-t flex text-md sm:text-lg flex gap-2 justify-center items-center">  
+                    <BotMessageSquare className="bg-white text-black"/> {currStatus === 'work' ? workPhrases[cycle] : breakPharases[cycle]}
                 </span>
                         
             </div>
