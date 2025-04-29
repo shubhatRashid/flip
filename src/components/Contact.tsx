@@ -33,9 +33,9 @@ const Contact = () => {
         Developer & Contact Info
       </h3>
 
-      <div className="flex flex-col md:flex-row justify-around items-center gap-10 w-full">
+      <div className="flex flex-col md:flex-row justify-evenly items-start gap-10 w-full">
         {/* Developer Info */}
-        <div className="flex flex-col justify-center items-start w-full">
+        <div className="flex flex-col justify-center items-start">
           <h4 className="text-xl font-bold text-purple-700 mb-4">Developer</h4>
           <p className="pl-2.5 text-gray-700 mb-1">{developer.name}</p>
           <p className="pl-2.5 text-gray-600 mb-3">{developer.role}</p>
@@ -45,8 +45,8 @@ const Contact = () => {
         </div>
 
         {/* Contact Info */}
-        <div className="flex flex-col justify-center items-start w-full mb-auto">
-          <h4 className="pl-2.5 text-xl font-bold text-purple-700 mb-4">Contact</h4>
+        <div className="flex flex-col justify-center items-start mb-auto">
+          <h4 className="text-xl font-bold text-purple-700 mb-4">Contact</h4>
           <InfoRow icon={<Mail className="pl-2.5 w-5 h-5 text-purple-600" />} url={`mailto:${contact.email}`} label={contact.email} />
           <InfoRow icon={<Phone className="pl-2.5 w-5 h-5 text-purple-600" />} label={contact.phone} />
           <InfoRow icon={<Twitter className="pl-2.5 w-5 h-5 text-purple-600" />} url={contact.twitter.url} label={contact.twitter.label} />
