@@ -21,7 +21,7 @@ export function BreadcrumbWithCustomSeparator() {
   },[pathName])
 
   return (
-    <Breadcrumb className="hidden sm:flex w-full justify-center items-center pt-10 pl-10 h-[20px] font-bold">
+    <Breadcrumb className="hidden sm:flex w-full justify-center items-center pl-10 h-[20px] font-bold">
       <BreadcrumbList className="pl-10 pt-10">
         <BreadcrumbSeparator>
           <Slash />

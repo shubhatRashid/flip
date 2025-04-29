@@ -1,7 +1,7 @@
 'use client';
 
-import { useSession, signOut } from "next-auth/react";
-import { SidebarTrigger,SidebarProvider,SidebarFooter,SidebarMenu,SidebarMenuItem} from "./ui/sidebar";
+import { useSession,} from "next-auth/react";
+import { SidebarTrigger,SidebarProvider} from "./ui/sidebar";
 import {AppSidebar} from "../components"
 
 export default function Footer() {

@@ -14,13 +14,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="relative flex flex-col w-[99dvw] justify-between items-center">
+      <body className="relative flex flex-col w-[99dvw]  justify-between items-center">
         <SessionProvider>
           <Toaster/>
           <Header/>
           <BreadcrumbWithCustomSeparator/>
           <AppProvider>
-            <div className="flex w-full min-h-[100dvh] justify-center items-center px-5 py-7"> {children}</div>
+            <div className="flex w-full min-h-[90dvh] justify-center items-center px-5"> {children}</div>
           </AppProvider>
         </SessionProvider>
       </body>

@@ -1,4 +1,4 @@
-import { Clock, Home,Timer,ListTodo,ChevronUp,Laptop,StickyNote,Bot, LogOut} from "lucide-react"
+import { Clock, Home,Timer,ListTodo,ChevronUp,StickyNote,Bot, LogOut, ClockArrowUp} from "lucide-react"
 import { useEffect, useState } from "react"
 import { DropdownMenu,DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem} from "@radix-ui/react-dropdown-menu"
 import { useSession,signOut } from "next-auth/react"
@@ -27,14 +27,14 @@ const items = [
     icon: Home,
   },
   {
-    title: "Clock",
-    url: "clock",
-    icon: Clock,
+    title: "AI Tasker",
+    url: '/aitasker',
+    icon: Bot,
   },
   {
-    title: "Stopwatch",
-    url: "stopwatch",
-    icon: Timer,
+    title : 'Pomodoro',
+    url: '/pomodoro',
+    icon : ClockArrowUp
   },
   {
     title: "Todo list",
@@ -52,10 +52,16 @@ const items = [
     icon: StickyNote,
   },
   {
-    title: "AI Tasker",
-    url: '/aitasker',
-    icon: Bot,
+    title: "Clock",
+    url: "clock",
+    icon: Clock,
   },
+  {
+    title: "Stopwatch",
+    url: "stopwatch",
+    icon: Timer,
+  },
+  
 ]
 
 export default function AppSidebar() {
