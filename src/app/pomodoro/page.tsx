@@ -3,6 +3,7 @@ import { Digit,SignInPage,Loader} from "@/components";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { BotMessageSquare, Circle, CircleArrowRight, Pause, Play, TimerReset } from "lucide-react";
+import AlertDialogBox from "@/components/AlertDialog";
 
 export default function Page() {
     const [currStatus,setCurrStatus] = useState('work')
@@ -12,10 +13,11 @@ export default function Page() {
     const {data:session,status} = useSession()
     const [start,setStart] = useState(false)
     const [time,setTime] = useState(stages[cycle][0])
+    const [openDialog,setOpenDialog] = useState(false)
 
     const workPhrases = [
-        "Work hard now, rest comes later.",
-        "Smart effort beats wasted time always.",
+        "Start strong, every second counts.",
+        "Stay focused — distractions can wait.",
         "Discipline turns goals into daily habits.",
         "Consistency compounds faster than you think."
       ]
@@ -24,7 +26,7 @@ export default function Page() {
         "Breathe deeply, you've earned this pause.",
         "Relax now, results are building quietly.",
         "Small rests fuel big comebacks ahead.",
-        "Rest your mind, reboot your energy."
+        "Great job — take a real break.",
       ]
       
       
@@ -48,18 +50,15 @@ export default function Page() {
                     setCurrStatus('break')
                     setTime(stages[cycle][1])
                     setStart(false)
+                    setOpenDialog(true)
                 }
                 else if (time === 0 && currStatus === 'break'){
+                    const nextCycle = cycle + 1 >= stages.length ? 0 : cycle + 1;
                     setCurrStatus('work')
-                    setCycle((cycle) => {
-                        if (cycle === 4){
-                            return 0
-                        }else{
-                            return cycle + 1
-                        }
-                    })
+                    setCycle(nextCycle)
                     setTime(stages[cycle][0])
                     setStart(false)
+                    setOpenDialog(true)
                 }else{
                     setTime((time) => time - 1)
                 }
@@ -76,6 +75,13 @@ export default function Page() {
 
     return (
         <div className="relative flex flex-col w-full h-[90dvh] justify-evenly items-center px-[10%]">
+            <AlertDialogBox 
+                title={currStatus == 'work'? 'Start Pomodoro / Work session': cycle < 3 ? 'Take a short Break' : 'Take a long Break. You deserve it.'} 
+                description={currStatus === 'break'? breakPharases[cycle] :workPhrases[cycle]} 
+                open={openDialog} 
+                setOpen={setOpenDialog}
+                continueAction={setStart}
+                buttonName = {`Start ${currStatus}`} />
             <div 
                 className="flex flex-col mr-auto justify-start items-start text-sm sm:text-md
                             border rounded-md p-2 capitalize shadow-md bg-gray-50 font-mono
@@ -87,8 +93,8 @@ export default function Page() {
                 <span className="flex">
                    <p className="font-bold">Status</p> : {currStatus === 'work' ? 'pomodoro / work session' : cycle < 3? 'short break':'long break'}
                 </span>
-                <span className="font-bold mt-5 border-t flex text-md sm:text-lg flex gap-2 justify-center items-center">  
-                    <BotMessageSquare className="bg-white text-black"/> {currStatus === 'work' ? workPhrases[cycle] : breakPharases[cycle]}
+                <span className="font-bold mt-5 border-t flex flex gap-1 justify-center items-center">  
+                    <BotMessageSquare className="bg-white text-black" size={20}/> {currStatus === 'work' ? workPhrases[cycle] : breakPharases[cycle]}
                 </span>
                         
             </div>
