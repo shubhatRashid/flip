@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { BotMessageSquare, Circle, CircleArrowRight, Pause, Play, TimerReset } from "lucide-react";
 import AlertDialogBox from "@/components/AlertDialog";
+import { playSound } from "@/utils/functions";
 
 export default function Page() {
     const [currStatus,setCurrStatus] = useState('work')
@@ -44,13 +45,13 @@ export default function Page() {
 
     useEffect(()=>{
         var interval = setInterval(() => { 
-            console.log(cycle,currStatus,time)
             if (start){
                 if (time === 0 && currStatus === 'work'){
                     setCurrStatus('break')
                     setTime(stages[cycle][1])
                     setStart(false)
                     setOpenDialog(true)
+                    playSound('/sounds/alertSound.wav')
                 }
                 else if (time === 0 && currStatus === 'break'){
                     const nextCycle = cycle + 1 >= stages.length ? 0 : cycle + 1;
@@ -59,6 +60,7 @@ export default function Page() {
                     setTime(stages[cycle][0])
                     setStart(false)
                     setOpenDialog(true)
+                    playSound('/sounds/alertSound.wav')
                 }else{
                     setTime((time) => time - 1)
                 }
@@ -80,7 +82,7 @@ export default function Page() {
                 description={currStatus === 'break'? breakPharases[cycle] :workPhrases[cycle]} 
                 open={openDialog} 
                 setOpen={setOpenDialog}
-                continueAction={setStart}
+                continueAction={() => setStart(true)}
                 buttonName = {`Start ${currStatus}`} />
             <div 
                 className="flex flex-col mr-auto justify-start items-start text-sm sm:text-md

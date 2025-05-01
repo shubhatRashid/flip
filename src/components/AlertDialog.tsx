@@ -19,7 +19,7 @@ export default function AlertDialogBox(
     description:string,
     open:boolean,
     setOpen:Dispatch<SetStateAction<boolean>>,
-    continueAction : Dispatch<SetStateAction<boolean>>,
+    continueAction : Function,
     buttonName:string}) {
  
   return (
@@ -33,15 +33,17 @@ export default function AlertDialogBox(
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              className='capitalize'
-              onClick={() => {
-                props.continueAction(true);
-              }}
-            >
-              {props.buttonName}
-            </AlertDialogAction>
+            <AlertDialogCancel>{props.buttonName ? 'Cancel' : 'Close'}</AlertDialogCancel>
+            {
+              props.buttonName && 
+              <AlertDialogAction
+                className='capitalize'
+                onClick={() => props.continueAction()}
+              >
+                {props.buttonName}
+              </AlertDialogAction>
+            }
+            
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

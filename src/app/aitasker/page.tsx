@@ -5,6 +5,7 @@ import { Loader, SignInPage } from "@/components"
 import { useSession } from "next-auth/react"
 import { useToast } from "@/hooks/use-toast"
 import { TaskType, TodoType } from "@/types"
+import { playSound } from "@/utils/functions"
 
 const Aitasker = () => {
   const [prompt,setPrompt] = useState('')
@@ -37,7 +38,8 @@ const Aitasker = () => {
         method:'POST',
         headers : {'Content-Type': 'application/json'}, 
         body : JSON.stringify(result)
-      })
+      }).then(() => playSound('/sounds/alertSound.wav'))
+      
       const toastBody = {
         title : 'Tasks approved' ,
         description : "check your tasks section for the approved tasks",

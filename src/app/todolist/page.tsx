@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { CirclePlus, FolderPen } from "lucide-react";
 import { Permanent_Marker} from 'next/font/google'; 
 import { useAppContext } from "@/utils/context/AppContext";
+import AlertDialogBox from "@/components/AlertDialog";
 const permanent_Marker = Permanent_Marker({weight:'400', subsets: ['latin'] })
 
 export default function Page() {
@@ -20,7 +21,7 @@ export default function Page() {
     const [editingCategory,setEditingCategory] = useState<string>('')
     const [newCategory,setNewCategory] = useState<string>('')
     const [showCardOptions,setShowCardOptions] = useState<string>('')
-    const [deleteCategory,setDeleteCategory] = useState('')
+    const [openDialog,setOpenDialog] = useState(false)
 
     const addNewTask = async (category: string) => {
     
@@ -167,6 +168,14 @@ export default function Page() {
 
     return (
         <div className="relative z-0 flex flex-wrap gap-5 w-full h-full justify-center items-center pt-5">
+             <AlertDialogBox 
+                title= {`Delete ${showCardOptions} ?`}
+                description= 'This action cannot be undone' 
+                open={openDialog} 
+                setOpen={setOpenDialog}
+                continueAction={() =>handleDeleteCategory(showCardOptions)}
+                buttonName = 'Delete'
+            />
             {todos.length == 0 && <div className="text-gray-300">Please Add your first Category and todos ...</div>}
             {todos.map((todo, index) => (
                 <div key={index} 
@@ -212,7 +221,7 @@ export default function Page() {
                             justify-start items-start gap-1 p-3 rounded-xl bg-white z-10"> 
 
                             <button  className="border p-2 rounded w-full bg-gray-200" 
-                                    onClick={() =>handleDeleteCategory(todo.category)}
+                                    onClick={() => setOpenDialog(true)}
                             >🗑️ delete</button>
                             <button className="border p-2 rounded bg-gray-200" 
                                     onClick={() => {

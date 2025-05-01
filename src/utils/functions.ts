@@ -5,4 +5,9 @@ export function generateHex24() {
       .padStart(2, '0')) // Ensure each byte is 2 digits long
       .join(''); // Join all bytes into a single string
   }
+
+export const playSound = (audiofile:string ) => {
+    const audio = new Audio(audiofile);
+    audio.play().catch((err) => console.log("Error playing sound:", err));
+  };
   

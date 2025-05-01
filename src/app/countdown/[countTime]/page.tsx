@@ -2,6 +2,8 @@
 import { Digit,Loader,SignInPage } from "@/components";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import AlertDialogBox from "@/components/AlertDialog";
+import { playSound } from "@/utils/functions";
 
 export default function Page(
   { params }: { params: Promise<{ countTime: number }> }
@@ -9,6 +11,7 @@ export default function Page(
   const {data:session,status} = useSession()
   // Resolve the params Promise inside useEffect
   const [time, setTime] = useState<number | null>(null);
+  const [openDialog,setOpenDialog] = useState(false)
   
   
   // Resolve params only once when the component mounts
@@ -20,18 +23,22 @@ export default function Page(
     resolveParams();
   }, [params]);
 
-  // Ensure timer logic is run only when 'time' is set
+  
   useEffect(() => {
     if (time !== null) {
       const interval = setInterval(() => {
-        setTime((prevTime) => (prevTime !== null && prevTime > 0 ? prevTime - 1 : 0));
+        setTime((prevTime) => (prevTime !== null && prevTime > 0 ? prevTime - 1 : null));
+        if (time === 0){
+          setOpenDialog(true)
+          playSound('/sounds/alertSound.wav')
+        }
       }, 1000);
 
       return () => clearInterval(interval);
     }
   }, [time]);
 
-  if (time === null || status === 'loading') {
+  if (status === 'loading') {
     return <Loader/>;
   }
 
@@ -46,6 +53,15 @@ export default function Page(
 
   return (
     <div className="flex flex-col sm:flex-row  w-full h-screen justify-evenly items-center px-[10%] gap-5 pt-5">
+      <AlertDialogBox 
+            title= 'Timer has ended.'
+            description= 'Your countdown time has ended.' 
+            open={openDialog} 
+            setOpen={setOpenDialog}
+            continueAction={() => {}}
+            buttonName = ''
+        />
+
       <div className="flex flex-col w-full h-[50%] justify-center items-center gap-3">
         <div className="flex w-full h-[90%] justify-center items-center gap-1">
           <Digit value={hours[0]} width={1} />

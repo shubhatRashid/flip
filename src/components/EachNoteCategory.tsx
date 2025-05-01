@@ -8,13 +8,16 @@ import { useAppContext } from "@/utils/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { error } from "console";
 import { NoteCategoryType } from "@/types";
+import AlertDialogBox from "./AlertDialog";
 
 export default function EachNoteCategory(
     {eachCategory}:{eachCategory:NoteCategoryType}) {
     const {notes,setNotes} = useAppContext()
     const [selectedCategory,setSelectedCategory] = useState('')
+    const [deleteCategoryId,setDeleteCategoryId] = useState('')
     const [renameCategory,setRenameCategory] = useState('')
     const [newCategoryName,setNewCategoryName] = useState('')
+    const [openDialog,setOpenDialog] = useState(false)
     const router = useRouter()
     const {toast} = useToast()
 
@@ -91,6 +94,14 @@ export default function EachNoteCategory(
                         hover:scale-110 hover:shadow-xl hover:bg-gray-100 transition ease-in-out delay-50
                     "
         >
+             <AlertDialogBox 
+                title= {`Delete ${selectedCategory} ?`}
+                description= 'This action cannot be undone' 
+                open={openDialog} 
+                setOpen={setOpenDialog}
+                continueAction={() =>handleDeleteCategory(deleteCategoryId)}
+                buttonName = 'Delete'
+            />
             
             <div className="flex justify-between border-b border-dashed">
                 {
@@ -115,12 +126,14 @@ export default function EachNoteCategory(
                 }
 
                 <button className=" scale-75 hover:scale-100" title="options"
-                        onClick={() => 
+                        onClick={() => {
                             selectedCategory != eachCategory.category
                             ? 
                                 setSelectedCategory(eachCategory.category) 
                             :
-                                setSelectedCategory("")}
+                                setSelectedCategory("")
+                            setDeleteCategoryId(eachCategory._id)
+                        }}
                 >
                     <FolderPen/>
                 </button>
@@ -132,7 +145,7 @@ export default function EachNoteCategory(
                         justify-start items-start gap-1 p-3 rounded-xl bg-white z-10"> 
 
                         <button  className="border p-2 rounded w-full bg-gray-200" title="delete"
-                                onClick={() => handleDeleteCategory(eachCategory._id) }
+                                onClick={() => setOpenDialog(true)}
                         >🗑️ delete</button>
                         <button className="border p-2 rounded bg-gray-200" title="rename"
                                 onClick={() => 
