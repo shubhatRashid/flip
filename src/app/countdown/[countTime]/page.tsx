@@ -32,7 +32,7 @@ export default function Page(
           setOpenDialog(true)
           playSound('/sounds/alertSound.wav')
         }
-      }, 1000);
+      }, 10);
 
       return () => clearInterval(interval);
     }
@@ -47,9 +47,9 @@ export default function Page(
   }
   
   // Calculate hours, minutes, and seconds
-  let hours = Math.floor(time / 3600).toString().padStart(2, '0');
-  let minutes = Math.floor((time - Number(hours) * 3600) / 60).toString().padStart(2, '0');
-  let seconds = (time % 60).toString().padStart(2, '0');
+  let hours = Math.floor(time? time / 3600 : 0).toString().padStart(2, '0');
+  let minutes = Math.floor((time? time - Number(hours) * 3600 : 0) / 60).toString().padStart(2, '0');
+  let seconds = (time ? time % 60 : 0).toString().padStart(2, '0');
 
   return (
     <div className="flex flex-col sm:flex-row  w-full h-screen justify-evenly items-center px-[10%] gap-5 pt-5">
