@@ -1,17 +1,17 @@
 'use client'
 import { Digit,SignInPage,Loader} from "@/components";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import { BotMessageSquare, Circle, CircleArrowRight, Pause, Play, TimerReset } from "lucide-react";
+import { BotMessageSquare,Pause, Play, TimerReset } from "lucide-react";
 import AlertDialogBox from "@/components/AlertDialog";
 import { playSound } from "@/utils/functions";
+import { useAppContext } from "@/utils/context/AppContext";
 
 export default function Page() {
     const [currStatus,setCurrStatus] = useState('work')
     const [cycle,setCycle] = useState(0)
     const stages = [[1500,300],[1500,300],[1500,300],[1500,1800]]
 
-    const {data:session,status} = useSession()
+    const {authStatus} = useAppContext()
     const [start,setStart] = useState(false)
     const [time,setTime] = useState(stages[cycle][0])
     const [openDialog,setOpenDialog] = useState(false)
@@ -72,8 +72,8 @@ export default function Page() {
         return () => clearInterval(interval)
     },[time,start])
     
-    if (status === 'loading') return <Loader/>
-    if (status === 'unauthenticated') return <SignInPage/>
+    if (authStatus === 'loading') return <Loader/>
+    if (authStatus === 'unauthenticated') return <SignInPage/>
 
     return (
         <div className="relative flex flex-col w-full h-[90dvh] justify-evenly items-center px-[10%]">

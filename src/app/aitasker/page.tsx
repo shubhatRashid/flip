@@ -1,17 +1,19 @@
 'use client'
 import { FormEvent, useState } from "react"
-import { Check, Clipboard, Cross, LoaderCircle, RotateCcw } from "lucide-react"
+import { Check, Clipboard,LoaderCircle, RotateCcw } from "lucide-react"
 import { Loader, SignInPage } from "@/components"
-import { useSession } from "next-auth/react"
 import { useToast } from "@/hooks/use-toast"
 import { TaskType, TodoType } from "@/types"
 import { playSound } from "@/utils/functions"
+import { useAppContext } from "@/utils/context/AppContext"
 
 const Aitasker = () => {
   const [prompt,setPrompt] = useState('')
   const [result,setResult] = useState<null|TodoType>(null)
   const [dataLoading,setDataLoading] = useState(false)
   const {toast} = useToast()
+
+  const {authStatus} = useAppContext()
 
   const handleForm = async (e:FormEvent) => {
     e.preventDefault()
@@ -57,15 +59,15 @@ const Aitasker = () => {
     
     setPrompt('')
   }
-  const { data: session,status } = useSession();
 
-  if (status === 'loading'){
+  if (authStatus === 'loading'){
     return <Loader/>
   }
 
-  if (status === 'unauthenticated') {
+  if (authStatus === 'unauthenticated') {
     return <SignInPage/>
   }
+  
   return (
     <div className="w-full flex flex-col justify-center items-center gap-5 bg-gray-50  md:pl-10">
     

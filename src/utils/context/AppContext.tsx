@@ -8,6 +8,7 @@ interface AppContextType {
   setNotes: Dispatch<React.SetStateAction<NoteCategoryType[]>>; 
   todos : TodoType[];
   setTodos : Dispatch<React.SetStateAction<TodoType[]>>; 
+  authStatus : string
 }
 
 // Create the context with default values
@@ -19,6 +20,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<TodoType[]>([])
   const {toast} = useToast()
   const {data:session,status} = useSession()
+  const [authStatus,setAuthStatus] = useState('loading')
 
   const getAllData = async () => {
     try {
@@ -46,10 +48,11 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       if (status === 'authenticated'){
         getAllData()
       }
+      setAuthStatus(status)
   },[status])
 
   return (
-    <AppContext.Provider value={{ notes, setNotes,todos,setTodos }}>
+    <AppContext.Provider value={{ notes, setNotes,todos,setTodos,authStatus }}>
       {children}
     </AppContext.Provider>
   );

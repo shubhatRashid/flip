@@ -1,21 +1,21 @@
 "use client";
-import { useSession} from "next-auth/react";
 import { time,todo,stopwatch,countdown,notes as notesImage ,aitasker, pomodoro} from "../../assets";
 import SignInPage from "@/components/SignInPage";
 import CountDownModel from "@/components/CountDownModel";
 import { useState,useEffect } from "react";
 import HomeCard from "@/components/HomeCard";
 import { Loader } from "@/components";
+import { useAppContext } from "@/utils/context/AppContext";
 
 const ProtectedPage = () => {
-  const { data: session,status } = useSession();
+  const { authStatus } = useAppContext()
   const [showCountDown,setShowCountDown] = useState(false)
 
-  if (status === 'loading'){
+  if (authStatus === 'loading'){
     return <Loader/>
   }
 
-  if (status === 'unauthenticated') {
+  if (authStatus === 'unauthenticated') {
     return <SignInPage/>
   }
 

@@ -1,5 +1,4 @@
 'use client'
-import { useSession } from "next-auth/react";
 import { SignInPage,Loader } from "@/components";
 import {EachNoteCategory} from "@/components";
 import { generateHex24 } from "@/utils/functions";
@@ -8,7 +7,7 @@ import { useAppContext } from "@/utils/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Page() {
-    const {data:session,status} = useSession()
+    const {authStatus} = useAppContext()
     const {notes,setNotes} = useAppContext()
     const {toast} = useToast()
 
@@ -41,8 +40,8 @@ export default function Page() {
     }
 
 
-    if (status === 'loading') return <Loader/>
-    if (status === 'unauthenticated') return <SignInPage/>
+    if (authStatus === 'loading') return <Loader/>
+    if (authStatus === 'unauthenticated') return <SignInPage/>
     
     return (
         <div className='relative z-0 flex flex-wrap justify-evenly items-center gap-10 w-full h-full pt-5 md:pl-10'>

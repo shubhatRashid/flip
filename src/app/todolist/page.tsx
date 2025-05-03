@@ -5,7 +5,6 @@ import {TaskType, TodoType} from "../../types"
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import { SignInPage,Loader,Eachtask} from "@/components";
-import { useSession } from "next-auth/react";
 import { CirclePlus, FolderPen } from "lucide-react";
 import { Permanent_Marker} from 'next/font/google'; 
 import { useAppContext } from "@/utils/context/AppContext";
@@ -13,7 +12,7 @@ import AlertDialogBox from "@/components/AlertDialog";
 const permanent_Marker = Permanent_Marker({weight:'400', subsets: ['latin'] })
 
 export default function Page() {
-    const {data:session,status} = useSession()
+    const {authStatus} = useAppContext()
     const {toast} = useToast()
     const {todos,setTodos} = useAppContext()
     const [editingTask, setEditingTask] = useState<TaskType | null>(null);
@@ -163,8 +162,8 @@ export default function Page() {
         }
     }
 
-    if (status === 'loading') return <Loader/>
-    if (status === 'unauthenticated') return <SignInPage/> 
+    if (authStatus === 'loading') return <Loader/>
+    if (authStatus === 'unauthenticated') return <SignInPage/> 
 
     return (
         <div className="relative z-0 flex flex-wrap gap-5 w-full h-full justify-center items-center pt-5">

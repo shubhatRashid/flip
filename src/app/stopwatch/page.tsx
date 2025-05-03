@@ -1,11 +1,11 @@
 'use client'
 import { Digit,SignInPage,Loader} from "@/components";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { Pause, Play, TimerReset } from "lucide-react";
+import { useAppContext } from "@/utils/context/AppContext";
 
 export default function Page() {
-    const {data:session,status} = useSession()
+    const {authStatus} = useAppContext()
     const [start,setStart] = useState(false)
     const [time,setTime] = useState(0)
     let hours = Math.floor(time/3600).toString().padStart(2,'0')
@@ -29,8 +29,8 @@ export default function Page() {
         return () => clearInterval(interval)
     },[start])
     
-    if (status === 'loading') return <Loader/>
-    if (status === 'unauthenticated') return <SignInPage/>
+    if (authStatus === 'loading') return <Loader/>
+    if (authStatus === 'unauthenticated') return <SignInPage/>
 
     return (
         <div className="flex flex-col sm:flex-row  w-full h-screen justify-evenly items-center px-[10%] gap-5 pt-5">

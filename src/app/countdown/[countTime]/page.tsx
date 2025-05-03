@@ -1,14 +1,15 @@
 'use client'
 import { Digit,Loader,SignInPage } from "@/components";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import AlertDialogBox from "@/components/AlertDialog";
 import { playSound } from "@/utils/functions";
+import { useAppContext } from "@/utils/context/AppContext";
 
 export default function Page(
   { params }: { params: Promise<{ countTime: number }> }
 ) {
-  const {data:session,status} = useSession()
+  const {authStatus} = useAppContext()
+
   // Resolve the params Promise inside useEffect
   const [time, setTime] = useState<number | null>(null);
   const [openDialog,setOpenDialog] = useState(false)
@@ -32,17 +33,17 @@ export default function Page(
           setOpenDialog(true)
           playSound('/sounds/alertSound.wav')
         }
-      }, 10);
+      }, 1000);
 
       return () => clearInterval(interval);
     }
   }, [time]);
 
-  if (status === 'loading') {
+  if (authStatus === 'loading') {
     return <Loader/>;
   }
 
-  if (status === 'unauthenticated'){
+  if (authStatus === 'unauthenticated'){
     return <SignInPage/>
   }
   
