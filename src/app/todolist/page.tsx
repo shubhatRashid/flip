@@ -1,7 +1,7 @@
 'use client';
-import { FormEvent, useEffect, useState } from "react";
-import {edit,add} from "../../../assets"
-import {TaskType, TodoType} from "../../types"
+import { FormEvent,useState } from "react";
+import {add} from "../../../assets"
+import {TaskType,} from "../../types"
 import Image from "next/image";
 import { useToast } from "@/hooks/use-toast";
 import { SignInPage,Loader,Eachtask} from "@/components";
@@ -137,7 +137,8 @@ export default function Page() {
     const handleAddNewCategory = async () => {
         try {
             const response = await fetch('/api/todolist/addNewCategory',{
-                method:'POST'
+                method:'POST',
+                body : JSON.stringify({category:null,tasks:null})
             })
             if (!response.ok){
                 const error = new Error()
@@ -149,7 +150,6 @@ export default function Page() {
 
             const incommingData = await response.json()
             setTodos(() => incommingData)
-            console.log(todos)
             setEditingCategory('new category...')
             setNewCategory('new category...')
         } catch (error:any) {

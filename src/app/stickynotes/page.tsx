@@ -44,13 +44,13 @@ export default function Page() {
     if (authStatus === 'unauthenticated') return <SignInPage/>
     
     return (
-        <div className='relative z-0 flex flex-wrap justify-evenly items-center gap-10 w-full h-full pt-5 md:pl-10'>
+        <div className='relative z-0 flex flex-wrap justify-evenly items-center gap-10 w-full h-full pt-5 md:pl-10 h-full'>
 
             {notes.map((eachCategory,index) => (
                 <EachNoteCategory key={index} eachCategory={eachCategory}/>
             ))}
 
-            <div className="flex  w-full justify-end items-center mt-auto py-2">
+            <div className="flex  w-full justify-end items-center mt-auto py-2 ">
                 <button 
                     className='flex flex-col justify-center items-center border rounded-full p-5 mr-5'
                     onClick={() => handleAddNewCategory()}>

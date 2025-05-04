@@ -6,10 +6,13 @@ import {AddNoteDialogBox} from "@/components";
 import { generateHex24 } from "@/utils/functions";
 import { CirclePlus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { TodoType,NoteCategoryType } from "@/types";
 
 export default function Page({params}:{params:Promise<{categoryid:string}>}) {
     const [categoryid,setCategoryid] = useState('')
     const {notes,setNotes} = useAppContext()
+
+    const [currCategory,setCategoryCategory] = useState<NoteCategoryType>(notes.filter((noteCategory) => noteCategory._id === categoryid)[0])
     const {toast} = useToast()
 
     const handleAddNewNote = async (title:string,description:string,color:string,textColor:string) => {
@@ -58,14 +61,19 @@ export default function Page({params}:{params:Promise<{categoryid:string}>}) {
         const resolveParams = async () => {
             const {categoryid} = await params
             setCategoryid(categoryid)
+            setCategoryCategory(notes.filter((noteCategory) => noteCategory._id === categoryid)[0])
         }
         resolveParams()
-    },[params])
-
-    const currCategory = notes.filter((noteCategory) => noteCategory._id === categoryid)[0]
+    },[params,notes])
 
     return (
-        <div className={`flex w-full h-full flex-wrap justify-evenly items-center gap-5`}>
+        <div className={`flex w-full h-full flex-wrap justify-evenly items-center gap-5 pt-10`}>
+            <div className="flex w-full pl-20 ">
+                <h1 
+                    className="font-bold border shadow-md p-2 rounded-md
+                        bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"
+                >{currCategory?.category}</h1>
+            </div>
             { 
                 currCategory?.notes.map((eachnote,index) => (
                     <EachNote 

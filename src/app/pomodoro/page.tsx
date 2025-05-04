@@ -67,7 +67,7 @@ export default function Page() {
             }else{
                 clearInterval(interval)
             }
-        },1)
+        },1000)
 
         return () => clearInterval(interval)
     },[time,start])
