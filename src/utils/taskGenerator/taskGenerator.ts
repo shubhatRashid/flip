@@ -8,7 +8,7 @@ export default async function generateTasks(prompt: string) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'llama3-70b-8192',
+        model: 'openai/gpt-oss-120b',
         messages: [
           { role: 'system', 
             content: "You are a productivity assistant that breaks down work into a to-do list and returns the result only and nothing else the result should be in stringified JSON format which can be parsed to json. Use the following JSON structure: { \"category\": \"string - category or topic of the task\", \"tasks\": [ { \"task\": \"string - individual to-do item\", \"completed\": false",

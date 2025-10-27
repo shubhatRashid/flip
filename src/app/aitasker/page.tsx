@@ -23,6 +23,7 @@ const Aitasker = () => {
       body : JSON.stringify({prompt:prompt})
     })
     const jsonData = await response.json()
+    console.log(jsonData)
     const parsedData = JSON.parse(jsonData.tasks.choices[0].message.content)
     setResult(parsedData)
     setDataLoading(false)
